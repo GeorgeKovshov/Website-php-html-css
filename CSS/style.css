@@ -1,8 +1,4 @@
-/*
-* {   the reset of margin and padding for everything 
-	margin:0;
-	padding:0;
-} */
+
 
 body {
 	background-color:#f4f4f4; 
@@ -11,13 +7,11 @@ body {
 	font-family: Arial, Helvetica,sans-serif;
 	font-size:18px;
 	font-weight:normal; 
-	/* Same as above
-	font: normal 16px Arial, Helvetica, sans-serif;*/
-	Line-height:1.6em; /* you can also write this in 16px. */
+	Line-height:1.6em; 
 	margin:0;
 }
 
-a{		/*targets all links in the file*/
+a{	
 	text-decoration:none;
 	color:#000;	
 }
@@ -27,15 +21,12 @@ a:hover {
 }
 
 a:active{
-	color:green;
+	color:yellow;
 }
 
-/*a:visited{
-	color:yellow;
-}*/
+
 
 .container{
-	/*width:300px; 960px is popular for websites*/
 	width:80%;
 	margin:auto;
 
@@ -53,9 +44,7 @@ a:active{
 	color:#fff;
 }
 
-.clr{
-	clear:both;
-}
+
 
 .box-1{
 	background-color:#333;
@@ -64,25 +53,18 @@ a:active{
 	display: grid;
 	grid-template-columns: 0.7fr 1fr;
 	grid-gap: 1px;
-	
-	/*border-right: 5px red solid;
-	border-left: 5px red solid;
-	border-top: 5px red solid;
-	border-bottom: 5px red solid;
-	Same as below*/
+
 	
 	border: 5px $141414 solid;
 	border-width: 3px;
 	border-bottom-width: 10px;
-	border-top-style:dotted; /*solid, dotted, dashed, double etc. */
-	/*this one overrides previous*/
+
 	
 	border: 5px #141414 solid;
 	padding-top: 25px;
 	padding-bottom: 25px;
 	padding-right: 25px;
 	padding-left: 25px;
-	/*same as above*/
 	padding: 25px;
 	
 	margin-top: 20px;
@@ -94,139 +76,16 @@ a:active{
 	font-family:Tahoma;
 	font-weight: 800;
 	font-style:italic;
-	/*text-decoration:underline;*/
 	text-transform:uppercase;
 	Letter-spacing:0.2em;
 	word-spacing: 0.5em;
 	line-height: 150%;
 }
 
-.box-2 {
-	border:3px dotted #ccc;
-	padding:20px;
-	margin:20px 0;
-}
-
-
-.categories {
-	border:1px #ccc solid;
-	padding: 10px;
-	border-radius:15px;
-}
-
-.categories h2{
-	text-align:center;
-}
-
-.categories ul{
-	padding:0;
-	padding-left:20px;
-	list-style:square; /*меняет форму list markers */
-	list-style:none;
-}
-
-.categories li{
-	padding-bottom:6px;
-	border-bottom:dotted 1px #333;
-	/*list-style-image: url('../images/Check.png');*/
-}
-
-.my-form{
-	padding:20px;
-}
-
-.my-form .form-group{
-	padding-bottom:15px;
-}
-
-.my-form label{
-	display:block
-}
-
-.my-form input[type="text"], .my-form textarea{
-	padding:8px;
-	width:100%;
-}
-
-/*.my-form input[type="submit"]{
-	background-color:#333;
-	color:#fff;
-	padding:10px 15px;
-	border:none;
-}decided to make a button style instead*/
-
-.block{
-	float:left;
-	width:33.3%;
-	border:1px solid #ccc;
-	padding:10px;
-	box-sizing:border-box;
-}
 
 
 
-#main-block{
-	float:left;
-	width:70%;
-	box-sizing:border-box;
-	margin-top:15px;
-}
 
-#sidebar{
-	float:right;
-	width:30%;
-	background-color:#333;
-	color:#fff;
-	padding:15px;
-	box-sizing:border-box;
-	margin-top:15px;
-}
-
-.p-box{
-	width:800px;
-	height:500px;
-	border:1px solid #000;
-	margin-top:30px;
-	position:relative;
-	background-image:url('../images/bgimage.jpg');
-	background-repeat: no-repeat;
-	background-position:100px 200px;
-	background-position:center top;
-}
-
-.p-box h1{
-	position:absolute;
-	top:100px;
-	left:200px;
-}
-
-
-.p-box h2{
-	position:absolute;
-	bottom:40px;
-	right:100px;
-}
-
-.fix-me{
-	position:fixed;
-	top:400px;
-}
-
-.my-list li:first-child{
-	background:red;
-}
-
-.my-list li:last-child{
-	background:blue;
-}
-
-.my-list li:nth-child(5){
-	background:yellow;
-}
-
-.my-list li:nth-child(even){
-	background:gray;
-}
 
 
 
