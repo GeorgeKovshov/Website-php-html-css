@@ -14,9 +14,9 @@ $dbpassword = "DTwP7491";
 
 
 try {
-	echo "1";
+
 	$pdo = new PDO($dsn, $dbusername, $dbpassword);
-	echo "2";
+
 	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	
 } catch(PDOException $e){

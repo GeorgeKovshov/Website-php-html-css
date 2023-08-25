@@ -19,7 +19,7 @@
 			<button> Submit </button>
 		</form>
 		<form action="search.php" method = "post">
-			<input type="number" name="start_search" placeholder="Start search">
+			<input type="number" name="usersearch" placeholder="Start search">
 			<button> Search </button>
 		</form>
 			

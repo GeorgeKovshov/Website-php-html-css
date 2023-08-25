@@ -1,18 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
 <?php
 
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
-	$start_search = $_POST["start_search"];
+	$usersearch = $_POST["usersearch"];
 
 	
 	try{
-		require_once "include/dbh.inc.php";
 		
-		$query = "SELECT * FROM water_company WHERE start == :start_search;";
+		require_once "includes/dbh.inc.php";
+
+		$query = "SELECT * FROM water_company WHERE start > :usersearch;";
 		
 		$stmt = $pdo->prepare($query);
 
-		$stmt->bindParam(":start_search", $start_search);
+		$stmt->bindParam(":usersearch", $usersearch);
 		
 		$stmt->execute();
 		
@@ -32,8 +35,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
+
+
 
 <head>
 
@@ -56,10 +59,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 		}
 		else {
 			foreach($results as $row){
-				echo htmlspecialchars($row["id"]);
-				echo htmlspecialchars($row["start"]);
-				echo htmlspecialchars($row["end"]);
-				echo htmlspecialchars($row["price"]);
+				echo "id:" . htmlspecialchars($row["id"]) . " ";
+				echo "start:" . htmlspecialchars($row["start"]) . " ";
+				echo "end:" . htmlspecialchars($row["end"]) . " ";
+				echo "price:" . htmlspecialchars($row["price"]) . "<br>";
 			}
 			
 		}
