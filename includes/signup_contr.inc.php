@@ -46,7 +46,10 @@ function is_email_registered(object $pdo, string $email){
 		
 }
 
-
+function create_user(object $pdo, string $username, string $pwd, string $email){
+	set_user($pdo, $username, $pwd, $email);
+		
+}
 
 
 
