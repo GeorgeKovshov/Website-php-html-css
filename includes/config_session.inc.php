@@ -1,12 +1,12 @@
 <?php
 
 ini_set('session.use_only_cookies', 1);
-ini_set('session.use_strict_mode', 1);
+ini_set('session.use_strict_mode', 1);// we make sure that the website only uses user_id created by the website 
 
 
 session_set_cookie_params([
 	'lifetime' => 1800,
-	'domain' => 'localhost',
+	'domain' => 'localhost', /// or 'example.com'
 	'path' => '/',
 	'secure' => true,
 	'httponly' => true
