@@ -38,12 +38,27 @@ require_once 'includes/ggb_view.inc.php';
 		
 		<div class="container-input">
 			<div class="box-input">
+				<h3> Input a game</h3>
+				<form action="includes/input_game.inc.php" method = "post">
+					<input type="text" name="game_title" placeholder="Game title"><br>
+					
+					<span style="font-size:16px;"> Genre: </span> <?php genre_select($pdo); ?><br>
+					<span style="font-size:16px;"> Released: </span> <input type="date" name="released"><br>
+					
+					<textarea name="genre_description" placeholder="genre_description" rows="4" cols="50">Write a description of the genre... </textarea><br>
+					
+					
+					<button> Submit </button>
+				</form>
+			</div>
+		
+			<div class="box-input">
 				<h3> Input a person</h3>
 				<form action="includes/input_designer.inc.php" method = "post">
 					<input type="text" name="full_name" placeholder="Full name"><br>
 					<span style="font-size:16px;"> Country: </span> <?php nations_select($pdo); ?><br>
 					
-					<input type="date" name="birthday" placeholder="Birthday"><br>
+					<input type="date" name="created" placeholder="Birthday"><br>
 					<input type="radio" name="gender" id="gender" value="Male" />
 					<label for="gender" style="font-size:16px;" >Male</label><br>
 
@@ -98,6 +113,37 @@ require_once 'includes/ggb_view.inc.php';
 				<button> Submit </button> 
 				</form>
 			</div>
+			
+			<div class="box-input">
+				<h3> Input a platform</h3>
+				<form action="includes/input_platform.inc.php" method = "post">
+					<input type="text" name="platform_name" placeholder="Platform title"><br>
+					<span style="font-size:16px;"> Generation: </span> <?php generation_select($pdo); ?><br>
+					
+					<span style="font-size:16px;"> Company: </span> <?php company_select($pdo); ?><br>
+					<span style="font-size:16px;"> Released: </span> <input type="date" name="released"><br>
+					<span style="font-size:16px;"> Discontinued*: </span> <input type="date" name="discontinued"><br>
+					<label for="discontinued" style="font-size:16px;" >*leave empty if not discontinued</label><br>
+					
+					<button> Submit </button>
+				</form>
+			</div>
+			
+			
+			<div class="box-input">
+				<h3> Input a genre</h3>
+				<form action="includes/input_genre.inc.php" method = "post">
+					<input type="text" name="genre_name" placeholder="Name of the Genre"><br>
+					<span style="font-size:16px;"> Subgenre of: </span> <?php genre_select($pdo); ?><br>
+					
+					<textarea name="genre_description" placeholder="genre_description" rows="4" cols="50">Write a description of the genre... </textarea><br>
+					
+					
+					<button> Submit </button>
+				</form>
+			</div>
+			
+			
 		
 		
 		

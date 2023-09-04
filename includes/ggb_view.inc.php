@@ -19,6 +19,45 @@ function nations_select(object $pdo){
 	
 }
 
+
+function generation_select(){
+	$array = ["First","Second","Third","Fourth","Fifth","Sixth","Seventth","Eigths","Ninth"];
+	
+	echo '<select name="generation" id="generation">';
+	$i=1;
+	foreach($array as $arr) { 
+		echo '<option value=' . $i++ . '>' . $arr . "</option>"; 
+		///$i++;
+	} 
+	echo '</select>';
+	
+	
+}
+
+function company_select(object $pdo){
+	$array = get_companies($pdo);
+	
+	echo '<select name="company" id="company">';
+	foreach($array as $key => $value) { 
+		echo '<option value=' . $key . '>' . $value . "</option>"; 
+	} 
+	echo '</select>';
+	
+	
+}
+
+function genre_select(object $pdo){
+	$array = get_genres_from_db($pdo);
+	
+	echo '<select name="subgenre" id="subgenre">';
+	foreach($array as $key => $value) { 
+		echo '<option value=' . $key . '>' . $value . "</option>"; 
+	} 
+	echo '</select>';
+	
+	
+}
+
 function check_input_errors(){
 	if(isset($_SESSION["errors_input"])){
 		$errors = $_SESSION["errors_input"];

@@ -12,6 +12,10 @@ function get_countries(object $pdo){
 	return get_countries_from_db($pdo);
 }
 
+function get_companies(object $pdo){
+	return get_companies_from_db($pdo);
+}
+
 function is_input_empty(array $inputs){
 	foreach($inputs as $input){
 		if(empty($input)){
@@ -39,4 +43,13 @@ function input_company(object $pdo, string $company_name, int $country, string $
 	set_company($pdo, $company_name, $country, $company_type, $founded, $closed);
 
 		
+}
+
+function input_platform(object $pdo, string $platform_name, int $company, int $generation, string $released, string $discontinued){
+	set_platform($pdo, $platform_name, $company, $generation, $released, $discontinued);
+	
+}
+
+function input_genre(object $pdo, string $genre_name, string $genre_description, int $subgenre){
+	set_genre($pdo, $genre_name, $genre_description, $subgenre);
 }
