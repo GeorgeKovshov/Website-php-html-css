@@ -34,16 +34,31 @@ function get_countries_from_db(object $pdo) {
 	return $result;
 }
 
-function get_companies_from_db(object $pdo) {
-	$query = "SELECT publisher_id, title FROM publisher;";
+function get_companies_from_db(object $pdo, int $type) {
+	if($type == 1){
+		$query = "SELECT developer_id, title FROM developer;";
+	}
+	else {
+		$query = "SELECT publisher_id, title FROM publisher;";
+	}
+	
 	$stmt = $pdo->prepare($query);
 	$stmt->execute();
 	$result = array();
 	$i = 1;
-	while ($data = $stmt->fetch(PDO::FETCH_ASSOC))
-	{
-		$result[$data["publisher_id"]] = $data["title"];
+	if($type == 1){
+		while ($data = $stmt->fetch(PDO::FETCH_ASSOC))
+		{
+			$result[$data["developer_id"]] = $data["title"];
+		}
 	}
+	else {
+		while ($data = $stmt->fetch(PDO::FETCH_ASSOC))
+		{
+			$result[$data["publisher_id"]] = $data["title"];
+		}
+	}
+	
 	$stmt = null;
 	return $result;
 }
@@ -61,6 +76,35 @@ function get_genres_from_db(object $pdo) {
 	$stmt = null;
 	return $result;
 }
+
+function get_platforms_from_db(object $pdo) {
+	$query = "SELECT platform_id, platform_name FROM platform";
+	$stmt = $pdo->prepare($query);
+	$stmt->execute();
+	$result = array();
+	$i = 1;
+	while ($data = $stmt->fetch(PDO::FETCH_ASSOC))
+	{
+		$result[$data["platform_id"]] = $data["platform_name"];
+	}
+	$stmt = null;
+	return $result;
+}
+
+function get_designers_from_db(object $pdo) {
+	$query = "SELECT people_id, full_name FROM people";
+	$stmt = $pdo->prepare($query);
+	$stmt->execute();
+	$result = array();
+	$i = 1;
+	while ($data = $stmt->fetch(PDO::FETCH_ASSOC))
+	{
+		$result[$data["people_id"]] = $data["full_name"];
+	}
+	$stmt = null;
+	return $result;
+}
+
 
 function get_name(object $pdo, string $current_name, string $name, string $table) {
 	$query = "SELECT $name FROM $table WHERE $name = :current_name;";

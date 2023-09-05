@@ -34,8 +34,22 @@ function generation_select(){
 	
 }
 
-function company_select(object $pdo){
-	$array = get_companies($pdo);
+function score_select(){
+	
+	echo '<select name="score" id="score">';
+	$i=0;
+	while($i < 11) { 
+		echo '<option value=' . $i . '>' . $i++ . "</option>"; 
+		///$i++;
+	} 
+	echo '</select>';
+	
+	
+}
+
+function company_select(object $pdo, int $type){
+	//type: 1 developer, 2 publisher
+	$array = get_companies($pdo, $type);
 	
 	echo '<select name="company" id="company">';
 	foreach($array as $key => $value) { 
@@ -47,9 +61,33 @@ function company_select(object $pdo){
 }
 
 function genre_select(object $pdo){
-	$array = get_genres_from_db($pdo);
+	$array = get_genres($pdo);
 	
 	echo '<select name="subgenre" id="subgenre">';
+	foreach($array as $key => $value) { 
+		echo '<option value=' . $key . '>' . $value . "</option>"; 
+	} 
+	echo '</select>';
+	
+	
+}
+
+function platform_select(object $pdo){
+	$array = get_platforms($pdo);
+	
+	echo '<select name="platform" id="platform">';
+	foreach($array as $key => $value) { 
+		echo '<option value=' . $key . '>' . $value . "</option>"; 
+	} 
+	echo '</select>';
+	
+	
+}
+
+function designer_select(object $pdo){
+	$array = get_designers($pdo);
+	
+	echo '<select name="designer" id="designer">';
 	foreach($array as $key => $value) { 
 		echo '<option value=' . $key . '>' . $value . "</option>"; 
 	} 

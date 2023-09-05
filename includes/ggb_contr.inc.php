@@ -12,8 +12,20 @@ function get_countries(object $pdo){
 	return get_countries_from_db($pdo);
 }
 
-function get_companies(object $pdo){
-	return get_companies_from_db($pdo);
+function get_companies(object $pdo, int $type){
+	return get_companies_from_db($pdo, $type);
+}
+
+function get_genres(object $pdo){
+	return get_genres_from_db($pdo);
+}
+
+function get_platforms(object $pdo){
+	return get_platforms_from_db($pdo);
+}
+
+function get_designers(object $pdo){
+	return get_designers_from_db($pdo);
 }
 
 function is_input_empty(array $inputs){
