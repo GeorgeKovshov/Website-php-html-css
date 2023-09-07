@@ -48,10 +48,15 @@ function score_select(){
 }
 
 function company_select(object $pdo, int $type){
-	//type: 1 developer, 2 publisher
+	//type: 1 developer (strict), 2 publisher, 3 developer (non-strict)
 	$array = get_companies($pdo, $type);
-	
-	echo '<select name="company" id="company">';
+	if($type == 1) {
+		echo '<select name="developer" id="developer">';
+	}
+	else {
+		echo '<select name="company" id="company">';
+	}
+	echo '<option value=0> Empty </option>'; 
 	foreach($array as $key => $value) { 
 		echo '<option value=' . $key . '>' . $value . "</option>"; 
 	} 
@@ -60,41 +65,65 @@ function company_select(object $pdo, int $type){
 	
 }
 
-function genre_select(object $pdo){
+function genre_select(object $pdo, int $amount){
 	$array = get_genres($pdo);
-	
-	echo '<select name="subgenre" id="subgenre">';
-	foreach($array as $key => $value) { 
-		echo '<option value=' . $key . '>' . $value . "</option>"; 
-	} 
-	echo '</select>';
+	while($amount > 0){
+		echo '<select name="subgenre'. $amount .'" id="subgenre">';
+		echo '<option value=0> None </option>'; 
+		foreach($array as $key => $value) { 
+			echo '<option value=' . $key . '>' . $value . "</option>"; 
+		} 
+		echo '</select>';
+		$amount--;
+	}
 	
 	
 }
 
-function platform_select(object $pdo){
+function platform_select(object $pdo, int $amount){
 	$array = get_platforms($pdo);
-	
-	echo '<select name="platform" id="platform">';
-	foreach($array as $key => $value) { 
-		echo '<option value=' . $key . '>' . $value . "</option>"; 
-	} 
-	echo '</select>';
+	while($amount > 0){
+		echo '<select name="platform'. $amount .'" id="platform">';
+		echo '<option value=0> None </option>'; 
+		foreach($array as $key => $value) { 
+			echo '<option value=' . $key . '>' . $value . "</option>"; 
+		} 
+		echo '</select>';
+		$amount--;
+	}
 	
 	
 }
 
+
+function designer_select(object $pdo, int $amount){
+	$array = get_designers($pdo);
+	while($amount > 0){
+		echo '<select name="designer' . $amount . '" id="designer">';
+		echo '<option value=0> Empty </option>'; 
+		foreach($array as $key => $value) { 
+			echo '<option value=' . $key . '>' . $value . "</option>"; 
+		} 
+		echo '</select>';
+		$amount--;
+	}
+	
+	
+}
+	
+/*
 function designer_select(object $pdo){
 	$array = get_designers($pdo);
 	
 	echo '<select name="designer" id="designer">';
+	echo '<option value=0> Empty </option>'; 
 	foreach($array as $key => $value) { 
 		echo '<option value=' . $key . '>' . $value . "</option>"; 
 	} 
 	echo '</select>';
 	
 	
-}
+}*/
 
 function check_input_errors(){
 	if(isset($_SESSION["errors_input"])){
@@ -159,7 +188,7 @@ function company_inputs(object $pdo){
 	}
 	echo '<span style="font-size:16px;"> Closed: </span>'; 
 	if(isset($_SESSION["input_data"]["closed"])){
-		echo '<input type="date" name="founded" value=' . $_SESSION["input_data"]["closed"] . '><br>';
+		echo '<input type="date" name="closed" value=' . $_SESSION["input_data"]["closed"] . '><br>';
 	}
 	else {
 		echo '<input type="date" name="closed"><br>';

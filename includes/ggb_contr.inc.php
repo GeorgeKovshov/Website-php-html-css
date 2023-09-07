@@ -65,3 +65,12 @@ function input_platform(object $pdo, string $platform_name, int $company, int $g
 function input_genre(object $pdo, string $genre_name, string $genre_description, int $subgenre){
 	set_genre($pdo, $genre_name, $genre_description, $subgenre);
 }
+
+function input_game(object $pdo, string $game_title, string $series_title, string $released, int $developer, int $publisher, int $genre,int $designer, int $platform, int $score, string $game_description){
+	set_game($pdo, $game_title, $series_title, $released, $developer, $publisher, $score, $game_description); 
+	$game_id = get_id($pdo, $game_title, "game_title", "games", "game_id");
+	set_relation($pdo, "dev_people", "person_id", "developer_id", $designer, $developer);
+	set_relation($pdo, "games_people", "person_id", "game_id", $designer, $game_id);
+	set_relation($pdo, "games_platform", "platform_id", "game_id", $platform, $game_id);
+	set_relation($pdo, "games_genre", "genre_id", "game_id", $genre, $game_id);
+}

@@ -35,11 +35,11 @@ function get_countries_from_db(object $pdo) {
 }
 
 function get_companies_from_db(object $pdo, int $type) {
-	if($type == 1){
-		$query = "SELECT developer_id, title FROM developer;";
+	if($type == 2){
+		$query = "SELECT publisher_id, title FROM publisher;";
 	}
 	else {
-		$query = "SELECT publisher_id, title FROM publisher;";
+		$query = "SELECT developer_id, title FROM developer;";
 	}
 	
 	$stmt = $pdo->prepare($query);
@@ -120,17 +120,34 @@ function get_name(object $pdo, string $current_name, string $name, string $table
 	return $result;
 }
 
+function get_id(object $pdo, string $current_name, string $name, string $table, string $id_column) {
+	$query = "SELECT $id_column FROM $table WHERE $name = :current_name;";
+	$stmt = $pdo->prepare($query);
+	//$stmt->bindParam(':name', $name);
+	//$stmt->bindParam(':table', $table);
+	$stmt->bindParam(":current_name", $current_name);
+	$stmt->execute();
+	
+	
+	$result = $stmt->fetch(PDO::FETCH_ASSOC);
+	$stmt = null;
+	return intval($result[$id_column]);
+}
+
 
 
 function set_company(object $pdo, string $company_name, int $country, string $company_type, string $founded, string $closed){
 	if($closed == "1") {
 		$query = "INSERT INTO $company_type (title, country, founded, closed) VALUES (:title, :country, :founded, NULL);";
+		$stmt = $pdo->prepare($query);
 	}
 	else{
-		$query = "INSERT INTO $company_type (title, country, founded, closed) VALUES (:title, :country, :founded, $closed);";
+		$query = "INSERT INTO $company_type (title, country, founded, closed) VALUES (:title, :country, :founded, :closed);";
+		$stmt = $pdo->prepare($query);
+		$stmt->bindParam(":closed", $closed);
 	}
 	//$query = "INSERT INTO $company_type (title, country, founded, closed) VALUES (:title, :country, :founded, :closed);";
-	$stmt = $pdo->prepare($query);
+	//$stmt = $pdo->prepare($query);
 	
 	$stmt->bindParam(":title", $company_name);
 	$stmt->bindParam(":country", $country);
@@ -184,7 +201,37 @@ function set_genre(object $pdo, string $genre_name, string $genre_description, i
 	
 }
 
+function set_game(object $pdo, string $game_title, string $series_title, string $released, int $developer, int $publisher, int $score, string $game_description){
+	$query = "INSERT INTO games(game_title, release_date, game_description, series, score, developer, publisher) VALUES (:game_title, :released, :game_description, :series_title, :score, :developer, :publisher);";
 
+	$stmt = $pdo->prepare($query);
+	
+	$stmt->bindParam(":game_title", $game_title);
+	$stmt->bindParam(":released", $released);
+	$stmt->bindParam(":game_description", $game_description);
+	$stmt->bindParam(":series_title", $series_title);
+	$stmt->bindParam(":score", $score);
+	
+	$stmt->bindParam(":developer", $developer);
+	$stmt->bindParam(":publisher", $publisher);
+	
+	
+	$stmt->execute();
+	$stmt = null;
+}
+
+function set_relation(object $pdo, string $table_name, string $column_one_name, string $column_two_name, int $column_one_value, int $column_two_value){
+	$query = "INSERT INTO $table_name ($column_one_name, $column_two_name) VALUES (:column_one_value, :column_two_value);";
+
+	$stmt = $pdo->prepare($query);
+	
+	$stmt->bindParam(":column_one_value", $column_one_value);
+	$stmt->bindParam(":column_two_value", $column_two_value);
+	
+	$stmt->execute();
+	$stmt = null;
+	
+}
 
 
 

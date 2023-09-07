@@ -37,70 +37,67 @@ require_once 'includes/ggb_view.inc.php';
 		</h3>
 		
 		<div class="container-input">
-			<div class="box-input">
-				
-				<form class="form-input" action="includes/input_game.inc.php" method = "post">
-					<div> 
-						<h3> Input a game</h3>
-						<input type="text" name="game_title" placeholder="Game title"> 
-						<input type="text" name="game_title" placeholder="Series"><br>
-						<span style="font-size:16px;"> Date of Release: </span> <br> <input type="date" name="released">
-						<span style="font-size:16px;"> Developer: </span> <?php company_select($pdo, 1); ?><br>
-						<span style="font-size:16px;"> Publisher: </span> <?php company_select($pdo, 2); ?><br>
-					</div>
-					
-					<div>
-						<br> 
-						<span style="font-size:16px;"> Genres: </span> 
+			<form class="form-input" action="includes/input_game.inc.php"method = "post"> 
+				<div class="box-input">
+					<div class="form-input" >
+						<div> 
+							<h3> Input a game</h3>
+							<input type="text" name="game_title" placeholder="Game title"> 
+							<input type="text" name="series_title" placeholder="Series"><br>
+							<span style="font-size:16px;"> Date of Release: </span> <br> <input type="date" name="released">
+							<span style="font-size:16px;"> Developer: </span> <?php company_select($pdo, 1); ?><br>
+							<span style="font-size:16px;"> Publisher: </span> <?php company_select($pdo, 2); ?><br>
+							
+						</div>
 						
-						<?php 
-							echo "<br>"; genre_select($pdo); 
-							echo "<br>"; genre_select($pdo);
-							echo "<br>"; genre_select($pdo);
-						?>
-						<span style="font-size:16px;"> Designers:  
+						<div>
+							<br> 
+							<span style="font-size:16px;"> Genres: </span> 
+							
 							<?php 
-							designer_select($pdo); 
-							designer_select($pdo);
-							designer_select($pdo);
-							?> 
-						</span><br>
-					</div>
-					
-					<div>
-						<br> 
-						<span style="font-size:16px;"> Platforms: </span> 
-						<?php 
-							echo "<br>"; platform_select($pdo); 
-							echo "<br>"; platform_select($pdo);
-							echo "<br>"; platform_select($pdo);
-						?>
-					
-					</div>
-					
-					<div>
-					
-
-					
+								echo "<br>"; genre_select($pdo,3); 
+								//echo "<br>"; genre_select($pdo);
+								//echo "<br>"; genre_select($pdo);
+							?>
+							<span style="font-size:16px;"> Designers:  
+								<?php 
+								designer_select($pdo,3); 
+								///designer_select($pdo);
+								//designer_select($pdo);
+								?> 
+							</span><br>
+						</div>
 						
+						<div>
+							<br> 
+							<span style="font-size:16px;"> Platforms: </span> 
+							<?php 
+								echo "<br>"; platform_select($pdo,3); 
+								//echo "<br>"; platform_select($pdo);
+								//echo "<br>"; platform_select($pdo);
+							?>
+						
+						</div>
+						
+						
+						
+						<div style="grid-column-end: span 3;">
+							<textarea  name="game_description" placeholder="game_description" rows="4" cols="50">Write a description of the game... </textarea><br>
+							<span style="font-size:16px;"> Tags: </span> 
+							<?php 
+								 //platform_select($pdo); 
+								 ///platform_select($pdo);
+								 //platform_select($pdo);
+							?>
+							<br><span> Score: <?php score_select(); ?> </span>
+							<button> Submit </button>
+						</div>
 					</div>
+				</div>
+				<div class="box-input">
 					
-					<div style="grid-column-end: span 3;">
-						<textarea  name="genre_description" placeholder="genre_description" rows="4" cols="50">Write a description of the game... </textarea><br>
-						<span style="font-size:16px;"> Tags: </span> 
-						<?php 
-							 platform_select($pdo); 
-							 platform_select($pdo);
-							 platform_select($pdo);
-						?>
-						<br><span> Score: <?php score_select(); ?> </span>
-						<button> Submit </button>
-					</div>
-					
-					
-				</form>
-			</div>
-		
+				</div>
+			</form>
 		
 		</div> 
 		<div class="container-input">
