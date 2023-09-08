@@ -35,7 +35,22 @@ require_once 'includes/ggb_view.inc.php';
 			}*/
 		?>
 		</h3>
-		
+		<form action="game_input.php" method = "post">
+			Change "genre" amount
+			<?php 
+				if(!isset($_SESSION["genre_amount"])){
+					$_SESSION["genre_amount"] = 1;
+				}
+				
+				change_session_variable("genre_amount");
+				
+				
+			?>	
+			<button name="+"> + </button>
+			<button name="-"> - </button>
+								
+								
+		</form>	
 		<div class="container-input">
 			<form class="form-input" action="includes/input_game.inc.php"method = "post"> 
 				<div class="box-input">
@@ -53,12 +68,12 @@ require_once 'includes/ggb_view.inc.php';
 						<div>
 							<br> 
 							<span style="font-size:16px;"> Genres: </span> 
+								<?php
+									echo "<br>"; genre_select($pdo,$_SESSION["genre_amount"]); 
+									//echo "<br>"; genre_select($pdo);
+									//echo "<br>"; genre_select($pdo);
+								?>
 							
-							<?php 
-								echo "<br>"; genre_select($pdo,3); 
-								//echo "<br>"; genre_select($pdo);
-								//echo "<br>"; genre_select($pdo);
-							?>
 							<span style="font-size:16px;"> Designers:  
 								<?php 
 								designer_select($pdo,3); 
@@ -71,11 +86,13 @@ require_once 'includes/ggb_view.inc.php';
 						<div>
 							<br> 
 							<span style="font-size:16px;"> Platforms: </span> 
+							<form>
 							<?php 
 								echo "<br>"; platform_select($pdo,3); 
 								//echo "<br>"; platform_select($pdo);
 								//echo "<br>"; platform_select($pdo);
 							?>
+							</form>
 						
 						</div>
 						

@@ -220,8 +220,8 @@ function set_game(object $pdo, string $game_title, string $series_title, string 
 	$stmt = null;
 }
 
-function set_relation(object $pdo, string $table_name, string $column_one_name, string $column_two_name, int $column_one_value, int $column_two_value){
-	$query = "INSERT INTO $table_name ($column_one_name, $column_two_name) VALUES (:column_one_value, :column_two_value);";
+function check_relation_exists(object $pdo, string $table_name, string $column_one_name, string $column_two_name, int $column_one_value, int $column_two_value) {
+	$query = "SELECT $column_one_name FROM $table_name WHERE $column_one_name = :column_one_value AND $column_two_name = :column_two_value;";
 
 	$stmt = $pdo->prepare($query);
 	
@@ -229,7 +229,25 @@ function set_relation(object $pdo, string $table_name, string $column_one_name, 
 	$stmt->bindParam(":column_two_value", $column_two_value);
 	
 	$stmt->execute();
+	
+	$result = $stmt->fetch(PDO::FETCH_ASSOC);
 	$stmt = null;
+	return $result;
+}
+
+function set_relation(object $pdo, string $table_name, string $column_one_name, string $column_two_name, int $column_one_value, int $column_two_value){
+	if(!check_relation_exists($pdo, $table_name, $column_one_name, $column_two_name, $column_one_value, $column_two_value)){
+		$query = "INSERT INTO $table_name ($column_one_name, $column_two_name) VALUES (:column_one_value, :column_two_value);";
+
+		$stmt = $pdo->prepare($query);
+		
+		$stmt->bindParam(":column_one_value", $column_one_value);
+		$stmt->bindParam(":column_two_value", $column_two_value);
+		
+		$stmt->execute();
+		$stmt = null;
+	}
+	
 	
 }
 

@@ -37,20 +37,6 @@ require_once 'includes/ggb_view.inc.php';
 		</h3>
 		
 		<div class="container-input">
-			<div class="box-input">
-				<h3> Input a game</h3>
-				<form action="includes/input_game.inc.php" method = "post">
-					<input type="text" name="game_title" placeholder="Game title"><br>
-					
-					<span style="font-size:16px;"> Genre: </span> <?php genre_select($pdo); ?><br>
-					<span style="font-size:16px;"> Released: </span> <input type="date" name="released"><br>
-					
-					<textarea name="genre_description" placeholder="genre_description" rows="4" cols="50">Write a description of the genre... </textarea><br>
-					
-					
-					<button> Submit </button>
-				</form>
-			</div>
 		
 			<div class="box-input">
 				<h3> Input a person</h3>
@@ -120,7 +106,7 @@ require_once 'includes/ggb_view.inc.php';
 					<input type="text" name="platform_name" placeholder="Platform title"><br>
 					<span style="font-size:16px;"> Generation: </span> <?php generation_select($pdo); ?><br>
 					
-					<span style="font-size:16px;"> Company: </span> <?php company_select($pdo); ?><br>
+					<span style="font-size:16px;"> Company: </span> <?php company_select($pdo, 2); ?><br>
 					<span style="font-size:16px;"> Released: </span> <input type="date" name="released"><br>
 					<span style="font-size:16px;"> Discontinued*: </span> <input type="date" name="discontinued"><br>
 					<label for="discontinued" style="font-size:16px;" >*leave empty if not discontinued</label><br>
@@ -134,7 +120,7 @@ require_once 'includes/ggb_view.inc.php';
 				<h3> Input a genre</h3>
 				<form action="includes/input_genre.inc.php" method = "post">
 					<input type="text" name="genre_name" placeholder="Name of the Genre"><br>
-					<span style="font-size:16px;"> Subgenre of: </span> <?php genre_select($pdo); ?><br>
+					<span style="font-size:16px;"> Subgenre of: </span> <?php genre_select($pdo,1); ?><br>
 					
 					<textarea name="genre_description" placeholder="genre_description" rows="4" cols="50">Write a description of the genre... </textarea><br>
 					

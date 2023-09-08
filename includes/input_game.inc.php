@@ -27,7 +27,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 	}
 
 	
-	$aa = !isset($_POST['subgenre'.'1']);
 	
 	$score = $_POST["score"];
 	$game_description = $_POST["game_description"];
@@ -41,8 +40,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 		$errors = [];
 		
 		$arr = [$game_title, $series_title, $released, $developer, $publisher, $genre, $platform, $score];
+		if(is_zero_input($platform) || is_zero_input($designer) || is_zero_input($genre)){
+			$errors["zero_input"] = "Select at least one designer, genre and platform! ";
+		}
+		
 		if(is_input_empty($arr)){
-			$errors["empty_input"] = "$genre[0], $genre[1], $genre[2] Fill in all the necessary data! ";
+			$errors["empty_input"] = "Fill in all the necessary data! ";
 		}
 		else {
 			if(is_name_taken($pdo, $game_title, "game_title", "games" )){
@@ -67,7 +70,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 				
 		
 
-		///input_game($pdo, $game_title, $series_title, $released, $developer, $publisher, $genre, $designer, $platform, $score, $game_description);
+		input_game($pdo, $game_title, $series_title, $released, $developer, $publisher, $genre, $designer, $platform, $score, $game_description);
 
 		
 		$pdo = null;
