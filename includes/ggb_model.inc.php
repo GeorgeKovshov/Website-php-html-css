@@ -105,6 +105,20 @@ function get_designers_from_db(object $pdo) {
 	return $result;
 }
 
+function get_tags_from_db(object $pdo) {
+	$query = "SELECT tag_id, tag_title FROM tags;";
+	$stmt = $pdo->prepare($query);
+	$stmt->execute();
+	$result = array();
+	$i = 1;
+	while ($data = $stmt->fetch(PDO::FETCH_ASSOC))
+	{
+		$result[$data["tag_id"]] = $data["tag_title"];
+	}
+	$stmt = null;
+	return $result;
+}
+
 
 function get_name(object $pdo, string $current_name, string $name, string $table) {
 	$query = "SELECT $name FROM $table WHERE $name = :current_name;";
@@ -186,12 +200,21 @@ function set_platform(object $pdo, string $platform_name, int $company, int $gen
 }
 
 function set_genre(object $pdo, string $genre_name, string $genre_description, int $subgenre){
-	$query = "INSERT INTO genre (genre_name, subgenre_of, genre_description) VALUES (:genre_name, :subgenre, :genre_description);";
+	if($subgenre == "1") {
+		$query = "INSERT INTO genre (genre_name, subgenre_of, genre_description) VALUES (:genre_name, NULL, :genre_description);";
+		$stmt = $pdo->prepare($query);
+	}
+	else{
+		$query = "INSERT INTO genre (genre_name, subgenre_of, genre_description) VALUES (:genre_name, :subgenre, :genre_description);";
+		$stmt = $pdo->prepare($query);
+		$stmt->bindParam(":subgenre", $subgenre);
+	}
+	
 
-	$stmt = $pdo->prepare($query);
+	//$stmt = $pdo->prepare($query);
 	
 	$stmt->bindParam(":genre_name", $genre_name);
-	$stmt->bindParam(":subgenre", $subgenre);
+	//$stmt->bindParam(":subgenre", $subgenre);
 	$stmt->bindParam(":genre_description", $genre_description);
 	
 	
@@ -201,12 +224,30 @@ function set_genre(object $pdo, string $genre_name, string $genre_description, i
 	
 }
 
-function set_game(object $pdo, string $game_title, string $series_title, string $released, int $developer, int $publisher, int $score, string $game_description){
-	$query = "INSERT INTO games(game_title, release_date, game_description, series, score, developer, publisher) VALUES (:game_title, :released, :game_description, :series_title, :score, :developer, :publisher);";
+function set_screenshot(object $pdo, string $screenshot_path, int $game_id){
+	$sql = "INSERT INTO screenshots(screenshot_path, game_id) VALUES (:filename, :game_id)";
+		
+
+			$stmt = $pdo->prepare($sql);
+
+		
+			$stmt->bindParam(":filename", $screenshot_path);
+			$stmt->bindParam(":game_id", $game_id);
+			$stmt->execute();
+			$stmt = null;
+	
+	
+
+	
+}
+
+function set_game(object $pdo, string $game_title, string $series_title, string $released, int $developer, int $publisher, int $score, string $game_description, string $cover){
+	$query = "INSERT INTO games(game_title, cover, release_date, game_description, series, score, developer, publisher) VALUES (:game_title, :cover, :released, :game_description, :series_title, :score, :developer, :publisher);";
 
 	$stmt = $pdo->prepare($query);
 	
 	$stmt->bindParam(":game_title", $game_title);
+	$stmt->bindParam(":cover", $cover);
 	$stmt->bindParam(":released", $released);
 	$stmt->bindParam(":game_description", $game_description);
 	$stmt->bindParam(":series_title", $series_title);

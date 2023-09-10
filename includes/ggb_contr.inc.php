@@ -38,6 +38,10 @@ function get_designers(object $pdo){
 	return get_designers_from_db($pdo);
 }
 
+function get_tags(object $pdo){
+	return get_tags_from_db($pdo);
+}
+
 function is_input_empty(array $inputs){
 	foreach($inputs as $input){
 		if(empty($input)){
@@ -87,11 +91,27 @@ function input_genre(object $pdo, string $genre_name, string $genre_description,
 	set_genre($pdo, $genre_name, $genre_description, $subgenre);
 }
 
-function input_game(object $pdo, string $game_title, string $series_title, string $released, int $developer, int $publisher, array $genre, array $designer, array $platform, int $score, string $game_description){
-	set_game($pdo, $game_title, $series_title, $released, $developer, $publisher, $score, $game_description); 
+function input_game(object $pdo, string $game_title, string $series_title, string $released, int $developer, int $publisher, array $genre, array $designer, array $platform, int $score, string $game_description, array $tags, array $files){
+	if($files[0] != "covers/") {
+		$cover = $files[0];
+	}
+	else{
+		$cover = "NULL";
+	}
+	set_game($pdo, $game_title, $series_title, $released, $developer, $publisher, $score, $game_description, $cover); 
 	$game_id = get_id($pdo, $game_title, "game_title", "games", "game_id");
 	foreach($designer as $d){	if($d != '0') {set_relation($pdo, "dev_people", "person_id", "developer_id", intval($d), $developer);}}
 	foreach($designer as $d){	if($d != '0') {set_relation($pdo, "games_people", "person_id", "game_id", intval($d), $game_id);}}
 	foreach($platform as $p){	if($p != '0') {set_relation($pdo, "games_platform", "platform_id", "game_id", intval($p), $game_id);}}
 	foreach($genre as $g){		if($g != '0') {set_relation($pdo, "games_genre", "genre_id", "game_id", intval($g), $game_id);}}
+	foreach($tags as $t){		if($t != '0') {set_relation($pdo, "games_tags", "tag_id", "game_id", intval($t), $game_id);}}
+	$length = count($files);
+	$i = 1;
+	while($i < $length){
+		if($files[$i] != "screenshots/") {
+			set_screenshot($pdo, $files[$i], $game_id);
+		}
+		$i++;
+	}
+				//if($files[0] != "covers/") {	set_relation()}
 }

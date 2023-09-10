@@ -110,6 +110,21 @@ function designer_select(object $pdo, int $amount){
 	
 	
 }
+
+function tags_select(object $pdo, int $amount){
+	$array = get_tags($pdo);
+	while($amount > 0){
+		echo '<select name="tag'. $amount .'" id="tag">';
+		echo '<option value=0> None </option>'; 
+		foreach($array as $key => $value) { 
+			echo '<option value=' . $key . '>' . $value . "</option>"; 
+		} 
+		echo '</select>';
+		$amount--;
+	}
+	
+	
+}
 	
 /*
 function designer_select(object $pdo){

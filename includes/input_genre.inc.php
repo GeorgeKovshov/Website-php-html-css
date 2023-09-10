@@ -39,7 +39,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 		}	
 				
 		
-
+		if(empty($subgenre)){
+			$subgenre = "1";
+		}
 		input_genre($pdo, $genre_name, $genre_description, $subgenre);
 
 		

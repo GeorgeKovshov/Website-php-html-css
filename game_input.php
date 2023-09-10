@@ -35,24 +35,95 @@ require_once 'includes/ggb_view.inc.php';
 			}*/
 		?>
 		</h3>
-		<form action="game_input.php" method = "post">
-			Change "genre" amount
+		<script>
+			if ( window.history.replaceState ) {
+			window.history.replaceState( null, null, window.location.href );
+			}
+		</script>
+		<form action="./includes/variable_increase.inc.php" method = "post">
+				Change "genre" amount:
 			<?php 
 				if(!isset($_SESSION["genre_amount"])){
 					$_SESSION["genre_amount"] = 1;
 				}
+				if($_SERVER["REQUEST_METHOD"] == "POST"){
+					/////change_session_variable("genre_amount");
+				}
 				
-				change_session_variable("genre_amount");
 				
 				
 			?>	
-			<button name="+"> + </button>
-			<button name="-"> - </button>
+			<button name="+1" style="padding:2px 5px;"> + </button>
+			<button name="-1" style="padding:2px 7px;"> - </button>
+		
+			<br>
+	
+			Change "designers" amount:
+			<?php 
+				if(!isset($_SESSION["designer_amount"])){
+					$_SESSION["designer_amount"] = 1;
+				}
+				if($_SERVER["REQUEST_METHOD"] == "POST"){
+					///change_session_variable("designer_amount");
+
+				}
+				
+				
+			?>	
+			<button name="+2" style="padding:2px 5px;"> + </button>
+			<button name="-2" style="padding:2px 7px;"> - </button>
 								
+				<br>				
+	
+			Change "platforms" amount:
+			<?php 
+				if(!isset($_SESSION["platform_amount"])){
+					$_SESSION["platform_amount"] = 1;
+				}
+				
+				//change_session_variable("platform_amount");
+				
+				
+			?>	
+			<button name="+3" style="padding:2px 5px;"> + </button>
+			<button name="-3" style="padding:2px 7px;"> - </button>
+			<br>
+			Change "screenshots" amount:
+			<?php 
+				if(!isset($_SESSION["image_amount"])){
+					$_SESSION["image_amount"] = 1;
+				}
+				
+				
+				
+				
+			?>	
+			<button name="+4" style="padding:2px 5px;"> + </button>
+			<button name="-4" style="padding:2px 7px;"> - </button>
+		
+			<br>
+			Change "tags" amount:
+			<?php 
+				if(!isset($_SESSION["tags_amount"])){
+					$_SESSION["tags_amount"] = 1;
+				}
+				
+				
+				
+				
+			?>	
+			<button name="+5" style="padding:2px 5px;"> + </button>
+			<button name="-5" style="padding:2px 7px;"> - </button>
+		
+			<br>
+			</form>
 								
-		</form>	
+									
 		<div class="container-input">
-			<form class="form-input" action="includes/input_game.inc.php"method = "post"> 
+			<form class="form-input" action="includes/input_game.inc.php" method = "post" enctype="multipart/form-data"> 
+			
+			
+			
 				<div class="box-input">
 					<div class="form-input" >
 						<div> 
@@ -76,7 +147,7 @@ require_once 'includes/ggb_view.inc.php';
 							
 							<span style="font-size:16px;"> Designers:  
 								<?php 
-								designer_select($pdo,3); 
+								designer_select($pdo,$_SESSION["designer_amount"]); 
 								///designer_select($pdo);
 								//designer_select($pdo);
 								?> 
@@ -88,7 +159,7 @@ require_once 'includes/ggb_view.inc.php';
 							<span style="font-size:16px;"> Platforms: </span> 
 							<form>
 							<?php 
-								echo "<br>"; platform_select($pdo,3); 
+								echo "<br>"; platform_select($pdo,$_SESSION["platform_amount"]); 
 								//echo "<br>"; platform_select($pdo);
 								//echo "<br>"; platform_select($pdo);
 							?>
@@ -102,20 +173,42 @@ require_once 'includes/ggb_view.inc.php';
 							<textarea  name="game_description" placeholder="game_description" rows="4" cols="50">Write a description of the game... </textarea><br>
 							<span style="font-size:16px;"> Tags: </span> 
 							<?php 
-								 //platform_select($pdo); 
+								 echo "<br>"; tags_select($pdo, $_SESSION["tags_amount"]); 
 								 ///platform_select($pdo);
 								 //platform_select($pdo);
 							?>
-							<br><span> Score: <?php score_select(); ?> </span>
-							<button> Submit </button>
+							<br><span> Score: <?php score_select(); ?> </span><button> Submit </button>
+							
 						</div>
+						<div class="box-input" style="width:300px;">
+						
+						
+							<span> Upload Cover:</span> <input type="file" name="cover_image" id="cover_image">
+							<br>
+							<span> Upload Screenshots:</span> 
+							<?php
+							$i = $_SESSION["image_amount"];
+							while($i>0){
+								echo '<input type="file" name="screenshot' . $i .  '" id="screenshot">';
+								$i--;
+							}
+						
+							?>
+						
+							<!-- <span> Upload Cover:</span> <input type="file" name="cover_image" id="cover_image"> -->
+							<br>
+							
+							
+						</div>
+						
+						
 					</div>
 				</div>
-				<div class="box-input">
+				
 					
-				</div>
+				
 			</form>
-		
+		</div>
 		</div> 
 		<div class="container-input">
 			<?php check_input_errors(); ?>
