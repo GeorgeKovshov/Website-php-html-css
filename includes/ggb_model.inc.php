@@ -293,5 +293,43 @@ function set_relation(object $pdo, string $table_name, string $column_one_name, 
 }
 
 
+function get_by_id_from_db(object $pdo, string $table_name, string $column_name, string $column_id, string $id){
+	$query = "SELECT DISTINCT $column_name FROM $table_name WHERE $column_id = :id;";
+	
+	$stmt = $pdo->prepare($query);
+	
+	$stmt->bindParam(":id", $id);
+	
+	$stmt->execute();
+	
+	$result = $stmt->fetchAll();
+	$stmt = null;
+	return $result;
+	
+	
+	
+}
+
+
+function get_game_from_db(object $pdo, string $game_title){
+	$query = "SELECT * FROM games WHERE game_title = :game_title;";
+	
+	$stmt = $pdo->prepare($query);
+	
+	$stmt->bindParam(":game_title", $game_title);
+	
+	$stmt->execute();
+	
+	$result = $stmt->fetch(PDO::FETCH_ASSOC);
+	$stmt = null;
+	return $result;
+	
+	
+	
+}
+	
+	
+
+
 
 

@@ -26,7 +26,23 @@ require_once 'includes/ggb_view.inc.php';
 
 <body>
 		<h3> 
-		<?php
+		<?php 
+				if(!isset($_SESSION["genre_amount"])){
+					$_SESSION["genre_amount"] = 1;
+				}
+				if(!isset($_SESSION["designer_amount"])){
+					$_SESSION["designer_amount"] = 1;
+				}
+				if(!isset($_SESSION["platform_amount"])){
+					$_SESSION["platform_amount"] = 1;
+				}
+				if(!isset($_SESSION["image_amount"])){
+					$_SESSION["image_amount"] = 1;
+				}
+				if(!isset($_SESSION["tags_amount"])){
+					$_SESSION["tags_amount"] = 1;
+				}
+				
 		/*
 			if(isset($_SESSION["user_id"])){
 				echo "You are logged in as " . $_SESSION["user_username"];
@@ -40,83 +56,6 @@ require_once 'includes/ggb_view.inc.php';
 			window.history.replaceState( null, null, window.location.href );
 			}
 		</script>
-		<form action="./includes/variable_increase.inc.php" method = "post">
-				Change "genre" amount:
-			<?php 
-				if(!isset($_SESSION["genre_amount"])){
-					$_SESSION["genre_amount"] = 1;
-				}
-				if($_SERVER["REQUEST_METHOD"] == "POST"){
-					/////change_session_variable("genre_amount");
-				}
-				
-				
-				
-			?>	
-			<button name="+1" style="padding:2px 5px;"> + </button>
-			<button name="-1" style="padding:2px 7px;"> - </button>
-		
-			<br>
-	
-			Change "designers" amount:
-			<?php 
-				if(!isset($_SESSION["designer_amount"])){
-					$_SESSION["designer_amount"] = 1;
-				}
-				if($_SERVER["REQUEST_METHOD"] == "POST"){
-					///change_session_variable("designer_amount");
-
-				}
-				
-				
-			?>	
-			<button name="+2" style="padding:2px 5px;"> + </button>
-			<button name="-2" style="padding:2px 7px;"> - </button>
-								
-				<br>				
-	
-			Change "platforms" amount:
-			<?php 
-				if(!isset($_SESSION["platform_amount"])){
-					$_SESSION["platform_amount"] = 1;
-				}
-				
-				//change_session_variable("platform_amount");
-				
-				
-			?>	
-			<button name="+3" style="padding:2px 5px;"> + </button>
-			<button name="-3" style="padding:2px 7px;"> - </button>
-			<br>
-			Change "screenshots" amount:
-			<?php 
-				if(!isset($_SESSION["image_amount"])){
-					$_SESSION["image_amount"] = 1;
-				}
-				
-				
-				
-				
-			?>	
-			<button name="+4" style="padding:2px 5px;"> + </button>
-			<button name="-4" style="padding:2px 7px;"> - </button>
-		
-			<br>
-			Change "tags" amount:
-			<?php 
-				if(!isset($_SESSION["tags_amount"])){
-					$_SESSION["tags_amount"] = 1;
-				}
-				
-				
-				
-				
-			?>	
-			<button name="+5" style="padding:2px 5px;"> + </button>
-			<button name="-5" style="padding:2px 7px;"> - </button>
-		
-			<br>
-			</form>
 								
 									
 		<div class="container-input">
@@ -130,7 +69,7 @@ require_once 'includes/ggb_view.inc.php';
 							<h3> Input a game</h3>
 							<input type="text" name="game_title" placeholder="Game title"> 
 							<input type="text" name="series_title" placeholder="Series"><br>
-							<span style="font-size:16px;"> Date of Release: </span> <br> <input type="date" name="released">
+							<span style="font-size:16px;"> Date of Release: </span> <br> <input type="date" name="released"> <br>
 							<span style="font-size:16px;"> Developer: </span> <?php company_select($pdo, 1); ?><br>
 							<span style="font-size:16px;"> Publisher: </span> <?php company_select($pdo, 2); ?><br>
 							
@@ -208,6 +147,42 @@ require_once 'includes/ggb_view.inc.php';
 					
 				
 			</form>
+			
+			<form action="./includes/variable_increase.inc.php" style="width: 300px" method = "post">
+			<br>
+				Change "genre" amount:
+			
+			<button name="+1" style="padding:2px 5px;"> + </button>
+			<button name="-1" style="padding:2px 7px;"> - </button>
+		
+			<br>
+	
+			Change "designers" amount:
+				
+			<button name="+2" style="padding:2px 5px;"> + </button>
+			<button name="-2" style="padding:2px 7px;"> - </button>
+								
+				<br>				
+	
+			Change "platforms" amount:
+				
+			<button name="+3" style="padding:2px 5px;"> + </button>
+			<button name="-3" style="padding:2px 7px;"> - </button>
+			<br>
+			Change "screenshots" amount:
+			
+			<button name="+4" style="padding:2px 5px;"> + </button>
+			<button name="-4" style="padding:2px 7px;"> - </button>
+		
+			<br>
+			Change "tags" amount:
+			
+			<button name="+5" style="padding:2px 5px;"> + </button>
+			<button name="-5" style="padding:2px 7px;"> - </button>
+		
+			<br>
+			</form>
+			
 		</div>
 		</div> 
 		<div class="container-input">

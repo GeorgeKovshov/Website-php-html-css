@@ -42,6 +42,27 @@ function get_tags(object $pdo){
 	return get_tags_from_db($pdo);
 }
 
+
+function get_game(object $pdo, string $name){
+	$result = get_game_from_db($pdo, $name);
+	//$tmpo = get_by_id_from_db($pdo, "developer", "title", "developer_id", $result["developer"]);
+	///foreach($tmpo as $key=>$value){
+	//	$result["developer"] = $value;
+	///}
+	$result["developer"] = get_by_id_from_db($pdo, "developer", "title", "developer_id", $result["developer"])["0"]["title"];
+	
+	$genres_id = get_by_id_from_db($pdo, "games_genre", "genre_id", "game_id", $result["game_id"]);
+	$tmpo2 = array();
+	foreach($genres_id as $tmp){
+		array_push($tmpo2, get_by_id_from_db($pdo, "genre", "genre_name", "genre_id", $tmp["genre_id"])["0"]["genre_name"]);
+	}
+	$result["genres"] = $tmpo2;
+	return $result;
+	}
+
+
+
+
 function is_input_empty(array $inputs){
 	foreach($inputs as $input){
 		if(empty($input)){

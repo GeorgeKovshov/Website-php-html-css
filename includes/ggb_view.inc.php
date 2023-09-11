@@ -212,3 +212,8 @@ function company_inputs(object $pdo){
 	echo '<label for="closed" style="font-size:16px;" >*leave empty if not closed</label><br>';
 
 }
+
+
+
+
+
