@@ -44,7 +44,7 @@ require_once 'includes/ggb_view.inc.php';
 					<input type="text" name="full_name" placeholder="Full name"><br>
 					<span style="font-size:16px;"> Country: </span> <?php nations_select($pdo); ?><br>
 					
-					<input type="date" name="created" placeholder="Birthday"><br>
+					<input type="date" name="birthday" placeholder="Birthday"><br>
 					<input type="radio" name="gender" id="gender" value="Male" />
 					<label for="gender" style="font-size:16px;" >Male</label><br>
 

@@ -137,8 +137,101 @@ function designer_select(object $pdo){
 	} 
 	echo '</select>';
 	
-	
 }*/
+
+
+function print_array(array $arr){
+	$i = 0;
+	foreach($arr as $tmp){
+		//print_r($tmp);
+		if($i != 0){
+			echo ", "; 
+		}
+		echo $tmp;
+		$i++;
+		
+	}
+}
+
+function show_screenshots(array $arr){
+	$i = 0;
+	foreach($arr as $tmp){
+		//print_r($tmp);
+		if($i != 0) {
+			echo '<img height="400" style="white-space: nowrap; padding-bottom: 1em;" src="includes/'. $tmp["screenshot_path"] . '" alt="a really informative image"/>';
+		}
+		$i++;
+		
+	}
+}
+
+function show_description(string $game_desc){
+	$handle = fopen('includes/' . $game_desc, "r");
+	if ($handle) {
+		while (($line = fgets($handle)) !== false) {
+			echo $line;
+			echo "<br> <br>";
+			// process the line read.
+		}
+
+		fclose($handle);
+	}
+	
+}
+
+
+function screenshot_helper(string $scr){
+	echo "<div>";
+		echo '<img height="400" style="white-space: nowrap; padding-bottom: 1em;" src="includes/'. $scr . '" alt="a really informative image"/>';
+	echo "</div>";
+	
+}
+
+function description_helper(string $line){
+	echo "<div style='width: 70%;'>";
+			echo "<span class='vertical-center'>" . $line . "</span>";
+	echo "</div>";
+}
+
+function show_screenshots_description(array $arr, string $game_desc){
+	$handle = fopen('includes/' . $game_desc, "r");
+	$length = count($arr);
+	$i = 0;
+	while($i < $length && $handle && (($line = fgets($handle)) !== false)){
+		if($i % 2 == 0){
+			screenshot_helper($arr[$i]["screenshot_path"] );
+			description_helper($line);
+		}
+		else {
+			description_helper($line);
+			screenshot_helper($arr[$i]["screenshot_path"] );
+		}
+		$i++;
+		
+	}
+	if ($handle) {
+		echo "<div style='width: 50%;'>";
+		while (($line = fgets($handle)) !== false) {
+			echo $line;
+			echo "<br> <br>";
+			// process the line read.
+		}
+		echo "</div>";
+		fclose($handle);
+	}
+	
+	if($i<$length){
+		echo "<div>";
+		while($i < $length){
+			echo '<img height="400" style="white-space: nowrap; padding-bottom: 1em;" src="includes/'. $arr[$i]["screenshot_path"] . '" alt="a really informative image"/>';
+			$i++;
+		}
+		echo "</div>";
+	}
+	
+}
+
+
 
 function check_input_errors(){
 	if(isset($_SESSION["errors_input"])){

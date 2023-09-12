@@ -302,13 +302,15 @@ function get_by_id_from_db(object $pdo, string $table_name, string $column_name,
 	
 	$stmt->execute();
 	
-	$result = $stmt->fetchAll();
+	$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	$stmt = null;
 	return $result;
 	
 	
 	
 }
+
+
 
 
 function get_game_from_db(object $pdo, string $game_title){

@@ -57,6 +57,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 		
 		// ERROR HANDLERS
 		$errors = [];
+		
+		$filename ='game_descriptions/' . $game_title . '_desc.txt';
+		if(!file_put_contents($filename, $game_description)){
+			$errors["failed_description"] = "Failed to upload description!";
+		}
+		
+		
+		
 		/*$j = 1;
 		foreach($tags as $value){
 				$errors["platform" . $j] = "platfofffff" . $j . ": " . $value;
@@ -140,7 +148,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 			
 		}
 		
-
+		
+		
+		
+		
 		require_once "config_session.inc.php";
 		
 		
@@ -156,7 +167,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 				
 		
 
-		input_game($pdo, $game_title, $series_title, $released, $developer, $publisher, $genre, $designer, $platform, $score, $game_description, $tags, $files);
+		input_game($pdo, $game_title, $series_title, $released, $developer, $publisher, $genre, $designer, $platform, $score, $filename, $tags, $files);
 
 		
 		$pdo = null;

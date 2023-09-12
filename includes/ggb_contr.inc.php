@@ -43,6 +43,22 @@ function get_tags(object $pdo){
 }
 
 
+
+function get_game_helper(object $pdo, array $id_numbers, string $table_name, string $column_name, string $column_id){
+	$tmpo2 = array();
+	foreach($id_numbers as $tmp){
+		if($column_id == "people_id"){
+			array_push($tmpo2, get_by_id_from_db($pdo, $table_name, $column_name, $column_id, $tmp["person_id"])["0"][$column_name]);
+		}
+		else{
+			array_push($tmpo2, get_by_id_from_db($pdo, $table_name, $column_name, $column_id, $tmp[$column_id])["0"][$column_name]);
+		}
+	}
+	return $tmpo2;
+	
+}
+
+
 function get_game(object $pdo, string $name){
 	$result = get_game_from_db($pdo, $name);
 	//$tmpo = get_by_id_from_db($pdo, "developer", "title", "developer_id", $result["developer"]);
@@ -50,13 +66,22 @@ function get_game(object $pdo, string $name){
 	//	$result["developer"] = $value;
 	///}
 	$result["developer"] = get_by_id_from_db($pdo, "developer", "title", "developer_id", $result["developer"])["0"]["title"];
+	$result["publisher"] = get_by_id_from_db($pdo, "publisher", "title", "publisher_id", $result["publisher"])["0"]["title"];
 	
+	//get genres
 	$genres_id = get_by_id_from_db($pdo, "games_genre", "genre_id", "game_id", $result["game_id"]);
-	$tmpo2 = array();
-	foreach($genres_id as $tmp){
-		array_push($tmpo2, get_by_id_from_db($pdo, "genre", "genre_name", "genre_id", $tmp["genre_id"])["0"]["genre_name"]);
-	}
-	$result["genres"] = $tmpo2;
+	$result["genres"] = array_reverse(get_game_helper($pdo, $genres_id, "genre", "genre_name", "genre_id"));
+	//get platform
+	$platforms_id = get_by_id_from_db($pdo, "games_platform", "platform_id", "game_id", $result["game_id"]);
+	$result["platforms"] = array_reverse(get_game_helper($pdo, $platforms_id, "platform", "platform_name", "platform_id"));
+	//get designers
+	$designers_id = get_by_id_from_db($pdo, "games_people", "person_id", "game_id", $result["game_id"]);
+	$result["designers"] = array_reverse(get_game_helper($pdo, $designers_id, "people", "full_name", "people_id"));
+	//get screenshots
+	$result["screenshots"] = array_reverse(get_by_id_from_db($pdo, "screenshots", "screenshot_path", "game_id", $result["game_id"]));
+	//$designers_id = get_by_id_from_db($pdo, "games_people", "person_id", "game_id", $result["game_id"]);
+	//$result["screenshots"] = get_game_helper($pdo, $screenshots, "people", "full_name", "people_id");
+	
 	return $result;
 	}
 
@@ -109,6 +134,9 @@ function input_platform(object $pdo, string $platform_name, int $company, int $g
 }
 
 function input_genre(object $pdo, string $genre_name, string $genre_description, int $subgenre){
+	//create description file
+	
+	
 	set_genre($pdo, $genre_name, $genre_description, $subgenre);
 }
 
@@ -119,6 +147,7 @@ function input_game(object $pdo, string $game_title, string $series_title, strin
 	else{
 		$cover = "NULL";
 	}
+	
 	set_game($pdo, $game_title, $series_title, $released, $developer, $publisher, $score, $game_description, $cover); 
 	$game_id = get_id($pdo, $game_title, "game_title", "games", "game_id");
 	foreach($designer as $d){	if($d != '0') {set_relation($pdo, "dev_people", "person_id", "developer_id", intval($d), $developer);}}

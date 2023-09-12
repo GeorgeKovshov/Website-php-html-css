@@ -24,34 +24,65 @@ require_once 'includes/ggb_view.inc.php';
 	<body>
 		
 		<div class="container">
-			<div class="box-1">
-				<?php  
-					$result = get_game($pdo, "Metal Gear Solid");
+		<?php  
+					$gamess = ["Earthworm Jim", "Metal Gear Solid"];
+					foreach($gamess as $gam){
+						
+					$result = get_game($pdo, $gam);
 				
 				?>
+			<div class="box-1" style="justify-content: center;">
 				
 				
-				<img height="500" src="includes/<?php echo $result["cover"]; ?>" alt="a really informative image"/>
 				<div>
-					<h1><?php echo $result["game_title"]; ?></h1>
-					<p><?php echo "Released: " . $result["release_date"]; ?></p>
-					<p><?php echo "Developer: " . $result["developer"];?></p>
-					<p>Genres:
-					<?php 
-						foreach($result["genres"] as $tmp){
-							//print_r($tmp);
-							echo $tmp . "; "; 
-						}
-						
-					?></p>
-					
-					
-					<p><?php echo htmlspecialchars($result["game_description"]); ?></p>
+					<img height="500" src="includes/<?php echo $result["cover"]; ?>" alt="a really informative image"/><br>
 				</div>
+				
+				<div class="box-input">
+					<h1><?php echo $result["game_title"]; ?></h1>
+					<p>	
+						Platforms: <?php print_array($result["platforms"]);?>
+					</p>
+					<p>	
+						Genres: <?php print_array($result["genres"]);?>
+					</p>
+					
+					<p><?php echo "Released: " . $result["release_date"]; ?></p>
+					<p>	
+						Designers: <?php print_array($result["designers"]);?>
+					</p>
+					<p><?php echo "Developer: " . $result["developer"];?></p>
+					<p><?php echo "Publisher: " . $result["publisher"];?></p>
+					
+					
+					
+				</div>	
+				
+				<?php //show_screenshots_description($result["screenshots"], $result["game_description"]); ?>
+				<div>
+					<img height="400" src="includes/<?php echo $result["screenshots"][0]["screenshot_path"]?>" alt="a really informative image"/><br>
+				</div>
+				<div>
+					
+					<p><?php show_description($result["game_description"]); echo "<br>"; ?></p>
+					
+					<p><?php echo "My score: " . $result["score"] . "/10";?></p>
+
+				</div>
+				
+				
+					<?php show_screenshots($result["screenshots"]); ?>
+				
+				
+				<div>	
+
+				</div>
+				
+				
 							
 				
 			</div>
-			
+					<?php } ?>
 		</div>
 		
 	</body>
