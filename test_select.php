@@ -25,7 +25,7 @@ require_once 'includes/ggb_view.inc.php';
 		
 		<div class="container">
 		<?php  
-					$gamess = ["Earthworm Jim", "Metal Gear Solid"];
+					$gamess = ["Phantasmagoria 2: A Puzzle of Flesh", "Metal Gear Solid", "Earthworm Jim"];
 					foreach($gamess as $gam){
 						
 					$result = get_game($pdo, $gam);
@@ -35,7 +35,7 @@ require_once 'includes/ggb_view.inc.php';
 				
 				
 				<div>
-					<img height="500" src="includes/<?php echo $result["cover"]; ?>" alt="a really informative image"/><br>
+					<img width="550" src="includes/<?php echo $result["cover"]; ?>" alt="a really informative image"/><br>
 				</div>
 				
 				<div class="box-input">
@@ -50,6 +50,7 @@ require_once 'includes/ggb_view.inc.php';
 					<p><?php echo "Released: " . $result["release_date"]; ?></p>
 					<p>	
 						Designers: <?php print_array($result["designers"]);?>
+						Professions: <?php //print_array($result["professions"]);?>
 					</p>
 					<p><?php echo "Developer: " . $result["developer"];?></p>
 					<p><?php echo "Publisher: " . $result["publisher"];?></p>
@@ -64,7 +65,7 @@ require_once 'includes/ggb_view.inc.php';
 				</div>
 				<div>
 					
-					<p><?php show_description($result["game_description"]); echo "<br>"; ?></p>
+					<p><?php show_description($result["game_description"]); ?></p>
 					
 					<p><?php echo "My score: " . $result["score"] . "/10";?></p>
 

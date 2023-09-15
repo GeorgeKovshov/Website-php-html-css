@@ -21,7 +21,7 @@ function nations_select(object $pdo){
 
 
 function generation_select(){
-	$array = ["First","Second","Third","Fourth","Fifth","Sixth","Seventth","Eigths","Ninth"];
+	$array = ["First","Second","Third","Fourth","Fifth","Sixth","Seventth","Eigths","Ninth", "PC"];
 	
 	echo '<select name="generation" id="generation">';
 	$i=1;
@@ -98,13 +98,29 @@ function platform_select(object $pdo, int $amount){
 
 function designer_select(object $pdo, int $amount){
 	$array = get_designers($pdo);
+
 	while($amount > 0){
 		echo '<select name="designer' . $amount . '" id="designer">';
 		echo '<option value=0> Empty </option>'; 
 		foreach($array as $key => $value) { 
 			echo '<option value=' . $key . '>' . $value . "</option>"; 
 		} 
-		echo '</select>';
+		echo '</select> <br>';
+		$amount--;
+	}
+	
+	
+}
+function profession_select(object $pdo, int $amount){
+	$array2 = get_professions($pdo);
+	
+	while($amount > 0){
+		echo '<select name="profession' . $amount . '" id="profession">';
+		echo '<option value=0> Empty </option>'; 
+		foreach($array2 as $key => $value) { 
+			echo '<option value=' . $key . '>' . $value . "</option>"; 
+		} 
+		echo '</select><br>';
 		$amount--;
 	}
 	
@@ -141,6 +157,9 @@ function designer_select(object $pdo){
 
 
 function print_array(array $arr){
+	if (empty($arr)){
+		return;
+	}
 	$i = 0;
 	foreach($arr as $tmp){
 		//print_r($tmp);

@@ -37,6 +37,9 @@ function get_platforms(object $pdo){
 function get_designers(object $pdo){
 	return get_designers_from_db($pdo);
 }
+function get_professions(object $pdo){
+	return get_professions_from_db($pdo);
+}
 
 function get_tags(object $pdo){
 	return get_tags_from_db($pdo);
@@ -77,6 +80,8 @@ function get_game(object $pdo, string $name){
 	//get designers
 	$designers_id = get_by_id_from_db($pdo, "games_people", "person_id", "game_id", $result["game_id"]);
 	$result["designers"] = array_reverse(get_game_helper($pdo, $designers_id, "people", "full_name", "people_id"));
+
+	
 	//get screenshots
 	$result["screenshots"] = array_reverse(get_by_id_from_db($pdo, "screenshots", "screenshot_path", "game_id", $result["game_id"]));
 	//$designers_id = get_by_id_from_db($pdo, "games_people", "person_id", "game_id", $result["game_id"]);
@@ -134,13 +139,19 @@ function input_platform(object $pdo, string $platform_name, int $company, int $g
 }
 
 function input_genre(object $pdo, string $genre_name, string $genre_description, int $subgenre){
-	//create description file
-	
-	
 	set_genre($pdo, $genre_name, $genre_description, $subgenre);
 }
 
-function input_game(object $pdo, string $game_title, string $series_title, string $released, int $developer, int $publisher, array $genre, array $designer, array $platform, int $score, string $game_description, array $tags, array $files){
+function input_profession(object $pdo, string $title, string $profession_description){
+	set_profession($pdo, $title, $profession_description);
+}
+
+function input_tag(object $pdo, string $tag_title){
+	set_tag($pdo, $tag_title);
+}
+
+
+function input_game(object $pdo, string $game_title, string $series_title, string $released, int $developer, int $publisher, array $genre, array $designer, array $profession, array $platform, int $score, string $game_description, array $tags, array $files){
 	if($files[0] != "covers/") {
 		$cover = $files[0];
 	}
@@ -151,10 +162,16 @@ function input_game(object $pdo, string $game_title, string $series_title, strin
 	set_game($pdo, $game_title, $series_title, $released, $developer, $publisher, $score, $game_description, $cover); 
 	$game_id = get_id($pdo, $game_title, "game_title", "games", "game_id");
 	foreach($designer as $d){	if($d != '0') {set_relation($pdo, "dev_people", "person_id", "developer_id", intval($d), $developer);}}
-	foreach($designer as $d){	if($d != '0') {set_relation($pdo, "games_people", "person_id", "game_id", intval($d), $game_id);}}
 	foreach($platform as $p){	if($p != '0') {set_relation($pdo, "games_platform", "platform_id", "game_id", intval($p), $game_id);}}
 	foreach($genre as $g){		if($g != '0') {set_relation($pdo, "games_genre", "genre_id", "game_id", intval($g), $game_id);}}
 	foreach($tags as $t){		if($t != '0') {set_relation($pdo, "games_tags", "tag_id", "game_id", intval($t), $game_id);}}
+	$j = 0;
+	foreach($designer as $d){
+		if($d != '0') {
+			set_relation_more($pdo, "games_people", "person_id", "game_id", "profession_id", intval($d), $game_id, intval($profession[$j]));
+		}
+		$j++;
+	}
 	$length = count($files);
 	$i = 1;
 	while($i < $length){

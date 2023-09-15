@@ -1,0 +1,2 @@
+Generally: Adventure game, which you control with the mouse. 
+More specifically: an adventure game without a text parser.

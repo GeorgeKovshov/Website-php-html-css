@@ -84,7 +84,7 @@ require_once 'includes/ggb_view.inc.php';
 									//echo "<br>"; genre_select($pdo);
 								?>
 							
-							<span style="font-size:16px;"> Designers:  
+							<span style="font-size:16px;"> Designers  -> 
 								<?php 
 								designer_select($pdo,$_SESSION["designer_amount"]); 
 								///designer_select($pdo);
@@ -96,13 +96,20 @@ require_once 'includes/ggb_view.inc.php';
 						<div>
 							<br> 
 							<span style="font-size:16px;"> Platforms: </span> 
-							<form>
+							
 							<?php 
 								echo "<br>"; platform_select($pdo,$_SESSION["platform_amount"]); 
 								//echo "<br>"; platform_select($pdo);
 								//echo "<br>"; platform_select($pdo);
 							?>
-							</form>
+							<span style="font-size:16px;">  Roles: <br>
+								<?php 
+								profession_select($pdo,$_SESSION["designer_amount"]); 
+								///designer_select($pdo);
+								//designer_select($pdo);
+								?> 
+							</span><br>
+							
 						
 						</div>
 						

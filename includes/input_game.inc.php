@@ -14,6 +14,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 	
 	$genre = [];
 	$designer = [];
+	$profession = [];
 	$platform = [];
 	$tags = [];
 	$screenshots = [];
@@ -25,6 +26,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 	$i = 1;
 	while(isset($_POST['designer' . $i])){
 		array_push($designer, $_POST['designer' . $i]);
+		$i++;
+	}
+	$i = 1;
+	while(isset($_POST['profession' . $i])){
+		array_push($profession, $_POST['profession' . $i]);
 		$i++;
 	}
 	$i = 1;
@@ -167,7 +173,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 				
 		
 
-		input_game($pdo, $game_title, $series_title, $released, $developer, $publisher, $genre, $designer, $platform, $score, $filename, $tags, $files);
+		input_game($pdo, $game_title, $series_title, $released, $developer, $publisher, $genre, $designer, $profession, $platform, $score, $filename, $tags, $files);
 
 		
 		$pdo = null;

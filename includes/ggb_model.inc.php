@@ -105,6 +105,20 @@ function get_designers_from_db(object $pdo) {
 	return $result;
 }
 
+function get_professions_from_db(object $pdo) {
+	$query = "SELECT profession_id, title FROM profession";
+	$stmt = $pdo->prepare($query);
+	$stmt->execute();
+	$result = array();
+	$i = 1;
+	while ($data = $stmt->fetch(PDO::FETCH_ASSOC))
+	{
+		$result[$data["profession_id"]] = $data["title"];
+	}
+	$stmt = null;
+	return $result;
+}
+
 function get_tags_from_db(object $pdo) {
 	$query = "SELECT tag_id, tag_title FROM tags;";
 	$stmt = $pdo->prepare($query);
@@ -224,6 +238,33 @@ function set_genre(object $pdo, string $genre_name, string $genre_description, i
 	
 }
 
+function set_profession(object $pdo, string $title, string $profession_description){
+	$query = "INSERT INTO profession (title, profession_description) VALUES (:title, :profession_description);";
+	
+	$stmt = $pdo->prepare($query);
+	
+	$stmt->bindParam(":title", $title);
+	$stmt->bindParam(":profession_description", $profession_description);
+
+	
+	$stmt->execute();
+	$stmt = null;
+	
+}
+
+function set_tag(object $pdo, string $tag_title){
+	$query = "INSERT INTO tags (tag_title) VALUES (:tag_title);";
+	
+	$stmt = $pdo->prepare($query);
+	
+	$stmt->bindParam(":tag_title", $tag_title);
+
+	
+	$stmt->execute();
+	$stmt = null;
+	
+}
+
 function set_screenshot(object $pdo, string $screenshot_path, int $game_id){
 	$sql = "INSERT INTO screenshots(screenshot_path, game_id) VALUES (:filename, :game_id)";
 		
@@ -292,6 +333,32 @@ function set_relation(object $pdo, string $table_name, string $column_one_name, 
 	
 }
 
+function set_relation_more(object $pdo, string $table_name, string $column_one_name, string $column_two_name, string $column_three_name, int $column_one_value, int $column_two_value, int $column_three_value){
+	if(!check_relation_exists($pdo, $table_name, $column_one_name, $column_two_name, $column_one_value, $column_two_value)){
+		if($column_three_value == "0") {
+			$query = "INSERT INTO $table_name ($column_one_name, $column_two_name, $column_three_name) VALUES (:column_one_value, :column_two_value, NULL);";
+			$stmt = $pdo->prepare($query);
+		}
+		else{
+			$query = "INSERT INTO $table_name ($column_one_name, $column_two_name, $column_three_name) VALUES (:column_one_value, :column_two_value, :column_three_value);";
+			$stmt = $pdo->prepare($query);
+			$stmt->bindParam(":column_three_value", $column_three_value);
+		}
+		//$query = "INSERT INTO $table_name ($column_one_name, $column_two_name, $column_three_name) VALUES (:column_one_value, :column_two_value, :column_three_value);";
+
+		//$stmt = $pdo->prepare($query);
+		
+		$stmt->bindParam(":column_one_value", $column_one_value);
+		$stmt->bindParam(":column_two_value", $column_two_value);
+		//$stmt->bindParam(":column_three_value", $column_three_value);
+		
+		$stmt->execute();
+		$stmt = null;
+	}
+	
+	
+}
+
 
 function get_by_id_from_db(object $pdo, string $table_name, string $column_name, string $column_id, string $id){
 	$query = "SELECT DISTINCT $column_name FROM $table_name WHERE $column_id = :id;";
@@ -309,8 +376,6 @@ function get_by_id_from_db(object $pdo, string $table_name, string $column_name,
 	
 	
 }
-
-
 
 
 function get_game_from_db(object $pdo, string $game_title){

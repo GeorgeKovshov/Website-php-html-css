@@ -129,7 +129,27 @@ require_once 'includes/ggb_view.inc.php';
 				</form>
 			</div>
 			
+			<div class="box-input">
+				<h3> Input a profession</h3>
+				<form action="includes/input_profession.inc.php" method = "post">
+					<input type="text" name="title" placeholder="Profession title"><br>
+					
+					<textarea name="profession_description" placeholder="profession_description" rows="4" cols="50">Write a description of the genre... </textarea><br>
+					
+					<button> Submit </button>
+				</form>
+			</div>
 			
+			<div class="box-input">
+				<h3> Input a tag</h3>
+				<form action="includes/input_tag.inc.php" method = "post">
+					<input type="text" name="tag_title" placeholder="Enter a #tag"><br>
+					
+					
+					
+					<button> Submit </button>
+				</form>
+			</div>
 		
 		
 		
