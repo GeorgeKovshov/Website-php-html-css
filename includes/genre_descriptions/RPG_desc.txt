@@ -1,0 +1,5 @@
+In video games, "Role-playing" means customization of the playable character's abilities. It usually involves inventory, RPG, leveling and/or quest systems of mechanics. The challenge is in creating as capable a character as to be able to overcome the gameplay obstacles.
+Inventory system – a gameplay feature that allows the player to gather beneficial items and store them to their timely usage. Some items can be “equipped” to grant a permanent boost to character’s abilities. 
+RPG system (thus named for being inherently related to the genre) – gameplay feature that allows customization of character’s abilities. It is only necessary to separate RPG as a genre and its system because RPG gameplay could be achieved without it, as long as the game still allows a degree of customization via other features (like inventory or questing).
+Leveling – gameplay ability to improve the character’s abilities over the play-through.
+Questing – in-game objectives, completion of which gives rewards and/or progresse the game.

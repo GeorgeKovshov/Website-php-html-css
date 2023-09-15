@@ -25,6 +25,11 @@ require_once 'includes/ggb_view.inc.php';
 </head>
 
 <body>
+		<?php 
+				if(!isset($_SESSION["subgenre_amount"])){
+					$_SESSION["subgenre_amount"] = 1;
+				}
+		?>
 		<h3> 
 		<?php
 		/*
@@ -119,8 +124,8 @@ require_once 'includes/ggb_view.inc.php';
 			<div class="box-input">
 				<h3> Input a genre</h3>
 				<form action="includes/input_genre.inc.php" method = "post">
-					<input type="text" name="genre_name" placeholder="Name of the Genre"><br>
-					<span style="font-size:16px;"> Subgenre of: </span> <?php genre_select($pdo,1); ?><br>
+					<input type="text" name="genre_name" placeholder="Name of the Genre">
+					<span style="font-size:16px;"> Subgenre of: </span> <?php genre_select($pdo,$_SESSION["subgenre_amount"]); ?><br>
 					
 					<textarea name="genre_description" placeholder="genre_description" rows="4" cols="50">Write a description of the genre... </textarea><br>
 					
@@ -151,7 +156,16 @@ require_once 'includes/ggb_view.inc.php';
 				</form>
 			</div>
 		
+		<form action="./includes/variable_increase_small.inc.php" style="width: 300px" method = "post">
+			<br>
+				Change "subgenre" amount:
+			
+			<button name="+1" style="padding:2px 5px;"> + </button>
+			<button name="-1" style="padding:2px 7px;"> - </button>
 		
+			<br>
+	
+		</form>
 		
 		
 		

@@ -1,0 +1,5 @@
+A subgenre of action/adventure. Like its parent, it is structured like an adventure game (with puzzles gating progress) with action situations spread across your path from puzzle to puzzle. The unique features of Survival Horror include: 
+1) limited controls (to motivate the player to avoid combat and make him feel weak), 
+2) infrequent saving mechanics (to make the player afraid of dying), 
+3) limited resources with the inventory management (hence the “survival” part of the name”)
+4) horror atmosphere to contextualize the gameplay mechanics (hence the “horror” part).

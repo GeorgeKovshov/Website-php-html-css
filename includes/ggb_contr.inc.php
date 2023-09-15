@@ -45,6 +45,10 @@ function get_tags(object $pdo){
 	return get_tags_from_db($pdo);
 }
 
+function get_games(object $pdo){
+	return get_games_from_db($pdo);
+}
+
 
 
 function get_game_helper(object $pdo, array $id_numbers, string $table_name, string $column_name, string $column_id){
@@ -59,6 +63,18 @@ function get_game_helper(object $pdo, array $id_numbers, string $table_name, str
 	}
 	return $tmpo2;
 	
+}
+
+function sort_designer_professions(array $des_pro){
+	$result = array();
+	foreach($des_pro as $key => $value){
+		if (!isset($result[$value["full_name"]])){
+			$result[$value["full_name"]] = array();
+		}
+		array_push($result[$value["full_name"]], $value["title"]);
+	}
+	
+	return $result;
 }
 
 
@@ -78,9 +94,14 @@ function get_game(object $pdo, string $name){
 	$platforms_id = get_by_id_from_db($pdo, "games_platform", "platform_id", "game_id", $result["game_id"]);
 	$result["platforms"] = array_reverse(get_game_helper($pdo, $platforms_id, "platform", "platform_name", "platform_id"));
 	//get designers
-	$designers_id = get_by_id_from_db($pdo, "games_people", "person_id", "game_id", $result["game_id"]);
-	$result["designers"] = array_reverse(get_game_helper($pdo, $designers_id, "people", "full_name", "people_id"));
-
+	///$designers_id = get_by_id_from_db($pdo, "games_people", "person_id", "game_id", $result["game_id"]);
+	///$result["designers"] = array_reverse(get_game_helper($pdo, $designers_id, "people", "full_name", "people_id"));
+	//get tags
+	$tags_id = get_by_id_from_db($pdo, "games_tags", "tag_id", "game_id", $result["game_id"]);
+	$result["tags"] = array_reverse(get_game_helper($pdo, $tags_id, "tags", "tag_title", "tag_id"));
+	
+	$tmp = get_developer_profession_from_db($pdo, intval($result["game_id"]));
+	$result["des_pro"] = sort_designer_professions($tmp);
 	
 	//get screenshots
 	$result["screenshots"] = array_reverse(get_by_id_from_db($pdo, "screenshots", "screenshot_path", "game_id", $result["game_id"]));
@@ -138,8 +159,11 @@ function input_platform(object $pdo, string $platform_name, int $company, int $g
 	
 }
 
-function input_genre(object $pdo, string $genre_name, string $genre_description, int $subgenre){
-	set_genre($pdo, $genre_name, $genre_description, $subgenre);
+function input_genre(object $pdo, string $genre_name, string $genre_description, array $subgenre){
+	
+	set_genre($pdo, $genre_name, $genre_description);
+	$genre_id = get_id($pdo, $genre_name, "genre_name", "genre", "genre_id");
+	foreach($subgenre as $g){	if($g != '0') {set_relation($pdo, "subgenre_relation", "genre_id", "subgenre_id", intval($g), $genre_id);}}
 }
 
 function input_profession(object $pdo, string $title, string $profession_description){

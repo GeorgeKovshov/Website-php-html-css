@@ -76,11 +76,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 				$errors["platform" . $j] = "platfofffff" . $j . ": " . $value;
 				$j++;
 			}*/
-		$arr = [$game_title, $series_title, $released, $developer, $publisher, $genre, $platform, $score];
-		if(is_zero_input($platform) || is_zero_input($designer) || is_zero_input($genre)){
+		$arr = [$game_title, $released, $developer, $publisher, $genre, $platform, $score];
+		if(is_zero_input($platform) || is_zero_input($genre)){
 			
 			
-			$errors["zero_input"] = "Select at least one designer, genre and platform! ";
+			$errors["zero_input"] = "Select at least one genre and platform! ";
 		}
 		
 		if(is_zero_input([$developer]) || is_zero_input([$publisher])){
@@ -97,7 +97,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 			
 		}
 		
+		require_once "config_session.inc.php";
 		
+		if($errors){
+			$_SESSION["errors_input"] = $errors;
+			//storing correct info to fill in when reset
+
+			
+			$pdo = null;
+			header("Location: ../game_input.php");
+			die();
+		}	
 		
 		//IMAGES ERROR HANDLING
 		
@@ -121,7 +131,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 			}
 				
 			// Check file size
-			if ($_FILES[$file_name]["size"] > 1000000) {
+			if ($_FILES[$file_name]["size"] > 5000000) {
 				$errors["image_too_big"] = "Image is too big!";
 			}
 			// Check if image file is a actual image or fake image
@@ -144,6 +154,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 			  $errors["wrong_file_extension"] = "Only JPG, JPEG, PNG, WEBP & GIF files are allowed!";
 			}
 			
+			if($errors){
+				$_SESSION["errors_input"] = $errors;
+				//storing correct info to fill in when reset
+
+				
+				$pdo = null;
+				header("Location: ../game_input.php");
+				die();
+			}	
+			
 			if (move_uploaded_file($_FILES[$file_name]["tmp_name"], $target_file)) {
 				//echo "The file has been uploaded.";
 			} else {
@@ -158,7 +178,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 		
 		
 		
-		require_once "config_session.inc.php";
 		
 		
 		if($errors){

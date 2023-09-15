@@ -14,7 +14,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 		// ERROR HANDLERS
 		$errors = [];
 		
-		$arr = [$full_name, $nationality, $birthday, $gender];
+		$arr = [$full_name, $nationality, $gender];
 		if(is_input_empty($arr)){
 			$errors["empty_input"] = "Fill in all fields!";
 		}
@@ -23,6 +23,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 		
 		if(is_name_taken($pdo, $full_name, "full_name", "people" )){
 			$errors["full_name_taken"] = "This person was already added!";
+		}
+		if(empty($_POST["birthday"])){
+			$birthday = "Unknown";
 		}
 		
 		

@@ -3,7 +3,13 @@
 if($_SERVER["REQUEST_METHOD"] == "POST"){
 	$genre_name = $_POST["genre_name"];
 	$genre_description = $_POST["genre_description"];
-	$subgenre= $_POST["subgenre1"];
+	$subgenre= array();
+	
+	$i = 1;
+	while(isset($_POST['subgenre' . $i])){
+		array_push($subgenre, $_POST['subgenre' . $i]);
+		$i++;
+	}
 
 	try{
 		require_once "./dbh_games.inc.php";

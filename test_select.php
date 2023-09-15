@@ -24,8 +24,9 @@ require_once 'includes/ggb_view.inc.php';
 	<body>
 		
 		<div class="container">
-		<?php  
-					$gamess = ["Phantasmagoria 2: A Puzzle of Flesh", "Metal Gear Solid", "Earthworm Jim"];
+		<?php  		
+					$gamess = array_reverse(get_games($pdo));
+					//$gamess = ["sssss", "test","Phantasmagoria 2: A Puzzle of Flesh", "Metal Gear Solid", "Earthworm Jim"];
 					foreach($gamess as $gam){
 						
 					$result = get_game($pdo, $gam);
@@ -47,13 +48,14 @@ require_once 'includes/ggb_view.inc.php';
 						Genres: <?php print_array($result["genres"]);?>
 					</p>
 					
-					<p><?php echo "Released: " . $result["release_date"]; ?></p>
+					<p><?php echo "Released: " . date("Y, F jS", strtotime($result["release_date"])); ?></p>
 					<p>	
-						Designers: <?php print_array($result["designers"]);?>
-						Professions: <?php //print_array($result["professions"]);?>
+						Designers: <?php show_designers($result["des_pro"]) ?>
 					</p>
 					<p><?php echo "Developer: " . $result["developer"];?></p>
 					<p><?php echo "Publisher: " . $result["publisher"];?></p>
+					
+					<p> Tags: <?php print_tags($result["tags"]); ?> <p>
 					
 					
 					

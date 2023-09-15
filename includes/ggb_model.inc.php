@@ -3,12 +3,19 @@
 declare(strict_types=1);
 
 function set_designer(object $pdo, string $full_name, int $nationality, string $birthday, string $gender){
-	$query = "INSERT INTO people (full_name, nationality, birthday, gender) VALUES (:full_name, :nationality, :birthday, :gender);";
-	$stmt = $pdo->prepare($query);
+	if($birthday = "Unknown"){
+		$query = "INSERT INTO people (full_name, nationality, birthday, gender) VALUES (:full_name, :nationality, NULL, :gender);";
+		$stmt = $pdo->prepare($query);
+	}
+	else{
+		$query = "INSERT INTO people (full_name, nationality, birthday, gender) VALUES (:full_name, :nationality, :birthday, :gender);";
+		$stmt = $pdo->prepare($query);
+		$stmt->bindParam(":birthday", $birthday);
+	}
 	
 	$stmt->bindParam(":full_name", $full_name);
 	$stmt->bindParam(":nationality", $nationality);
-	$stmt->bindParam(":birthday", $birthday);
+	
 	$stmt->bindParam(":gender", $gender);
 	
 	$stmt->execute();
@@ -133,6 +140,20 @@ function get_tags_from_db(object $pdo) {
 	return $result;
 }
 
+function get_games_from_db(object $pdo) {
+	$query = "SELECT game_id, game_title FROM games;";
+	$stmt = $pdo->prepare($query);
+	$stmt->execute();
+	$result = array();
+	$i = 1;
+	while ($data = $stmt->fetch(PDO::FETCH_ASSOC))
+	{
+		$result[$data["game_id"]] = $data["game_title"];
+	}
+	$stmt = null;
+	return $result;
+}
+
 
 function get_name(object $pdo, string $current_name, string $name, string $table) {
 	$query = "SELECT $name FROM $table WHERE $name = :current_name;";
@@ -213,16 +234,10 @@ function set_platform(object $pdo, string $platform_name, int $company, int $gen
 	
 }
 
-function set_genre(object $pdo, string $genre_name, string $genre_description, int $subgenre){
-	if($subgenre == "1") {
-		$query = "INSERT INTO genre (genre_name, subgenre_of, genre_description) VALUES (:genre_name, NULL, :genre_description);";
-		$stmt = $pdo->prepare($query);
-	}
-	else{
-		$query = "INSERT INTO genre (genre_name, subgenre_of, genre_description) VALUES (:genre_name, :subgenre, :genre_description);";
-		$stmt = $pdo->prepare($query);
-		$stmt->bindParam(":subgenre", $subgenre);
-	}
+function set_genre(object $pdo, string $genre_name, string $genre_description){
+	$query = "INSERT INTO genre (genre_name, subgenre_of, genre_description) VALUES (:genre_name, NULL, :genre_description);";
+	$stmt = $pdo->prepare($query);
+
 	
 
 	//$stmt = $pdo->prepare($query);
@@ -361,11 +376,34 @@ function set_relation_more(object $pdo, string $table_name, string $column_one_n
 
 
 function get_by_id_from_db(object $pdo, string $table_name, string $column_name, string $column_id, string $id){
-	$query = "SELECT DISTINCT $column_name FROM $table_name WHERE $column_id = :id;";
+	$query = "SELECT DISTINCT $column_name FROM $table_name WHERE $column_id = :id AND $column_name IS NOT NULL;";
 	
 	$stmt = $pdo->prepare($query);
 	
 	$stmt->bindParam(":id", $id);
+	
+	$stmt->execute();
+	
+	$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$stmt = null;
+	return $result;
+	
+	
+	
+}
+
+function get_developer_profession_from_db(object $pdo, int $game_id){
+	$query = "
+		SELECT p.full_name, pro.title 
+		FROM people as p
+		join games_people as gp on p.people_id = gp.person_id
+		left join profession as pro on pro.profession_id = gp.profession_id
+		where gp.game_id = :game_id;
+		";
+	
+	$stmt = $pdo->prepare($query);
+	
+	$stmt->bindParam(":game_id", $game_id);
 	
 	$stmt->execute();
 	
