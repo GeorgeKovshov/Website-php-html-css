@@ -4,6 +4,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 	$full_name = $_POST["full_name"];
 	$nationality = $_POST["country"]; 
 	$birthday = $_POST["birthday"];
+	$deceased = $_POST["deceased"];
 	$gender = $_POST["gender"];
 	
 	try{
@@ -24,8 +25,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 		if(is_name_taken($pdo, $full_name, "full_name", "people" )){
 			$errors["full_name_taken"] = "This person was already added!";
 		}
-		if(empty($_POST["birthday"])){
+		if(empty($birthday)){
 			$birthday = "Unknown";
+		}
+		if(empty($deceased )){
+			$deceased = "Unknown";
 		}
 		
 		
@@ -70,7 +74,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 		$_SESSION["user_username"] = htmlspecialchars($result["username"]);
 		$_SESSION["last_regeneration"] = time();**/
 		
-		input_designer($pdo, $full_name, $nationality, $birthday, $gender);
+		input_designer($pdo, $full_name, $nationality, $birthday, $gender, $deceased);
 
 		
 		$pdo = null;

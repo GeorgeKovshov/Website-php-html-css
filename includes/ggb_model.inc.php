@@ -2,15 +2,26 @@
 
 declare(strict_types=1);
 
-function set_designer(object $pdo, string $full_name, int $nationality, string $birthday, string $gender){
-	if($birthday = "Unknown"){
-		$query = "INSERT INTO people (full_name, nationality, birthday, gender) VALUES (:full_name, :nationality, NULL, :gender);";
+function set_designer(object $pdo, string $full_name, int $nationality, string $birthday, string $gender, string $deceased){
+	if($birthday == "Unknown" && $deceased == "Unknown"){
+		$query = "INSERT INTO people (full_name, nationality, birthday, gender, deceased) VALUES (:full_name, :nationality, NULL, :gender, NULL);";
 		$stmt = $pdo->prepare($query);
 	}
-	else{
-		$query = "INSERT INTO people (full_name, nationality, birthday, gender) VALUES (:full_name, :nationality, :birthday, :gender);";
+	else if($deceased == "Unknown"){
+		$query = "INSERT INTO people (full_name, nationality, birthday, gender, deceased) VALUES (:full_name, :nationality, :birthday, :gender, NULL);";
 		$stmt = $pdo->prepare($query);
 		$stmt->bindParam(":birthday", $birthday);
+	}
+	else if($birthday == "Unknown"){
+		$query = "INSERT INTO people (full_name, nationality, birthday, gender, deceased) VALUES (:full_name, :nationality, NULL, :gender, :deceased);";
+		$stmt = $pdo->prepare($query);
+		$stmt->bindParam(":deceased", $deceased);
+	}
+	else{
+		$query = "INSERT INTO people (full_name, nationality, birthday, gender, deceased) VALUES (:full_name, :nationality, :birthday, :gender, :deceased);";
+		$stmt = $pdo->prepare($query);
+		$stmt->bindParam(":birthday", $birthday);
+		$stmt->bindParam(":deceased", $deceased);
 	}
 	
 	$stmt->bindParam(":full_name", $full_name);
@@ -332,6 +343,22 @@ function check_relation_exists(object $pdo, string $table_name, string $column_o
 	return $result;
 }
 
+function check_relation_exists_more(object $pdo, string $table_name, string $column_one_name, string $column_two_name, string $column_three_name, int $column_one_value, int $column_two_value, int $column_three_value) {
+	$query = "SELECT $column_one_name FROM $table_name WHERE $column_one_name = :column_one_value AND $column_two_name = :column_two_value AND $column_three_name = :column_three_value;";
+
+	$stmt = $pdo->prepare($query);
+	
+	$stmt->bindParam(":column_one_value", $column_one_value);
+	$stmt->bindParam(":column_two_value", $column_two_value);
+	$stmt->bindParam(":column_three_value", $column_three_value);
+	
+	$stmt->execute();
+	
+	$result = $stmt->fetch(PDO::FETCH_ASSOC);
+	$stmt = null;
+	return $result;
+}
+
 function set_relation(object $pdo, string $table_name, string $column_one_name, string $column_two_name, int $column_one_value, int $column_two_value){
 	if(!check_relation_exists($pdo, $table_name, $column_one_name, $column_two_name, $column_one_value, $column_two_value)){
 		$query = "INSERT INTO $table_name ($column_one_name, $column_two_name) VALUES (:column_one_value, :column_two_value);";
@@ -349,7 +376,7 @@ function set_relation(object $pdo, string $table_name, string $column_one_name, 
 }
 
 function set_relation_more(object $pdo, string $table_name, string $column_one_name, string $column_two_name, string $column_three_name, int $column_one_value, int $column_two_value, int $column_three_value){
-	if(!check_relation_exists($pdo, $table_name, $column_one_name, $column_two_name, $column_one_value, $column_two_value)){
+	if(!check_relation_exists_more($pdo, $table_name, $column_one_name, $column_two_name, $column_three_name, $column_one_value, $column_two_value, $column_three_value)){
 		if($column_three_value == "0") {
 			$query = "INSERT INTO $table_name ($column_one_name, $column_two_name, $column_three_name) VALUES (:column_one_value, :column_two_value, NULL);";
 			$stmt = $pdo->prepare($query);

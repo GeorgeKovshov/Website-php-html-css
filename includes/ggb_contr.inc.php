@@ -13,8 +13,8 @@ function change_session_variable(string $i){
 }
 
 
-function input_designer(object $pdo, string $full_name, int $nationality, string $birthday, string $gender){
-	set_designer($pdo, $full_name, $nationality, $birthday, $gender);
+function input_designer(object $pdo, string $full_name, int $nationality, string $birthday, string $gender, string $deceased){
+	set_designer($pdo, $full_name, $nationality, $birthday, $gender, $deceased);
 		
 }
 

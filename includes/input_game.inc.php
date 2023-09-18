@@ -85,6 +85,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 		
 		if(is_zero_input([$developer]) || is_zero_input([$publisher])){
 			$errors["zero_input1"] = "Select a developer and publisher! ";
+			
+			
+			$errors["ssss"] = $designer;
 		}
 		
 		if(is_input_empty($arr)){

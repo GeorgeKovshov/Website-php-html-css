@@ -193,7 +193,7 @@ require_once 'includes/ggb_view.inc.php';
 		</div>
 		</div> 
 		<div class="container-input">
-			<?php check_input_errors(); ?>
+			<?php check_input_errors();?>
 		</div>
 		
 
