@@ -172,6 +172,22 @@ function print_array(array $arr){
 	}
 }
 
+function print_tags(array $arr){
+	if (empty($arr)){
+		return;
+	}
+	$i = 0;
+	foreach($arr as $tmp){
+		//print_r($tmp);
+		if($i != 0){
+			echo ", "; 
+		}
+		echo "<span class='tag'>". '#' . $tmp . "</span>";
+		$i++;
+		
+	}
+}
+
 function show_screenshots(array $arr){
 	$i = 0;
 	foreach($arr as $tmp){
@@ -194,6 +210,28 @@ function show_description(string $game_desc){
 		}
 
 		fclose($handle);
+	}
+	
+}
+
+
+function show_designers($des_pro){
+	$i = 0;
+	foreach($des_pro as $des => $pro){
+		if($i != 0){
+			echo ", "; 
+		}
+		if(is_null($pro[0])){
+			echo $des;
+		}
+		else {
+			echo $des . " (";
+			print_array($pro);
+			echo ")";
+		}
+		$i++;
+		
+		
 	}
 	
 }
