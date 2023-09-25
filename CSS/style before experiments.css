@@ -81,14 +81,6 @@ button:hover {
 	grid-gap: 10px;
 
 }
-.container_new{
-	width:80%;
-	margin:auto;
-	display: grid;
-	grid-template-columns: repeat(2, minmax(0, 1fr)); ;
-	grid-gap: 10px;
-
-}
 
 .box-1{
 	background-color:#333;
@@ -96,30 +88,6 @@ button:hover {
 	
 	display: grid;
 	grid-template-columns: 0.7fr 1fr;
-	grid-gap: 1px;
-
-	
-	border: 5px $141414 solid;
-	border-width: 3px;
-	border-bottom-width: 10px;
-
-	
-	border: 5px #141414 solid;
-	padding-top: 25px;
-	padding-bottom: 25px;
-	padding-right: 25px;
-	padding-left: 25px;
-	padding: 25px;
-	
-	margin-top: 20px;
-	margin: 20px 0;}
-	
-.box-1_new{
-	background-color:#333;
-	color:#fff;
-	
-	display: grid;
-	grid-template-columns: 0.4fr 1fr;
 	grid-gap: 1px;
 
 	
@@ -233,14 +201,6 @@ input[type="radio"]:checked::before {
 	Letter-spacing:0.2em;
 	word-spacing: 0.5em;
 	line-height: 150%;
-}
-.box-input_new h1{
-	font-family:Tahoma;
-	font-weight: 400;
-	font-style:bold;
-	text-transform:uppercase;
-	line-height: 150%;
-
 }
 
 .box-input{

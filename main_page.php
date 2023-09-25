@@ -14,7 +14,8 @@ require_once 'includes/ggb_view.inc.php';
 	<head>
 	
 		<meta charset="UTF-8">
-		<meta name="description" content="This is website">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" type="text/css" href="CSS/style.css">
 		<title> Great Games </title>
 	</head>
@@ -25,7 +26,7 @@ require_once 'includes/ggb_view.inc.php';
 			fuck
 			<hr>
 			</div>
-		<div class="container_new">
+		<div class="container_list_games">
 			
 		<?php  		
 					$gamess = array_reverse(get_games($pdo));
@@ -35,26 +36,28 @@ require_once 'includes/ggb_view.inc.php';
 					$result = get_game($pdo, $gam);
 				
 				?>
-			<div class="box-1_new">
+			<div class="box_list_games">
 				
 				
-				<div>
-					<img height="250" src="includes/<?php echo $result["cover"]; ?>" alt="a really informative image"/><br>
+				<div class="center_item">
+					<img class="image_dimensions" src="includes/<?php echo $result["cover"]; ?>" alt="a really informative image"/><br>
 				</div>
 				
-				<div class="box-input_new">
-					<h1 class="box-input_new"><?php echo $result["game_title"]; ?></h1>
-					<p>	
-						Platforms: <?php print_array($result["platforms"]);?>
-					</p>
-					<p>	
-						Genres: <?php print_array($result["genres"]);?>
-					</p>
-					
-					<p><?php echo "Released: " . date("Y, F jS", strtotime($result["release_date"])); ?></p>
+				<div class="center_item">
+					<h1><?php echo $result["game_title"]; ?></h1>
+					<div >
+						<p>	
+							Platforms: <?php print_array($result["platforms"]);?>
+						</p>
+						<p>	
+							Genres: <?php print_array($result["genres"]);?>
+						</p>
+						
+						<p><?php echo "Released: " . date("Y, F jS", strtotime($result["release_date"])); ?></p>
 
-					<p><?php echo "Developer: " . $result["developer"];?></p>
-					<p><?php echo "Publisher: " . $result["publisher"];?></p>
+						<p><?php echo "Developer: " . $result["developer"];?></p>
+						<p><?php echo "Publisher: " . $result["publisher"];?></p>
+					</div>
 				</div>		
 				
 				
