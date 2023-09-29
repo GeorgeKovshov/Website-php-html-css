@@ -20,20 +20,20 @@ body {
 
 a{	
 	text-decoration:none;
-	color:#000;	
+	color:#fff;;
 }
 
 a:hover {
-	color:red;
+	color:#606060;
 }
 
 a:active{
-	color:yellow;
+	color:white;
 }
 
 
 .container{
-	width:80%;
+	width:80vw;
 	margin:auto;
 
 }
@@ -50,8 +50,10 @@ a:active{
 	width:80%;
 	margin:auto;
 	display: grid;
-	grid-template-columns: 1fr 1fr;
+	grid-template-columns: repeat(auto-fill, 700px);
 	grid-gap: 10px;
+	justify-content: center;
+
 
 }
 
@@ -97,9 +99,9 @@ button:hover {
 	color:#fff;
 	
 	display: grid;
+	/*grid-template-columns: repeat(auto-fill, minmax(200, 1fr));*/
 	grid-template-columns: 1.4fr 2fr;
 	grid-gap: 15px;
-
 	
 	border: 5px $141414 solid;
 	border-width: 3px;
@@ -200,6 +202,41 @@ button:hover {
 	
 }
 
+
+
+.screenshots_div{
+	grid-column: 1 /3;
+	display: grid;
+	grid-template-columns: repeat(auto-fill, 650px);
+	align-items: center;
+	justify-content: space-around;
+	/**/
+}
+
+.screenshots{
+	height:400px;
+	max-width: 750px;
+	align-self:center; 
+	justify-self: center; 
+	padding-bottom: 1em;
+	
+}
+
+
+
+.cover_div{
+	justify-self: end; 
+	align-self: center; 
+	padding-right: 20px;
+}
+
+.cover{
+	width:550px;
+	
+}
+
+
+
 textarea,
 input[type],
 input[type=date] {
@@ -239,6 +276,21 @@ input[type="radio"]::before {
 
 input[type="radio"]:checked::before {
   transform: scale(1);
+}
+
+
+@media(max-width: 1200px){
+	.container {
+		width:90vw;
+		
+	}	
+	.cover {
+		width: 20vw;
+	}
+	.screenshots{
+		height: 20vh;;
+	}
+
 }
 
 

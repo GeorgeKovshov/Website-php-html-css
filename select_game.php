@@ -25,9 +25,10 @@ require_once 'includes/ggb_view.inc.php';
 		
 		<div class="container">
 		<?php  		
-					$gamess = array_reverse(get_games($pdo));
+					//$gamess = array_reverse(get_games($pdo));
 					//$gamess = ["sssss", "test","Phantasmagoria 2: A Puzzle of Flesh", "Metal Gear Solid", "Earthworm Jim"];
-					foreach($gamess as $gam){
+					$gam =filter_input(INPUT_GET, 'nam', FILTER_SANITIZE_URL);
+					$gam = str_replace('_', ' ', $gam);
 						
 					$result = get_game($pdo, $gam);
 				
@@ -85,7 +86,6 @@ require_once 'includes/ggb_view.inc.php';
 							
 				
 			</div>
-					<?php } ?>
 		</div>
 		
 	</body>

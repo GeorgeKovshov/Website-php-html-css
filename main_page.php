@@ -34,6 +34,7 @@ require_once 'includes/ggb_view.inc.php';
 					foreach($gamess as $gam){
 						
 					$result = get_game($pdo, $gam);
+					$no_ws_game = str_replace(' ', '_', $gam);
 				
 				?>
 			<div class="box_list_games">
@@ -44,7 +45,7 @@ require_once 'includes/ggb_view.inc.php';
 				</div>
 				
 				<div class="center_item">
-					<h1><?php echo $result["game_title"]; ?></h1>
+					<a href="select_game.php?nam=<?php echo $no_ws_game; ?>"> <h1><?php echo $result["game_title"]; ?> </h1></a> 
 					<div >
 						<p>	
 							Platforms: <?php print_array($result["platforms"]);?>
