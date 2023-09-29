@@ -12,5 +12,5 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 	}
 	
 }
-header("Location: ../test_input.php");
+header("Location: ../inputs.php?input=Genre");
 ?>

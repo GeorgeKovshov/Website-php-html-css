@@ -193,7 +193,7 @@ function show_screenshots(array $arr){
 	foreach($arr as $tmp){
 		//print_r($tmp);
 		if($i != 0) {
-			echo '<img height="400" style="white-space: nowrap; padding-bottom: 1em;" src="includes/'. $tmp["screenshot_path"] . '" alt="a really informative image"/>';
+			echo '<img class="screenshots" src="includes/'. $tmp["screenshot_path"] . '" alt="a really informative image"/>';
 		}
 		$i++;
 		

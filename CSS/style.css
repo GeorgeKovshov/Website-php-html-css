@@ -94,6 +94,31 @@ button:hover {
 	margin: 20px 0;
 }
 
+.box-header{
+	background-color:#333;
+	color:#fff;
+	
+	display: grid;
+	grid-template-columns: repeat(auto-fill, 100px);
+	grid-gap: 1px;
+
+	
+	border: 5px $141414 solid;
+	border-width: 3px;
+	border-bottom-width: 10px;
+
+	
+	border: 5px #141414 solid;
+	padding-top: 25px;
+	padding-bottom: 25px;
+	padding-right: 25px;
+	padding-left: 25px;
+	padding: 25px;
+	
+	margin-top: 20px;
+	margin: 20px 0;
+}
+
 .box_list_games{
 	background-color:#333;
 	color:#fff;
@@ -197,6 +222,8 @@ button:hover {
 }
 
 .image_dimensions{
+	
+	max-height: 600px;
 	width: 100%; /*max(250px);*/
 
 	

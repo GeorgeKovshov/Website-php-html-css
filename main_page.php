@@ -22,10 +22,17 @@ require_once 'includes/ggb_view.inc.php';
 	
 		
 	<body>
-		<div class="box-1"  style="position: sticky; top:0px;">
-			fuck
-			<hr>
-			</div>
+		<div class="box-header" style="position: sticky; top:0px;">
+		
+			<h2> Input: </h2>
+			<button onClick="window.open('game_input.php');"> Game </button>
+			<button onClick="window.open('inputs.php?input=Company');"> Company </button>			
+			<button onClick="window.open('inputs.php?input=Designer');">Designer </button>
+			<button onClick="window.open('inputs.php?input=Platform');"> Platform </button>
+			<button onClick="window.open('inputs.php?input=Genre');"> Genre </button>
+			<button onClick="window.open('inputs.php?input=Tag');"> Tag </button>
+			
+		</div>
 		<div class="container_list_games">
 			
 		<?php  		
