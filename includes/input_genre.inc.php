@@ -45,7 +45,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
 			
 			$pdo = null;
-			header("Location: ../test_input.php");
+			header("Location: ../main_page.php");
 			die();
 		}	
 				
@@ -57,19 +57,19 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
 		
 		$pdo = null;
-		header("Location: ../test_input.php?input=success");
+		header("Location: ../main_page.php?input=success");
 		die();
 		
 	} catch(PDOException $e) {
 		die("Query failed: " . $e->getMessage());
 	}
-	header("Location: ../test_input.php");
+	header("Location: ../main_page.php");
 	die();
 	
 	
 }
 else{
 
-	header("Location: ../test_input.php");
+	header("Location: ../main_page.php");
 	die();
 }

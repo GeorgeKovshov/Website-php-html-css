@@ -145,7 +145,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 			
 			// Check if file already exists
 			if (file_exists($target_file)) {
-			  $errors["image_exists"] = "Cover was already added!";
+			  $errors["image_exists"] = "$target_file was already added!";
 			}
 			
 			
