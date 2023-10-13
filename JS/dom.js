@@ -1,5 +1,5 @@
 //EXAMINE THE DOCUMENT OBJECT IN CONSOLE
-/*
+
 //console.dir(document)
 console.dir(document);
 console.dir(document.domain);
@@ -14,10 +14,10 @@ console.dir(document.all);
 console.log(document.forms);
 console.log(document.links);
 console.log(document.images);
-*/
 
 
-/*
+
+
 //console.log(document.getElementById('header-title'));
 var headerTitle = document.getElementById('header-title'); // you pick an html element by its id
 var header = document.getElementById('main-header');
@@ -26,7 +26,7 @@ headerTitle.textContent = 'hello'; // you can change the text inside of the pick
 headerTitle.innerText = 'goodbye'; // difference is that textContent disregards style settings, innerText doesn't
 headerTitle.innerHTML = '<h3>Hello</h3>' // this puts html code inside of the element
 header.style.borderBottom = 'solid 3px #000';
-*/
+
 
 
 var items = document.getElementsByClassName('list-group-item');
@@ -67,6 +67,12 @@ titles[0].textContent = 'do it';
 
 var odd = document.querySelectorAll('li:nth-child(odd)');
 odd.forEach((item) => item.style.backgroundColor='lightyellow');
+
+
+
+
+
+
 
 
 
