@@ -47,102 +47,22 @@ require_once 'includes/ggb_view.inc.php';
 		switch($type_input){
 			
 		case "Designer":
-			echo '
-				<div class="box-input">
-					<h3> Input a person</h3>
-					<form action="includes/input_designer.inc.php" method = "post">
-						<input type="text" name="full_name" placeholder="Full name"><br>
-						<span style="font-size:16px;"> Country: </span>'; nations_select($pdo);
-			 
-			echo '			
-						<input type="date" name="birthday" placeholder="Birthday"><br>
-						<input type="date" name="deceased" placeholder="deceased"><br>
-						<input type="radio" name="gender" id="gender" value="Male" />
-						<label for="gender" style="font-size:16px;" >Male</label><br>
-
-						<input type="radio" name="gender" id="gender" value="Female" />
-						<label for="gender" style="font-size:16px;" >Female</label><br>
-						
-						<input type="radio" name="gender" id="gender" value="Other" />
-						<label for="gender" style="font-size:16px;" >Other</label><br>
-						
-						<button> Submit </button>
-					</form>
-				</div>';
+			designer_inputs($pdo);
 			break;
-			
 		case "Company":
-			echo '
-			<div class="box-input">
-				<h3> Input a company</h3>
-				<form action="includes/input_company.inc.php" method = "post">
-			
-				';
 			company_inputs($pdo);
-			echo ' 
-				<button> Submit </button> 
-				</form>
-			</div>';
 			break;
-			
 		case "Platform":	
-			echo '	
-			
-			<div class="box-input">
-				<h3> Input a platform</h3>
-				<form action="includes/input_platform.inc.php" method = "post">
-					<input type="text" name="platform_name" placeholder="Platform title"><br>
-					<span style="font-size:16px;"> Generation: </span>'; generation_select($pdo); echo '<br>
-					
-					<span style="font-size:16px;"> Company: </span>'; company_select($pdo, 2); echo' <br>
-					<span style="font-size:16px;"> Released: </span> <input type="date" name="released"><br>
-					<span style="font-size:16px;"> Discontinued*: </span> <input type="date" name="discontinued"><br>
-					<label for="discontinued" style="font-size:16px;" >*leave empty if not discontinued</label><br>
-					
-					<button> Submit </button>
-				</form>
-			</div>';
+			platform_inputs($pdo);
 			break;
 		case "Genre":
-			echo '
-			<div class="box-input">
-				<h3> Input a genre</h3>
-				<form action="includes/input_genre.inc.php" method = "post">
-					<input type="text" name="genre_name" placeholder="Name of the Genre">
-					<span style="font-size:16px;"> Subgenre of: </span>';  genre_select($pdo,$_SESSION["subgenre_amount"]); echo ' <br>
-					
-					<textarea name="genre_description" placeholder="genre_description" rows="4" cols="50">Write a description of the genre... </textarea><br>
-					
-					
-					<button> Submit </button>
-				</form>
-			</div>';
+			genre_inputs($pdo);
 			break;
 		case "Profession":
-			echo '	
-			<div class="box-input">
-				<h3> Input a profession</h3>
-				<form action="includes/input_profession.inc.php" method = "post">
-					<input type="text" name="title" placeholder="Profession title"><br>
-					
-					<textarea name="profession_description" placeholder="profession_description" rows="4" cols="50">Write a description of the genre... </textarea><br>
-					
-					<button> Submit </button>
-				</form>
-			</div>';
+			profession_inputs($pdo);
 			break;
 		case "Tag":	
-			echo '	
-			<div class="box-input">
-				<h3> Input a tag</h3>
-				<form action="includes/input_tag.inc.php" method = "post">
-					<input type="text" name="tag_title" placeholder="Enter a #tag"><br>
-					
-					
-					
-					<button> Submit </button>
-				</form>
-			</div>';
+			tag_inputs($pdo);
 			break;
 		default: 
 			header("Location: ../main_page.php?input=wrong_type");

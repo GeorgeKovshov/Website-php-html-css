@@ -33,7 +33,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 		if($errors){
 			$_SESSION["errors_input"] = $errors;
 			//storing correct info to fill in when reset
-
+			$inputData =[
+				"platform_name" => $platform_name,
+				"company" => $company,
+				"generation" => $generation,
+				"released" => $released,
+				"discontinued" => $discontinued
+			];
+			$_SESSION["input_data"] = $inputData;
 			
 			$pdo = null;
 			header("Location: ../main_page.php");

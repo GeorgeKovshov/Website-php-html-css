@@ -32,47 +32,26 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 			$deceased = "Unknown";
 		}
 		
-		
-		/*
-		if(is_username_wrong($result)){
-			$errors["login_incorrect"] = "Incorrect login info!";
-		}
-		if(!is_username_wrong($result) && is_password_wrong($pwd, $result["pwd"])){
-			$errors["login_incorrect"] = "Incorrect login info!";
-		}
-		
-		if(is_input_empty($username, $pwd, $email)){
-			$errors["empty_input"] = "Fill in all fields!";
-		}
-		if(is_email_invalid($email)){
-			$errors["invalid_email"] = "Invalid email used!";
-		}
-		
-		if(is_email_registered($pdo, $email)){
-			$errors["email_used"] = "Email already registered!";
-			
-		}
-		
-		*/
+
 		require_once "config_session.inc.php";
 		
 		
 		if($errors){
 			$_SESSION["errors_input"] = $errors;
-			
+			$inputData = [
+				"full_name" => $full_name,
+				"nationality" => $nationality, 
+				"birthday" => $birthday,
+				"deceased" => $deceased,
+				"gender" => $gender 
+			];
+			$_SESSION["input_data"] = $inputData;
 			
 			$pdo = null;
 			header("Location: ../main_page.php?input=failed");
 			die();
 		}	
-		/*
-		$newSessionId = session_create_id();
-		$sessionId = $newSessionId . "_" . $result["id"];
-		session_id($session_id);
-		
-		$_SESSION["user_id"] = $result["id"];
-		$_SESSION["user_username"] = htmlspecialchars($result["username"]);
-		$_SESSION["last_regeneration"] = time();**/
+
 		
 		input_designer($pdo, $full_name, $nationality, $birthday, $gender, $deceased);
 

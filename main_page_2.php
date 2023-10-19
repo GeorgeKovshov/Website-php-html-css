@@ -30,6 +30,7 @@ require_once 'includes/ggb_view.inc.php';
 			<button onClick="window.open('inputs.php?input=Designer');">Designer </button>
 			<button onClick="window.open('inputs.php?input=Platform');"> Platform </button>
 			<button onClick="window.open('inputs.php?input=Genre');"> Genre </button>
+			<button onClick="window.open('inputs.php?input=Profession');"> Professon </button>
 			<button onClick="window.open('inputs.php?input=Tag');"> Tag </button>
 			<input type="text" style="width:400px; height:40px; align-self: center;	justify-self: start;" id="filter" placeholder="Search Items...">
 			
