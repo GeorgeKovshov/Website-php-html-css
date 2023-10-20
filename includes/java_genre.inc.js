@@ -1,19 +1,20 @@
-console.log(genres);
-let amount_java_genre;
+console.log(subgenres.keys);
+let amount_java_genre; // we store the amount of loaded genre selects in memory
 if(localStorage.getItem("amount_java_genre") === null) {
 	amount_java_genre = 1;		
 } else {
 	amount_java_genre = parseInt(localStorage.getItem("amount_java_genre"));
 }
-let java_genre = document.querySelector("#java_genre");
-console.log(java_genre);
 
-let java_genre_menu = [];
+let java_genre = document.querySelector("#java_genre"); // the div holding the selectors and buttons
+
+
+let java_genre_menu = []; //list of individual genre selectors
 
 
 let i = 1;
-let selects = [];
 
+//initializing buttons "+" and "-"
 var btn = document.createElement("button");
 java_genre.appendChild(btn);
 btn.appendChild(document.createTextNode("+"));
@@ -37,16 +38,23 @@ function add_genre_selector(i){
 	option_none.text = "None";
 	java_genre_menu[i].appendChild(option_none);
 	
+	
 	for (var key in genres) {
 		if (genres.hasOwnProperty(key)) {
 			let option = document.createElement("option");
 			option.value = key;
 			option.text = genres[key];
+			///if(subgenres.includes(key.toString()) && subgenres.indexOf(key.toString())==i-1){
+				//option.setAttribute("selected", "selected");
+				//console.log(`${subgenres.indexOf(key.toString())} and key: ${key} and i: ${i}`);
+			//}			
 			java_genre_menu[i].appendChild(option);
 			//console.log( + " -> " + genres[key]);
 		}
 	}
-	
+	if(i-1 < subgenres.length && subgenres.keys!=undefined && i-1>=0 && genres.hasOwnProperty(parseInt(subgenres[i-1])) != -1){
+		java_genre_menu[i].value = subgenres[i-1];
+	}
 	java_genre.insertBefore(java_genre_menu[i], btn);
 	//java_genre.appendChild(java_genre_menu[i]);
 	
@@ -54,39 +62,42 @@ function add_genre_selector(i){
 
 
 while( i <= amount_java_genre){
+	
 	add_genre_selector(i);
 	java_genre.insertBefore(java_genre_menu[i], btn);
 	//java_genre.appendChild(java_genre_menu[i]);
 	
 	i++;
 }
-console.log(selects);
+
+
 for (var key in genres) {
 	if (genres.hasOwnProperty(key)) {
-		console.log(key + " -> " + genres[key]);
+		//console.log(key + " -> " + genres[key]);
 	}
 }
 
-console.log(java_genre.children[amount_java_genre + 2]);
-
-
-
-
 
 function add_selector(e){
+	// function for adding selectors
 	e.preventDefault();
-	amount_java_genre++;
-	add_genre_selector(amount_java_genre);
-	console.log(amount_java_genre);
-	localStorage.setItem("amount_java_genre", amount_java_genre.toString());
+	if(amount_java_genre < 10){
+		amount_java_genre++;
+		add_genre_selector(amount_java_genre);
+		console.log(amount_java_genre);
+		localStorage.setItem("amount_java_genre", amount_java_genre.toString());
+	}
 }
 
 function remove_selector(e){
+	// function for removing selectors
 	e.preventDefault();
-	java_genre.children[amount_java_genre + 1].remove();
-	amount_java_genre--;
-	console.log(amount_java_genre);
-	localStorage.setItem("amount_java_genre", amount_java_genre.toString());
+	if(amount_java_genre > 1){
+		java_genre.children[amount_java_genre + 1].remove();
+		amount_java_genre--;
+		console.log(amount_java_genre);
+		localStorage.setItem("amount_java_genre", amount_java_genre.toString());
+	}
 }
 
   

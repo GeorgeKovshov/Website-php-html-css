@@ -10,6 +10,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 		array_push($subgenre, $_POST['subgenre' . $i]);
 		$i++;
 	}
+	
 
 	try{
 		require_once "./dbh_games.inc.php";
@@ -21,7 +22,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 		
 		$arr = [$genre_name, $genre_description];
 		if(is_input_empty($arr)){
-			$errors["empty_input"] = "Fill in all the necessary data!";
+			$errors["empty_input"] = "$subgenre[0] Fill in all the necessary data!";
 		}
 		else {
 			if(is_name_taken($pdo, $genre_name, "genre_name", "genre" )){
@@ -42,10 +43,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 		if($errors){
 			$_SESSION["errors_input"] = $errors;
 			//storing correct info to fill in when reset
-
+			//storing correct info to fill in when reset
+			$inputData =[
+				"genre_name" => $genre_name,
+				"genre_description" => $genre_description,
+				"subgenres" => $subgenre 
+			];
+			$_SESSION["input_data"] = $inputData;
 			
 			$pdo = null;
-			header("Location: ../main_page.php");
+			header("Location: ../inputs.php?input=Genre&submission=Success");
 			die();
 		}	
 				
@@ -57,19 +64,19 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
 		
 		$pdo = null;
-		header("Location: ../main_page.php?input=success");
+		header("Location: ../inputs.php?input=Genre");
 		die();
 		
 	} catch(PDOException $e) {
 		die("Query failed: " . $e->getMessage());
 	}
-	header("Location: ../main_page.php");
+	header("Location: ../inputs.php?input=Genre");
 	die();
 	
 	
 }
 else{
 
-	header("Location: ../main_page.php");
+	header("Location: ../inputs.php?input=Genre");
 	die();
 }

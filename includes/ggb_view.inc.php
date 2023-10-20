@@ -128,6 +128,21 @@ function genre_select(object $pdo, int $amount){
 	
 }
 
+function genre_select_2(object $pdo, int $amount){
+	$array = get_genres($pdo);
+	while($amount > 0){
+		echo '<select name="subgenre'. $amount .'" id="subgenre">';
+		echo '<option value=0> None </option>'; 
+		foreach($array as $key => $value) { 
+			echo '<option value=' . $key . '>' . $value . "</option>"; 
+		} 
+		echo '</select>';
+		$amount--;
+	}
+	
+	
+}
+
 function platform_select(object $pdo, int $amount){
 	$array = get_platforms($pdo);
 	while($amount > 0){
@@ -419,7 +434,11 @@ function genre_inputs(object $pdo){
 	else {
 		echo '<input type="text" name="genre_name" placeholder="Name of the Genre"><br>';
 	} 
-	echo '<span style="font-size:16px;"> Subgenre of: </span>'; genre_select($pdo,$_SESSION["subgenre_amount"]);  echo '<br>';
+	
+	echo '<div id="java_genre">';
+		echo '	<span style="font-size:16px;"> Subgenre of: </span>'; echo '<br>';
+	//echo '	<span style="font-size:16px;"> Subgenre of: </span>'; genre_select($pdo,$_SESSION["subgenre_amount"]);  echo '<br>';
+	echo '</div>';
 	
 	
 	if(isset($_SESSION["input_data"]["genre_description"])){

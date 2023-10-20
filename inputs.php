@@ -90,6 +90,11 @@ require_once 'includes/ggb_view.inc.php';
 			
 		if($type_input == "Genre"){
 			$array = get_genres($pdo);
+			if(isset($_SESSION["input_data"]["subgenres"])){
+				echo '<script>'; echo 'let subgenres ='; echo json_encode($_SESSION["input_data"]["subgenres"]); echo '</script>';
+			} else {
+				echo '<script>'; echo 'let subgenres ="empty"'; echo '</script>';
+			}
 			echo '<script>'; echo 'let genres ='; echo json_encode($array); echo '</script>';
 			echo '<script src="includes/java_genre.inc.js">';			
 			echo '</script>';
