@@ -69,8 +69,33 @@ require_once 'includes/ggb_view.inc.php';
 			die();
 		}
 			
+		/*
+		function genre_select(object $pdo, int $amount){
+			$array = get_genres($pdo);
+			while($amount > 0){
+				echo '<select name="subgenre'. $amount .'" id="subgenre">';
+				echo '<option value=0> None </option>'; 
+				foreach($array as $key => $value) { 
+					echo '<option value=' . $key . '>' . $value . "</option>"; 
+				} 
+				echo '</select>';
+				$amount--;
+			}
 			
 			
+		}
+		
+		*/
+			
+			
+		if($type_input == "Genre"){
+			$array = get_genres($pdo);
+			echo '<script>'; echo 'let genres ='; echo json_encode($array); echo '</script>';
+			echo '<script src="includes/java_genre.inc.js">';			
+			echo '</script>';
+		}		
+		/*	
+		echo '<div id="java_genre">';
 		if($type_input == "Genre"){
 			echo '
 			<form action="./includes/variable_increase_small.inc.php" style="width: 300px" method = "post">
@@ -83,7 +108,7 @@ require_once 'includes/ggb_view.inc.php';
 				<br>
 		
 			</form>';
-		}
+		}*/
 		
 		
 		echo '	
