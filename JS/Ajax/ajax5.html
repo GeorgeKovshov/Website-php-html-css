@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	<input list="browsers" name="browser">
+	  <datalist id="browsers">
+		<option value="Internet Explorer">
+		<option value="Firefox">
+		<option value="Chrome">
+		<option value="Opera">
+		<option value="Safari">
+	  </datalist>
+	  <input type="submit">
+    <title>Ajax 5 - Fetch from PHP MySql</title>
+  </head>
+  <body>
+	<button id="button">Get Users</button>
+
+	<br><br>
+	<h1>Games</h1>
+	<div id="users"> Games</div>
+	
+	<script>
+		document.getElementById('button').addEventListener('click', loadUsers)
+
+		
+		function loadUsers(){
+			var xhr = new XMLHttpRequest();
+			xhr.open('POST', 'users.php', true);
+			xhr.onload = function(){
+				if(this.status == 200){
+					console.log(this.responseText);
+					var users = JSON.parse(this.responseText);
+					//console.log(user.name);
+					
+					var output = '';
+					for(var i in users) {
+						output += '<ul>' + 
+						'<li>ID: ' + users[i].game_id + '</li>' +
+						'<li>Title: ' + users[i].game_title + '</li>' +
+						'</ul>';
+					}			
+					document.getElementById('users').innerHTML = output;
+				}
+			}
+			
+			xhr.send();
+		}
+		
+		
+	</script>
+	
+  </body>
+  
+ </html>

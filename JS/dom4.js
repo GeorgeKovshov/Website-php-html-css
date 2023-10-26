@@ -40,6 +40,7 @@ function addItem(e){
 	
 	//create new li element;
 	var li = document.createElement('li');
+	
 	// add class
 	li.className = 'list-group-item';
 	// add text node with input value

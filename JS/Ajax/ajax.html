@@ -10,7 +10,9 @@
   <body>
 	<button id="button"> Get text file </button>
 	
-	<?php header('Access-Control-Allow-Origin: http://localhost:4000'); ?>
+	<div id="text"></div>
+	
+	<?php //header('Access-Control-Allow-Origin: http://localhost:4000'); ?>
 	
 	<script>
 		document.getElementById('button').addEventListener('click', loadText);
@@ -25,15 +27,29 @@
 			xhr.open('GET', 'http://localhost:4000/www/sample.txt', true);
 			
 			console.log('READYSTATE: ', xhr.readyState);
-			/*xhr.onload = function(){
+			
+			// optional - used for loaders (like gifs when circle loads)
+			xhr.onprogress = function(){
+				console.log('READYSTATE: ', xhr.readyState);
+			}
+			
+			
+			xhr.onload = function(){
 				//HTTP statuses
-				//200: "Ok"
+				// 200: "Ok"
 				// 403: "Forbidden"
 				// 404: "Not Found"
 				if(this.status == 200){ 
-					console.log(this.responseText);
+					//console.log(this.responseText);
+					document.getElementById('text').innerHTML = this.responseText;
+				} else if(this.status = 404) {
+					document.getElementById('text').innerHTML = 'Not Found';
 				}
-			}*/
+			}
+			
+			xhr.onerror = function(){
+				console.log('Request Error...');
+			}
 			
 			xhr.onreadystatechange = function(){
 				//readyState Values
