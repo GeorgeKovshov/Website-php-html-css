@@ -4,13 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-	<input list="browsers" name="browser">
+	<input list="browsers" name="browser" id="browser_input">
 	  <datalist id="browsers">
-		<option value="Internet Explorer">
+		<!--<option value="Internet Explorer">
 		<option value="Firefox">
 		<option value="Chrome">
 		<option value="Opera">
-		<option value="Safari">
+		<option value="Safari"> -->
 	  </datalist>
 	  <input type="submit">
     <title>Ajax 5 - Fetch from PHP MySql</title>
@@ -23,12 +23,73 @@
 	<div id="users"> Games</div>
 	
 	<script>
-		document.getElementById('button').addEventListener('click', loadUsers)
-
+		document.getElementById('button').addEventListener('click', findGame)
+		document.getElementById('browser_input').addEventListener('keyup', findGame)
+		function findGame(e){
+			e.preventDefault(); //stops the redirection to the php file
+			
+			let name = document.getElementById('browser_input').value;
+			console.log(name);
+			let params = "name=" + name;
+			
+			let xhr = new XMLHttpRequest();
+			xhr.open('POST', 'test_request2.php', true);
+			xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+			
+			xhr.onreadystatechange = function(){
+				if(this.readyState == 4 && this.status == 200){
+					console.log(this.responseText);
+					if(this.responseText != ""){
+						let users = JSON.parse(this.responseText);
+						//console.log(user.name);
+						
+						let output = '';
+						for(let i in users) {
+							output += '<option value="' +  users[i].game_title + '">';
+						}			
+						document.getElementById('browsers').innerHTML = output;
+					}
+				}
+			}
+			xhr.send(params);
+		
+		}
+		
+		
+		function postName(e){
+			e.preventDefault(); //stops the redirection to the php file
+			
+			//var name = document.getElementById('name2').value;
+			var params = "start="+"6";
+			
+			var xhr = new XMLHttpRequest();
+			xhr.open('POST', 'test_request.php', true);
+			xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+			
+			xhr.onload = function(){
+				if(this.status == 200){
+					console.log(this.responseText);
+					var users = JSON.parse(this.responseText);
+					//console.log(user.name);
+					
+					var output = '';
+					for(var i in users) {
+						output += '<ul>' + 
+						'<li>ID: ' + users[i].game_id + '</li>' +
+						'<li>Title: ' + users[i].game_title + '</li>' +
+						'</ul>';
+					}			
+					document.getElementById('users').innerHTML = output;
+				}
+			}
+			xhr.send(params);
+		
+		}
+		
 		
 		function loadUsers(){
 			var xhr = new XMLHttpRequest();
-			xhr.open('POST', 'users.php', true);
+			xhr.open('POST', 'test_request.php', true);
 			xhr.onload = function(){
 				if(this.status == 200){
 					console.log(this.responseText);
