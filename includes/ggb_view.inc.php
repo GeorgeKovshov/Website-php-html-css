@@ -477,13 +477,33 @@ function platform_inputs(object $pdo){
 				<span style="font-size:16px;"> Generation: </span>'; generation_select(-1); echo '<br>';
 	}
 	
+	
+	echo '
+				<span style="font-size:16px;"> Company:</span> <br>';
+	echo '<script>'; echo 'let company_selected =';			
+	if(isset($_SESSION["input_data"]["company"])){
+			 echo json_encode($_SESSION["input_data"]["company"]); 
+	} else {
+		echo json_encode("none");
+	}
+	echo '</script>';									
+	echo ' 
+				<div id="company_selector_div">
+					<input list="company_selector_datalist" name="company"  id="company_selector_input">
+					<datalist id="company_selector_datalist">
+					</datalist>
+				</div>';
+	
+	/*
 	if(isset($_SESSION["input_data"]["company"])){
 		echo '
 				<span style="font-size:16px;"> Company: </span>'; company_select_2($pdo, 2, (int)$_SESSION["input_data"]["company"]); echo' <br>';
 	} else {
 		echo '
 				<span style="font-size:16px;"> Company: </span>'; company_select_2($pdo, 2, -1); echo' <br>';
-	}
+	}*/
+	
+	
 	
 	if(isset($_SESSION["input_data"]["released"])){
 		echo '

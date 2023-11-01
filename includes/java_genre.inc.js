@@ -44,7 +44,7 @@ function add_genre_selector(i){
 			let option = document.createElement("option");
 			option.value = key;
 			option.text = genres[key];
-			///if(subgenres.includes(key.toString()) && subgenres.indexOf(key.toString())==i-1){
+			//if(subgenres.includes(key.toString()) && subgenres.indexOf(key.toString())==i-1){
 				//option.setAttribute("selected", "selected");
 				//console.log(`${subgenres.indexOf(key.toString())} and key: ${key} and i: ${i}`);
 			//}			

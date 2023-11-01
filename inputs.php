@@ -98,7 +98,11 @@ require_once 'includes/ggb_view.inc.php';
 			echo '<script>'; echo 'let genres ='; echo json_encode($array); echo '</script>';
 			echo '<script src="includes/java_genre.inc.js">';			
 			echo '</script>';
-		}		
+		}
+		else if($type_input == "Platform"){
+			echo '<script src="includes/java_platform.inc.js">';			
+			echo '</script>';
+		}
 		/*	
 		echo '<div id="java_genre">';
 		if($type_input == "Genre"){
