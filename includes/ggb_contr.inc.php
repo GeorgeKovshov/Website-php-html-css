@@ -206,3 +206,24 @@ function input_game(object $pdo, string $game_title, string $series_title, strin
 	}
 				//if($files[0] != "covers/") {	set_relation()}
 }
+
+function initiate_fill_datalist(string $name){
+	// this function creates a variable in JS for a datalist element and ties an AJAX function to it that fills it
+	// string $name is the name of the html element that corresponds (it has to be exact) to the PHP POST parameter name in ajax_fill_datalist.inc.js
+	echo '
+				<script>
+				let ' . $name . ' = document.getElementById("' . $name . '_selector_input");
+				if(' . $name . '_selected != "none"){
+					' . $name . '.setAttribute("value", ' . $name . '_selected);
+				}
+				' . $name . '.addEventListener("keyup", fill_datalist);
+				</script>
+			
+			';
+	
+}
+
+
+
+
+

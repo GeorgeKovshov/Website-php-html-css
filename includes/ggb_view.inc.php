@@ -108,10 +108,35 @@ function company_select_2(object $pdo, int $type, int $selected){
 		}		
 		$i++;
 	} 
-	echo '</select>';
+	echo '</select>';	
+}
+
+function create_datalist(object $pdo, string $name){
+	//function to create a datalist with a given name/type. The name determines what table the data will be pulled from.
+	
+	//this will pass the value already filled in if the user made a mistake while filling the form
+	echo '<script>'; echo 'let ' . $name . '_selected =';			
+	if(isset($_SESSION["input_data"][$name])){
+		echo json_encode($_SESSION["input_data"][$name]); 
+	} else {
+		echo json_encode("none");
+	}
+	// this will create the datalist
+	echo '</script>';									
+	echo ' 
+				<div id="' . $name . '_selector_div">
+					<input list="' . $name . '_selector_datalist" name="' . $name . '"  id="' . $name . '_selector_input">
+					<datalist id="' . $name . '_selector_datalist">
+					</datalist>
+				</div>';
+	// this will fill the datalist option list
+	echo '<script src="includes/ajax_fill_datalist.inc.js">';			
+	echo '</script>';
+	initiate_fill_datalist($name);
 	
 	
 }
+
 
 function genre_select(object $pdo, int $amount){
 	$array = get_genres($pdo);
@@ -478,14 +503,18 @@ function platform_inputs(object $pdo){
 	}
 	
 	
+	
+	
 	echo '
 				<span style="font-size:16px;"> Company:</span> <br>';
+				
 	echo '<script>'; echo 'let company_selected =';			
 	if(isset($_SESSION["input_data"]["company"])){
 			 echo json_encode($_SESSION["input_data"]["company"]); 
 	} else {
 		echo json_encode("none");
 	}
+	
 	echo '</script>';									
 	echo ' 
 				<div id="company_selector_div">
@@ -493,6 +522,8 @@ function platform_inputs(object $pdo){
 					<datalist id="company_selector_datalist">
 					</datalist>
 				</div>';
+	
+	
 	
 	/*
 	if(isset($_SESSION["input_data"]["company"])){

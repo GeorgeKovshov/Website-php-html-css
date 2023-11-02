@@ -100,8 +100,12 @@ require_once 'includes/ggb_view.inc.php';
 			echo '</script>';
 		}
 		else if($type_input == "Platform"){
-			echo '<script src="includes/java_platform.inc.js">';			
+			//echoing of ajax_fill_datalist HAS TO BE ABOVE initiate_fill_datalist
+			// ajax_fill_datalist has the function which initiate_fill_datalist calls.
+			echo '<script src="includes/ajax_fill_datalist.inc.js">';			
 			echo '</script>';
+			initiate_fill_datalist("company");
+		
 		}
 		/*	
 		echo '<div id="java_genre">';

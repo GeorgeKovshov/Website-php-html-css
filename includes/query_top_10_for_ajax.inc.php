@@ -9,6 +9,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 	} else if(isset($_POST['developer'])) {
 		$var = $_POST['developer'];
 		$query = "SELECT title FROM developer WHERE title like '%" . $var . "%' LIMIT 10;";
+	} else if(isset($_POST['designer'])) {
+		$var = $_POST['designer'];
+		$query = "SELECT full_name FROM people WHERE full_name like '%" . $var . "%' LIMIT 10;";
 	} else {
 		$pdo = null;
 		die();
