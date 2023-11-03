@@ -1,12 +1,14 @@
 
 
+
 function fill_datalist(e){
 	e.preventDefault(); //stops the redirection to the php file
-	console.log(e.target.name);
+	
 	//let publisher = document.getElementById('company_selector_input').value;
 	//let params = "company=" + publisher.value;
-	let params = e.target.name + "=" + e.target.value;
-	
+		
+	let params = e.target.name.replace(/[0-9]/g, '') + "=" + e.target.value;
+	console.log(params);
 	let xhr = new XMLHttpRequest();
 	xhr.open('POST', 'includes/query_top_10_for_ajax.inc.php', true);
 	xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
@@ -35,3 +37,8 @@ function fill_datalist(e){
 	xhr.send(params);
 
 }
+
+
+
+
+

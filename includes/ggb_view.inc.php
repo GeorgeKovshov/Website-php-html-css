@@ -123,15 +123,66 @@ function create_datalist(object $pdo, string $name){
 	}
 	// this will create the datalist
 	echo '</script>';									
+
+	
+	$arr = array("developer","company", "designer");
+	//print_r($arr);
+	
+	echo '<script>'; echo 'let list_of_categories =';			
+		echo json_encode($arr); 
+	echo '</script>';
+	
+	echo '<script src="includes/java_manage_datalists.inc.js">';	
+	echo '</script>';
+	//initiate_fill_datalist($name);
+	
+	
+}
+
+function create_datalist_old(object $pdo, string $name){
+	// THIRD ITERATION
+	//function to create a datalist with a given name/type. The name determines what table the data will be pulled from.
+	//this will pass the value already filled in if the user made a mistake while filling the form
+	echo '<script>'; echo 'let ' . $name . '_selected =';			
+	if(isset($_SESSION["input_data"][$name])){
+		echo json_encode($_SESSION["input_data"][$name]); 
+	} else {
+		echo json_encode("none");
+	}
+	echo '</script>';									
+	
+	echo '<script>'; echo 'let category = "' . $name . '";';			
+	echo '</script>';
+	
+	echo '<script src="includes/java_manage_datalists_old.inc.js">';	
+	echo '</script>';
+	//initiate_fill_datalist($name);
+	
+	
+}
+
+function create_datalist_single(object $pdo, string $name){
+	// SECOND ITERATION
+	//function to create a datalist with a given name/type. The name determines what table the data will be pulled from.
+	//this will pass the value already filled in if the user made a mistake while filling the form
+	echo '<script>'; echo 'let ' . $name . '_selected =';			
+	if(isset($_SESSION["input_data"][$name])){
+		echo json_encode($_SESSION["input_data"][$name]); 
+	} else {
+		echo json_encode("none");
+	}
+	echo '</script>';
+	// this will create the datalist
+										
 	echo ' 
 				<div id="' . $name . '_selector_div">
 					<input list="' . $name . '_selector_datalist" name="' . $name . '"  id="' . $name . '_selector_input">
 					<datalist id="' . $name . '_selector_datalist">
 					</datalist>
-				</div>';
+				</div>
+			</script>';
 	// this will fill the datalist option list
-	echo '<script src="includes/ajax_fill_datalist.inc.js">';			
-	echo '</script>';
+	echo '<script src="includes/ajax_fill_datalist.inc.js"> </script>';		
 	initiate_fill_datalist($name);
 	
 	
@@ -485,6 +536,8 @@ function platform_inputs(object $pdo){
 			<div class="box-input">
 				<h3> Input a platform</h3>
 				<form action="includes/input_platform.inc.php" method = "post"> ';
+				
+	
 	
 	if(isset($_SESSION["input_data"]["platform_name"])){
 		echo '
@@ -503,29 +556,27 @@ function platform_inputs(object $pdo){
 	}
 	
 	
+	// THIS IS THE THIRD ITERATION - can add and remove selectors
+	//PUT DIV WITH COMPANIES INSIDE JAVA_MANAGER!!!
+	echo '	
+				<span style="font-size:16px;"> Company:</span> <br>
+				<div id="company_big_selector_div"></div>';
+	
+	create_datalist_old($pdo, "company");
 	
 	
-	echo '
-				<span style="font-size:16px;"> Company:</span> <br>';
-				
-	echo '<script>'; echo 'let company_selected =';			
-	if(isset($_SESSION["input_data"]["company"])){
-			 echo json_encode($_SESSION["input_data"]["company"]); 
-	} else {
-		echo json_encode("none");
-	}
-	
-	echo '</script>';									
-	echo ' 
-				<div id="company_selector_div">
-					<input list="company_selector_datalist" name="company"  id="company_selector_input">
-					<datalist id="company_selector_datalist">
-					</datalist>
-				</div>';
+	/*
+	//THIS IS THE SECOND ITERATION - made a datalist
+	create_datalist_single($pdo, "developer");
+	create_datalist_single($pdo, "company");
+	create_datalist_single($pdo, "designer");
+	*/
 	
 	
 	
 	/*
+	//THIS IS THE FIRST ITERATION - made a option list
+	
 	if(isset($_SESSION["input_data"]["company"])){
 		echo '
 				<span style="font-size:16px;"> Company: </span>'; company_select_2($pdo, 2, (int)$_SESSION["input_data"]["company"]); echo' <br>';
@@ -551,6 +602,8 @@ function platform_inputs(object $pdo){
 		echo '
 				<span style="font-size:16px;"> Discontinued*: </span> <input type="date" name="discontinued"><br>';
 	}
+	
+
 	
 	echo '
 				<label for="discontinued" style="font-size:16px;" >*leave empty if not discontinued</label><br>
