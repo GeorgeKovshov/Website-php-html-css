@@ -112,7 +112,9 @@ function company_select_2(object $pdo, int $type, int $selected){
 }
 
 function create_datalist(object $pdo, string $name){
-	//function to create a datalist with a given name/type. The name determines what table the data will be pulled from.
+	//function to create a datalist with a given list of categories. The name determines what table the data will be pulled from.
+	//FOURTH ITERATION
+	
 	
 	//this will pass the value already filled in if the user made a mistake while filling the form
 	echo '<script>'; echo 'let ' . $name . '_selected =';			
@@ -125,7 +127,7 @@ function create_datalist(object $pdo, string $name){
 	echo '</script>';									
 
 	
-	$arr = array("developer","company", "designer");
+	$arr = array("developer", "company", "designer");
 	//print_r($arr);
 	
 	echo '<script>'; echo 'let list_of_categories =';			
@@ -555,14 +557,24 @@ function platform_inputs(object $pdo){
 				<span style="font-size:16px;"> Generation: </span>'; generation_select(-1); echo '<br>';
 	}
 	
+	echo '	
+				<span style="font-size:16px;"> Company:</span> <br>
+				<div id="company_big_selector_div"></div>
+				<span style="font-size:16px;"> Designer:</span> <br>
+				<div id="designer_big_selector_div"></div>
+				<span style="font-size:16px;"> Developer:</span> <br>
+				<div id="developer_big_selector_div"></div>';
+	create_datalist($pdo, "company");
 	
+	
+	/*
 	// THIS IS THE THIRD ITERATION - can add and remove selectors
 	//PUT DIV WITH COMPANIES INSIDE JAVA_MANAGER!!!
 	echo '	
 				<span style="font-size:16px;"> Company:</span> <br>
 				<div id="company_big_selector_div"></div>';
 	
-	create_datalist_old($pdo, "company");
+	create_datalist_old($pdo, "company");*/
 	
 	
 	/*
