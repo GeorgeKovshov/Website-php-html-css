@@ -70,23 +70,28 @@ require_once 'includes/ggb_view.inc.php';
 							<input type="text" name="game_title" placeholder="Game title"> 
 							<input type="text" name="series_title" placeholder="Series"><br>
 							<span style="font-size:16px;"> Date of Release: </span> <br> <input type="date" name="released"> <br>
-							<span style="font-size:16px;"> Developer: </span> <?php company_select($pdo, 1); ?><br>
-							<span style="font-size:16px;"> Publisher: </span> <?php company_select($pdo, 2); ?><br>
+							<span style="font-size:16px;"> Developer: </span> 
+							<div id="developer_big_selector_div"></div>
+							<span style="font-size:16px;"> Publisher: </span> <br>
+							<div id="company_big_selector_div"></div>
 							
 						</div>
 						
 						<div>
 							<br> 
 							<span style="font-size:16px;"> Genres: </span> 
+								<div id="subgenre_big_selector_div"></div>
 								<?php
-									echo "<br>"; genre_select($pdo,$_SESSION["genre_amount"]); 
+									//echo "<br>"; genre_select($pdo,$_SESSION["genre_amount"]); 
 									//echo "<br>"; genre_select($pdo);
 									//echo "<br>"; genre_select($pdo);
 								?>
 							
 							<span style="font-size:16px;"> Designers  -> 
+								<div id="designer_big_selector_div"></div>
 								<?php 
-								designer_select($pdo,$_SESSION["designer_amount"]); 
+								//designer_select($pdo,$_SESSION["designer_amount"]); 
+								//create_datalist($pdo, "designer");
 								///designer_select($pdo);
 								//designer_select($pdo);
 								?> 
@@ -96,18 +101,20 @@ require_once 'includes/ggb_view.inc.php';
 						<div>
 							<br> 
 							<span style="font-size:16px;"> Platforms: </span> 
-							
+							<div id="platform_big_selector_div"></div>
 							<?php 
-								echo "<br>"; platform_select($pdo,$_SESSION["platform_amount"]); 
+								//echo "<br>"; platform_select($pdo,$_SESSION["platform_amount"]); 
 								//echo "<br>"; platform_select($pdo);
 								//echo "<br>"; platform_select($pdo);
 							?>
 							<span style="font-size:16px;">  Roles: <br>
+							<div id="profession_big_selector_div">
 								<?php 
-								profession_select($pdo,$_SESSION["designer_amount"]); 
-								///designer_select($pdo);
+								//profession_select($pdo,$_SESSION["designer_amount"]); 
+								//designer_select($pdo);
 								//designer_select($pdo);
 								?> 
+							</div>
 							</span><br>
 							
 						
@@ -118,8 +125,9 @@ require_once 'includes/ggb_view.inc.php';
 						<div style="grid-column-end: span 3;">
 							<textarea  name="game_description" placeholder="game_description" rows="4" cols="50">Write a description of the game... </textarea><br>
 							<span style="font-size:16px;"> Tags: </span> 
+							<div id="tag_big_selector_div"></div>
 							<?php 
-								 echo "<br>"; tags_select($pdo, $_SESSION["tags_amount"]); 
+								 //echo "<br>"; tags_select($pdo, $_SESSION["tags_amount"]); 
 								 ///platform_select($pdo);
 								 //platform_select($pdo);
 							?>
@@ -150,7 +158,7 @@ require_once 'includes/ggb_view.inc.php';
 						
 					</div>
 				</div>
-				
+			
 					
 				
 			</form>
@@ -197,8 +205,26 @@ require_once 'includes/ggb_view.inc.php';
 		</div>
 		
 
-		
-		
+<?php create_datalist($pdo, ["designer_many", "developer_single", "company_single", "subgenre_many", "platform_many", "tag_many"]); ?>			
+<!--
+$array = get_platforms($pdo);
+	while($amount > 0){
+		echo '<select name="platform'. $amount .'" id="platform">';
+		echo '<option value=0> None </option>'; 
+		foreach($array as $key => $value) { 
+			echo '<option value=' . $key . '>' . $value . "</option>"; 
+		} 
+		echo '</select>';
+		$amount--;
+	}
+-->
+
+<?php	
+	$array = get_professions($pdo);
+	echo '<script>'; echo 'let professions ='; echo json_encode($array); echo '</script>';
+?>
+	
+<script src="includes/java_tie_profession_to_designers.inc.js"></script>
 
 			
 			

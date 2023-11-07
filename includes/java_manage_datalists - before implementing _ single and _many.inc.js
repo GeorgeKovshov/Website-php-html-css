@@ -6,27 +6,13 @@ let container_java = []; // array of divs holding each category block (with butt
 let btn = []; // array of plus buttons
 let btn2 = []; // array of minus buttons
 
-console.log(list_of_categories);
-//console.log(category.substr(0, category.indexOf('_')));
-//console.log(category.substr(category.indexOf('_') + 1, category.length));
 
 let length = list_of_categories.length;
 let i = 0;
 while (i < length){
 	// we go through the passed array and create selectors, divs and buttons for each
-	let category = list_of_categories[i].substr(0, list_of_categories[i].indexOf('_'));
+	let category = list_of_categories[i];
 
-	container_java.push(document.querySelector("#" + category + "_big_selector_div")); // the div holding the selectors and buttons
-	
-	if (list_of_categories[i].substr(list_of_categories[i].indexOf('_')+1, list_of_categories[i].length) == "single") {
-		amount_selectors.push(1);
-		add_datalist(0, category);
-		btn.push(document.createElement("button"));
-		btn2.push(document.createElement("button"));
-		i++;
-		continue;
-	}
-	//console.log(category);
 	// using local storage to save the amount of the created selectors
 	if(localStorage.getItem("amount_" + category + "_selectors") === null) {
 		amount_selectors.push(1);		
@@ -34,14 +20,14 @@ while (i < length){
 		amount_selectors.push(parseInt(localStorage.getItem("amount_" + category + "_selectors")));
 	}
 	
-	//container_java.push(document.querySelector("#" + category + "_big_selector_div")); // the div holding the selectors and buttons
+	container_java.push(document.querySelector("#" + category + "_big_selector_div")); // the div holding the selectors and buttons
 	
 	//adding + button
 	btn.push(document.createElement("button"));
 	container_java[i].appendChild(btn[i]);
 	btn[i].appendChild(document.createTextNode("+"));
 	btn[i].setAttribute("style", "padding:2px 5px;");
-	btn[i].setAttribute("id", "java_button_+");
+	btn[i].setAttribute("id", "java_button");
 	btn[i].addEventListener("click", add_selector);
 	
 	//adding - button
@@ -49,7 +35,6 @@ while (i < length){
 	container_java[i].appendChild(btn2[i]);
 	btn2[i].appendChild(document.createTextNode("-"));
 	btn2[i].setAttribute("style", "padding:2px 7px;");
-	btn2[i].setAttribute("id", "java_button_-");
 	btn2[i].addEventListener("click", remove_selector);
 	
 	let j = 1;
@@ -61,43 +46,31 @@ while (i < length){
 	}
 	
 	i++;
-	
 }
 
 
 function add_datalist(i, category){
 	//function that adds a new selector for a category a press of a button and at the page load
 	
-	// i == 0 means that we make a single datalist
-	if(i !== 0){
-		name = category + i.toString();
-	} else {
-		name = category;
-	}
-	
+	name = category + i.toString();
+
 	// creating a div for individual category selector
 	let sel_list  = document.createElement("div");
-	sel_list.name = name + "_selector_div";
+	sel_list .name = name + "_selector_div";
 	
 	let input_field = document.createElement("input");
 	input_field.setAttribute("list", name + "_selector_datalist");
 	input_field.name = name;
 	input_field.id = name + "_selector_input";
-	sel_list.appendChild(input_field);
+	sel_list .appendChild(input_field);
 	
 	let datalist_field = document.createElement("datalist");
 	datalist_field.id = name + "_selector_datalist";
-	sel_list.appendChild(datalist_field);
+	sel_list .appendChild(datalist_field);
 	
 	//inserting the new div into the big_selector_div of category
-	let ind = 0;
-	if(i === 0){
-		ind = list_of_categories.indexOf(category + "_single");
-		container_java[ind].appendChild(sel_list);
-	} else {
-		ind = list_of_categories.indexOf(category + "_many");
-		container_java[ind].insertBefore(sel_list, btn[ind]);
-	}
+	ind = list_of_categories.indexOf(category);
+	container_java[ind].insertBefore(sel_list, btn[ind]);
 	document.querySelector("#" + name + "_selector_input").addEventListener("keyup", fill_datalist);
 	
 }
@@ -140,10 +113,10 @@ function add_selector(e){
 	e.preventDefault();
 	//subtracting the category from id
 	let category = e.target.parentNode.id
-	category = category.substr(0, category.indexOf('_'));
+	category = category.substr(0, category.indexOf('_'))
 	
 	//finding the index of the targetted category in main array
-	ind = list_of_categories.indexOf(category + "_many");
+	ind = list_of_categories.indexOf(category)
 	
 	if(amount_selectors[ind] < 9){
 		amount_selectors[ind]++;
@@ -157,14 +130,14 @@ function remove_selector(e){
 	e.preventDefault();
 	
 	//subtracting the category from id
-	let category = e.target.parentNode.id;
+	let category = e.target.parentNode.id
 	category = category.substr(0, category.indexOf('_'))
 	
 	//finding the index of the targetted category in main array
-	ind = list_of_categories.indexOf(category + "_many");
+	ind = list_of_categories.indexOf(category)
 	
 	if(amount_selectors[ind]> 1){
-		container_java[ind].children[amount_selectors[ind]-1].remove();
+		container_java[list_of_categories.indexOf(category)].children[amount_selectors[ind]-1].remove();
 		amount_selectors[ind]--;
 		localStorage.setItem("amount_" + category + "_selectors", amount_selectors[ind].toString());
 	}

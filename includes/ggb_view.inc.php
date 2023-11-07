@@ -111,25 +111,22 @@ function company_select_2(object $pdo, int $type, int $selected){
 	echo '</select>';	
 }
 
-function create_datalist(object $pdo, string $name){
-	//function to create a datalist with a given list of categories. The name determines what table the data will be pulled from.
+function create_datalist(object $pdo, array $arr){
+	//function to create a datalist with a given list of categories. The arr determines what tables the data will be pulled from.
+	// there need to be a premade divs with id="'your_name'_big_selector_div" for this function to fill them
+	// each name has to be typed like this: 'your_name'_single or 'your_name'_many. many will allow user to use + and - buttons to manage amount of selectors for category, single will restrict the field to just one selector.
 	//FOURTH ITERATION
 	
 	
 	//this will pass the value already filled in if the user made a mistake while filling the form
+	/*
 	echo '<script>'; echo 'let ' . $name . '_selected =';			
 	if(isset($_SESSION["input_data"][$name])){
 		echo json_encode($_SESSION["input_data"][$name]); 
 	} else {
 		echo json_encode("none");
-	}
-	// this will create the datalist
-	echo '</script>';									
-
-	
-	$arr = array("developer", "company", "designer");
-	//print_r($arr);
-	
+	}*/
+	// this will create the datalist			
 	echo '<script>'; echo 'let list_of_categories =';			
 		echo json_encode($arr); 
 	echo '</script>';
@@ -564,7 +561,8 @@ function platform_inputs(object $pdo){
 				<div id="designer_big_selector_div"></div>
 				<span style="font-size:16px;"> Developer:</span> <br>
 				<div id="developer_big_selector_div"></div>';
-	create_datalist($pdo, "company");
+	
+	create_datalist($pdo, ["designer_many", "company_single", "developer_single"]);
 	
 	
 	/*

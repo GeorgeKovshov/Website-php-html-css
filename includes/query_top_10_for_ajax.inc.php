@@ -12,7 +12,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 	} else if(isset($_POST['designer'])) {
 		$var = $_POST['designer'];
 		$query = "SELECT full_name FROM people WHERE full_name like '%" . $var . "%' LIMIT 10;";
-	} else {
+	} else if(isset($_POST['subgenre'])) {
+		$var = $_POST['subgenre'];
+		$query = "SELECT genre_name FROM genre WHERE genre_name LIKE '%" . $var . "%' LIMIT 10;";
+	} else if(isset($_POST['platform'])) {
+		$var = $_POST['platform'];
+		$query = "SELECT platform_name FROM platform WHERE platform_name LIKE '%" . $var . "%' LIMIT 10;";
+	}  else if(isset($_POST['tag'])) {
+		$var = $_POST['tag'];
+		$query = "SELECT tag_title FROM tags WHERE tag_title LIKE '%" . $var . "%' LIMIT 10;";
+	}	else {
 		$pdo = null;
 		die();
 	}		
