@@ -53,6 +53,38 @@ function get_countries_from_db(object $pdo) {
 }
 
 function get_companies_from_db(object $pdo, int $type) {
+	// get full list of companies 
+	// type 1: developer
+	// type 2: publisher
+	if($type == 2){
+		$query = "SELECT publisher_id, title FROM publisher;";
+	}
+	else {
+		$query = "SELECT developer_id, title FROM developer;";
+	}
+	
+	$stmt = $pdo->prepare($query);
+	$stmt->execute();
+	$result = array();
+	$i = 1;
+	if($type == 1){
+		while ($data = $stmt->fetch(PDO::FETCH_ASSOC))
+		{
+			$result[$data["developer_id"]] = $data["title"];
+		}
+	}
+	else {
+		while ($data = $stmt->fetch(PDO::FETCH_ASSOC))
+		{
+			$result[$data["publisher_id"]] = $data["title"];
+		}
+	}
+	
+	$stmt = null;
+	return $result;
+}
+
+function get_companies_from_db_limited(object $pdo, int $type) {
 	if($type == 2){
 		$query = "SELECT publisher_id, title FROM publisher;";
 	}
@@ -167,6 +199,7 @@ function get_games_from_db(object $pdo) {
 
 
 function get_name(object $pdo, string $current_name, string $name, string $table) {
+	// function that returns a name from the table if it exists
 	$query = "SELECT $name FROM $table WHERE $name = :current_name;";
 	$stmt = $pdo->prepare($query);
 	//$stmt->bindParam(':name', $name);
@@ -181,6 +214,7 @@ function get_name(object $pdo, string $current_name, string $name, string $table
 }
 
 function get_id(object $pdo, string $current_name, string $name, string $table, string $id_column) {
+	// function that returns an ID of a field with a given name in a given table
 	$query = "SELECT $id_column FROM $table WHERE $name = :current_name;";
 	$stmt = $pdo->prepare($query);
 	//$stmt->bindParam(':name', $name);
@@ -329,6 +363,7 @@ function set_game(object $pdo, string $game_title, string $series_title, string 
 }
 
 function check_relation_exists(object $pdo, string $table_name, string $column_one_name, string $column_two_name, int $column_one_value, int $column_two_value) {
+	// check if given entry has already been made in a given relation table (for one relating TWO tables)
 	$query = "SELECT $column_one_name FROM $table_name WHERE $column_one_name = :column_one_value AND $column_two_name = :column_two_value;";
 
 	$stmt = $pdo->prepare($query);
@@ -344,6 +379,7 @@ function check_relation_exists(object $pdo, string $table_name, string $column_o
 }
 
 function check_relation_exists_more(object $pdo, string $table_name, string $column_one_name, string $column_two_name, string $column_three_name, int $column_one_value, int $column_two_value, int $column_three_value) {
+	// check if given entry has already been made in a given relation table (for one relating THREE tables)
 	$query = "SELECT $column_one_name FROM $table_name WHERE $column_one_name = :column_one_value AND $column_two_name = :column_two_value AND $column_three_name = :column_three_value;";
 
 	$stmt = $pdo->prepare($query);
@@ -360,6 +396,8 @@ function check_relation_exists_more(object $pdo, string $table_name, string $col
 }
 
 function set_relation(object $pdo, string $table_name, string $column_one_name, string $column_two_name, int $column_one_value, int $column_two_value){
+	// insert into a relation table a relation between two tables it connects
+	// parameters are the name of relation table, the two column names and their new values
 	if(!check_relation_exists($pdo, $table_name, $column_one_name, $column_two_name, $column_one_value, $column_two_value)){
 		$query = "INSERT INTO $table_name ($column_one_name, $column_two_name) VALUES (:column_one_value, :column_two_value);";
 
@@ -376,6 +414,8 @@ function set_relation(object $pdo, string $table_name, string $column_one_name, 
 }
 
 function set_relation_more(object $pdo, string $table_name, string $column_one_name, string $column_two_name, string $column_three_name, int $column_one_value, int $column_two_value, int $column_three_value){
+	// insert into a relation table a relation between THREE tables it connects
+	// parameters are the name of relation table, the THREE column names and their new values
 	if(!check_relation_exists_more($pdo, $table_name, $column_one_name, $column_two_name, $column_three_name, $column_one_value, $column_two_value, $column_three_value)){
 		if($column_three_value == "0") {
 			$query = "INSERT INTO $table_name ($column_one_name, $column_two_name, $column_three_name) VALUES (:column_one_value, :column_two_value, NULL);";
@@ -459,6 +499,8 @@ function get_game_from_db(object $pdo, string $game_title){
 	
 	
 }
+
+
 	
 	
 

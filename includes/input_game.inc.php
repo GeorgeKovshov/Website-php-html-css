@@ -77,6 +77,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 				$j++;
 			}*/
 		$arr = [$game_title, $released, $developer, $publisher, $genre, $platform, $score];
+		/*
 		if(is_zero_input($platform) || is_zero_input($genre)){
 			
 			
@@ -98,7 +99,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 			$errors["game_name_taken"] = "This game was already added!";
 			}
 			
-		}
+		}*/
 		
 		require_once "config_session.inc.php";
 		

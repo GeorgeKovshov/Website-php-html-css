@@ -175,7 +175,55 @@ function input_tag(object $pdo, string $tag_title){
 }
 
 
-function input_game(object $pdo, string $game_title, string $series_title, string $released, int $developer, int $publisher, array $genre, array $designer, array $profession, array $platform, int $score, string $game_description, array $tags, array $files){
+
+function input_game(object $pdo, string $game_title, string $series_title, string $released, string $developer_title, string $publisher_title, array $genre_names, array $designer_names, array $profession, array $platform_names, int $score, string $game_description, array $tags_names, array $files){
+	//function to input a game into database
+	
+	if($files[0] != "covers/") {
+		$cover = $files[0];
+	}
+	else{
+		$cover = "NULL";
+	}
+	//converting the names to IDs
+	$developer = get_id($pdo, $developer_title, "title", "developer", "developer_id"); 
+	$publisher = get_id($pdo, $publisher_title, "title", "publisher", "publisher_id");
+	$genre = [];
+	foreach($genre_names as $g) { array_push($genre, get_id($pdo, $g, "genre_name", "genre", "genre_id"));}
+	$designer = [];
+	foreach($designer_names as $d) { array_push($designer, get_id($pdo, $d, "full_name", "people", "people_id"));}
+	$platform = [];
+	foreach($platform_names as $p) { array_push($platform, get_id($pdo, $p, "platform_name", "platform", "platform_id"));}
+	$tags= [];
+	foreach($tags_names as $t) { array_push($tags, get_id($pdo, $t, "tag_title", "tags", "tag_id"));}
+	
+	
+	set_game($pdo, $game_title, $series_title, $released, $developer, $publisher, $score, $game_description, $cover); 
+	$game_id = get_id($pdo, $game_title, "game_title", "games", "game_id");
+	foreach($designer as $d){	if($d != '0') {set_relation($pdo, "dev_people", "person_id", "developer_id", intval($d), $developer);}}
+	foreach($platform as $p){	if($p != '0') {set_relation($pdo, "games_platform", "platform_id", "game_id", intval($p), $game_id);}}
+	foreach($genre as $g){		if($g != '0') {set_relation($pdo, "games_genre", "genre_id", "game_id", intval($g), $game_id);}}
+	foreach($tags as $t){		if($t != '0') {set_relation($pdo, "games_tags", "tag_id", "game_id", intval($t), $game_id);}}
+	$j = 0;
+	foreach($designer as $d){
+		if($d != '0') {
+			set_relation_more($pdo, "games_people", "person_id", "game_id", "profession_id", intval($d), $game_id, intval($profession[$j]));
+		}
+		$j++;
+	}
+	$length = count($files);
+	$i = 1;
+	while($i < $length){
+		if($files[$i] != "screenshots/") {
+			set_screenshot($pdo, $files[$i], $game_id);
+		}
+		$i++;
+	}
+				//if($files[0] != "covers/") {	set_relation()}
+}
+
+
+function input_game_old(object $pdo, string $game_title, string $series_title, string $released, int $developer, int $publisher, array $genre, array $designer, array $profession, array $platform, int $score, string $game_description, array $tags, array $files){
 	if($files[0] != "covers/") {
 		$cover = $files[0];
 	}
