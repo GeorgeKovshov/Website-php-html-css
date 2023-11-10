@@ -204,7 +204,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 				
 		
 
-		input_game($pdo, $game_title, $series_title, $released, $developer_new, $publisher_new, $genre_new, $designer_new, $profession, $platform_new, $score, $filename, $tags_new, $files);
+		input_game_old($pdo, $game_title, $series_title, $released, $developer_new, $publisher_new, $genre_new, $designer_new, $profession, $platform_new, $score, $filename, $tags_new, $files);
 
 		
 		$pdo = null;

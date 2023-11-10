@@ -326,16 +326,18 @@ function print_tags(array $arr){
 	}
 }
 
-function show_screenshots(array $arr){
+function show_screenshots(array $arr, int $start){
+	echo "<div class='screenshots_div'>";
 	$i = 0;
 	foreach($arr as $tmp){
 		//print_r($tmp);
-		if($i != 0) {
+		if($i >= $start) {
 			echo '<img class="screenshots" src="includes/'. $tmp["screenshot_path"] . '" alt="a really informative image"/>';
 		}
 		$i++;
 		
 	}
+	echo "</div>";
 }
 
 function show_description(string $game_desc){
@@ -388,7 +390,38 @@ function description_helper(string $line){
 	echo "</div>";
 }
 
-function show_screenshots_description(array $arr, string $game_desc){
+
+
+function show_screenshots_description(string $game_desc, array $screenshots, string $score){
+	$handle = fopen('includes/' . $game_desc, "r");
+	$text = "";
+	if ($handle) {
+		while (($line = fgets($handle)) !== false) {
+			$text = $text . $line . "<br> <br>";
+			// process the line read.
+		}
+		fclose($handle);
+	}
+	$text = $text . "My score: " . $score . "/10 <br><br>";
+	$start = 1;
+	echo '<div class="cover_div" style="align-self:start; justify-content:center; padding-top:10px;">';
+		echo '<img class="screenshots" src="includes/'; 
+		echo $screenshots[0]["screenshot_path"]; 
+		echo'" alt="a really informative image"/><br>';
+	if(strlen($text) > 1750){
+		$start++;
+		echo '<img class="screenshots" src="includes/'; 
+		echo $screenshots[1]["screenshot_path"]; 
+		echo'" alt="a really informative image"/><br>';
+	}
+	echo '</div>';
+	
+	echo '<div>' . $text . '</div>';
+	show_screenshots($screenshots, $start);
+}
+
+
+function show_screenshots_description_old(array $arr, string $game_desc){
 	$handle = fopen('includes/' . $game_desc, "r");
 	$length = count($arr);
 	$i = 0;

@@ -62,14 +62,25 @@ require_once 'includes/ggb_view.inc.php';
 					
 				</div>	
 				
-				<?php 	show_screenshots_description($result["game_description"], $result["screenshots"], $result["score"]);?>
+				<?php //show_screenshots_description($result["screenshots"], $result["game_description"]); ?>
+				<div class="cover_div" style="align-self:start; padding-top:10px;">
+					<img class="screenshots"  src="includes/<?php echo $result["screenshots"][0]["screenshot_path"]?>" alt="a really informative image"/><br>
+				</div>
+				<div>
+					
+					<p><?php show_description($result["game_description"]); ?></p>
+					
+					<p><?php echo "My score: " . $result["score"] . "/10";?></p>
+
+				</div>
 				
-				
+				<div class="screenshots_div">
+					<?php show_screenshots($result["screenshots"]); ?>
 				
 				
 					
 
-				
+				</div>
 				
 				
 							
