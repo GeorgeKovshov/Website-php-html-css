@@ -69,9 +69,27 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 			$errors["failed_description"] = "Failed to upload description!";
 		}
 		
+		
+		
+		/*$j = 1;
+		foreach($tags as $value){
+				$errors["platform" . $j] = "platfofffff" . $j . ": " . $value;
+				$j++;
+			}*/
 		$arr = [$game_title, $released, $developer, $publisher, $genre, $platform, $score];
+		/*
+		if(is_zero_input($platform) || is_zero_input($genre)){
+			
+			
+			$errors["zero_input"] = "Select at least one genre and platform! ";
+		}
 		
-		
+		if(is_zero_input([$developer]) || is_zero_input([$publisher])){
+			$errors["zero_input1"] = "Select a developer and publisher! ";
+			
+			
+			$errors["ssss"] = $designer;
+		}
 		
 		if(is_input_empty($arr)){
 			$errors["empty_input"] = "Fill in all the necessary data! ";
@@ -81,35 +99,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 			$errors["game_name_taken"] = "This game was already added!";
 			}
 			
-		
-		
-			$developer_new = get_id($pdo, $developer, "title", "developer", "developer_id"); 
-			if($developer_new == 0) { $errors["empty_developer"] = "The developer is not in the database! "; }
-			$publisher_new = get_id($pdo, $publisher, "title", "publisher", "publisher_id");
-			if($publisher_new == 0) { $errors["empty_publisher"] = "The publisher is not in the database! "; }
-			
-			$genre_new = [];
-			foreach($genre as $g) { array_push($genre_new, get_id($pdo, $g, "genre_name", "genre", "genre_id"));}
-			if(is_zero_input($genre_new)){	$errors["empty_genre"] = "The genre doesn't exist! ";}
-			
-			$designer_new = [];
-			foreach($designer as $d) { array_push($designer_new, get_id($pdo, $d, "full_name", "people", "people_id"));}
-			if(is_zero_input($designer_new)){	$errors["empty_designer"] = "The designer doesn't exist! ";}
-			
-			$platform_new = [];
-			foreach($platform as $p) { array_push($platform_new, get_id($pdo, $p, "platform_name", "platform", "platform_id"));}
-			if(is_zero_input($platform_new)){	$errors["empty_platform"] = "The platform doesn't exist! ";}
-			
-			$tags_new= [];
-			foreach($tags as $t) { array_push($tags_new, get_id($pdo, $t, "tag_title", "tags", "tag_id"));}
-			if(is_zero_input($tags_new)){	$errors["empty_tags"] = "The tag doesn't exist! ";}
-			
-			
-		}
+		}*/
 		
 		require_once "config_session.inc.php";
-		
-	
 		
 		if($errors){
 			$_SESSION["errors_input"] = $errors;
@@ -204,7 +196,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 				
 		
 
-		input_game($pdo, $game_title, $series_title, $released, $developer_new, $publisher_new, $genre_new, $designer_new, $profession, $platform_new, $score, $filename, $tags_new, $files);
+		input_game($pdo, $game_title, $series_title, $released, $developer, $publisher, $genre, $designer, $profession, $platform, $score, $filename, $tags, $files);
 
 		
 		$pdo = null;

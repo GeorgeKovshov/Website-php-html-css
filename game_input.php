@@ -27,21 +27,11 @@ require_once 'includes/ggb_view.inc.php';
 <body>
 		<h3> 
 		<?php 
-				if(!isset($_SESSION["genre_amount"])){
-					$_SESSION["genre_amount"] = 1;
-				}
-				if(!isset($_SESSION["designer_amount"])){
-					$_SESSION["designer_amount"] = 1;
-				}
-				if(!isset($_SESSION["platform_amount"])){
-					$_SESSION["platform_amount"] = 1;
-				}
+				
 				if(!isset($_SESSION["image_amount"])){
 					$_SESSION["image_amount"] = 1;
 				}
-				if(!isset($_SESSION["tags_amount"])){
-					$_SESSION["tags_amount"] = 1;
-				}
+				
 				
 		/*
 			if(isset($_SESSION["user_id"])){
@@ -81,39 +71,17 @@ require_once 'includes/ggb_view.inc.php';
 							<br> 
 							<span style="font-size:16px;"> Genres: </span> 
 								<div id="subgenre_big_selector_div"></div>
-								<?php
-									//echo "<br>"; genre_select($pdo,$_SESSION["genre_amount"]); 
-									//echo "<br>"; genre_select($pdo);
-									//echo "<br>"; genre_select($pdo);
-								?>
-							
 							<span style="font-size:16px;"> Designers  -> 
 								<div id="designer_big_selector_div"></div>
-								<?php 
-								//designer_select($pdo,$_SESSION["designer_amount"]); 
-								//create_datalist($pdo, "designer");
-								///designer_select($pdo);
-								//designer_select($pdo);
-								?> 
 							</span><br>
 						</div>
 						
 						<div>
 							<br> 
 							<span style="font-size:16px;"> Platforms: </span> 
-							<div id="platform_big_selector_div"></div>
-							<?php 
-								//echo "<br>"; platform_select($pdo,$_SESSION["platform_amount"]); 
-								//echo "<br>"; platform_select($pdo);
-								//echo "<br>"; platform_select($pdo);
-							?>
+								<div id="platform_big_selector_div"></div>
 							<span style="font-size:16px;">  Roles: <br>
-							<div id="profession_big_selector_div">
-								<?php 
-								//profession_select($pdo,$_SESSION["designer_amount"]); 
-								//designer_select($pdo);
-								//designer_select($pdo);
-								?> 
+								<div id="profession_big_selector_div">
 							</div>
 							</span><br>
 							
@@ -125,12 +93,7 @@ require_once 'includes/ggb_view.inc.php';
 						<div style="grid-column-end: span 3;">
 							<textarea  name="game_description" placeholder="game_description" rows="4" cols="50">Write a description of the game... </textarea><br>
 							<span style="font-size:16px;"> Tags: </span> 
-							<div id="tag_big_selector_div"></div>
-							<?php 
-								 //echo "<br>"; tags_select($pdo, $_SESSION["tags_amount"]); 
-								 ///platform_select($pdo);
-								 //platform_select($pdo);
-							?>
+								<div id="tag_big_selector_div"></div>
 							<br><span> Score: <?php score_select(); ?> </span><button> Submit </button>
 							
 						</div>
@@ -148,14 +111,8 @@ require_once 'includes/ggb_view.inc.php';
 							}
 						
 							?>
-						
-							<!-- <span> Upload Cover:</span> <input type="file" name="cover_image" id="cover_image"> -->
-							<br>
-							
-							
-						</div>
-						
-						
+							<br>	
+						</div>	
 					</div>
 				</div>
 			
@@ -165,37 +122,14 @@ require_once 'includes/ggb_view.inc.php';
 			
 			<form action="./includes/variable_increase.inc.php" style="width: 300px" method = "post">
 			<br>
-				Change "genre" amount:
-			
-			<button name="+1" style="padding:2px 5px;"> + </button>
-			<button name="-1" style="padding:2px 7px;"> - </button>
-		
-			<br>
-	
-			Change "designers" amount:
-				
-			<button name="+2" style="padding:2px 5px;"> + </button>
-			<button name="-2" style="padding:2px 7px;"> - </button>
-								
-				<br>				
-	
-			Change "platforms" amount:
-				
-			<button name="+3" style="padding:2px 5px;"> + </button>
-			<button name="-3" style="padding:2px 7px;"> - </button>
-			<br>
+
 			Change "screenshots" amount:
 			
 			<button name="+4" style="padding:2px 5px;"> + </button>
 			<button name="-4" style="padding:2px 7px;"> - </button>
 		
 			<br>
-			Change "tags" amount:
-			
-			<button name="+5" style="padding:2px 5px;"> + </button>
-			<button name="-5" style="padding:2px 7px;"> - </button>
-		
-			<br>
+
 			</form>
 			
 		</div>
@@ -206,18 +140,6 @@ require_once 'includes/ggb_view.inc.php';
 		
 
 <?php create_datalist($pdo, ["designer_many", "developer_single", "company_single", "subgenre_many", "platform_many", "tag_many"]); ?>			
-<!--
-$array = get_platforms($pdo);
-	while($amount > 0){
-		echo '<select name="platform'. $amount .'" id="platform">';
-		echo '<option value=0> None </option>'; 
-		foreach($array as $key => $value) { 
-			echo '<option value=' . $key . '>' . $value . "</option>"; 
-		} 
-		echo '</select>';
-		$amount--;
-	}
--->
 
 <?php	
 	$array = get_professions($pdo);

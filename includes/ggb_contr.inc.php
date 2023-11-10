@@ -185,6 +185,8 @@ function input_game(object $pdo, string $game_title, string $series_title, strin
 	else{
 		$cover = "NULL";
 	}
+	
+	/*
 	//converting the names to IDs
 	$developer = get_id($pdo, $developer_title, "title", "developer", "developer_id"); 
 	$publisher = get_id($pdo, $publisher_title, "title", "publisher", "publisher_id");
@@ -196,6 +198,7 @@ function input_game(object $pdo, string $game_title, string $series_title, strin
 	foreach($platform_names as $p) { array_push($platform, get_id($pdo, $p, "platform_name", "platform", "platform_id"));}
 	$tags= [];
 	foreach($tags_names as $t) { array_push($tags, get_id($pdo, $t, "tag_title", "tags", "tag_id"));}
+	*/
 	
 	
 	set_game($pdo, $game_title, $series_title, $released, $developer, $publisher, $score, $game_description, $cover); 
