@@ -1,4 +1,4 @@
-
+console.log(session_vars);
 //let category = list_of_categories[2];
 // list_of_categories is a passed array to this file of which datalist selectors to add
 let amount_selectors = []; // array of how many selectors for each catagory there are
@@ -18,15 +18,20 @@ while (i < length){
 
 	container_java.push(document.querySelector("#" + category + "_big_selector_div")); // the div holding the selectors and buttons
 	
+	//this if block is for _single datalists, the rest of the function for _many
 	if (list_of_categories[i].substr(list_of_categories[i].indexOf('_')+1, list_of_categories[i].length) == "single") {
 		amount_selectors.push(1);
-		add_datalist(0, category);
+		let inputed_data = ""; //this is for filling values when the page is reloaded after mistake in input
+		if(session_vars != null){
+			inputed_data = session_vars[i];
+		}
+		add_datalist(0, category, inputed_data);
 		btn.push(document.createElement("button"));
 		btn2.push(document.createElement("button"));
 		i++;
 		continue;
 	}
-	//console.log(category);
+
 	// using local storage to save the amount of the created selectors
 	if(localStorage.getItem("amount_" + category + "_selectors") === null) {
 		amount_selectors.push(1);		
@@ -53,10 +58,16 @@ while (i < length){
 	btn2[i].addEventListener("click", remove_selector);
 	
 	let j = 1;
-
-	while( j <= amount_selectors[i]){
-		// creating the appropriate amount of selectors for given category
-		add_datalist(j, category);
+	let session_vars_length = 0;
+	if(session_vars[i] != null){
+		session_vars_length = session_vars[i].length;
+	}
+	while( j <= amount_selectors[i]){// creating the appropriate amount of selectors for given category
+		let inputed_data = ""; //this is for filling values when the page is reloaded after mistake in input
+		if(j-1 < session_vars_length){
+			inputed_data = session_vars[i][j-1];
+		} 
+		add_datalist(j, category, inputed_data);
 		j++;
 	}
 	
@@ -65,7 +76,7 @@ while (i < length){
 }
 
 
-function add_datalist(i, category){
+function add_datalist(i, category, session_value){
 	//function that adds a new selector for a category a press of a button and at the page load
 	
 	// i == 0 means that we make a single datalist
@@ -82,6 +93,7 @@ function add_datalist(i, category){
 	let input_field = document.createElement("input");
 	input_field.setAttribute("list", name + "_selector_datalist");
 	input_field.name = name;
+	input_field.value = session_value;
 	input_field.id = name + "_selector_input";
 	sel_list.appendChild(input_field);
 	
@@ -147,7 +159,7 @@ function add_selector(e){
 	
 	if(amount_selectors[ind] < 9){
 		amount_selectors[ind]++;
-		add_datalist(amount_selectors[ind], category);
+		add_datalist(amount_selectors[ind], category, "");
 		localStorage.setItem("amount_" + category + "_selectors", amount_selectors[ind].toString());
 	}
 }

@@ -57,9 +57,11 @@ require_once 'includes/ggb_view.inc.php';
 					<div class="form-input" >
 						<div> 
 							<h3> Input a game</h3>
+							<!--
 							<input type="text" name="game_title" placeholder="Game title"> 
 							<input type="text" name="series_title" placeholder="Series"><br>
-							<span style="font-size:16px;"> Date of Release: </span> <br> <input type="date" name="released"> <br>
+							<span style="font-size:16px;"> Date of Release: </span> <br> <input type="date" name="released"> <br> -->
+							<?php game_inputs($pdo); ?>
 							<span style="font-size:16px;"> Developer: </span> 
 							<div id="developer_big_selector_div"></div>
 							<span style="font-size:16px;"> Publisher: </span> <br>
@@ -91,10 +93,30 @@ require_once 'includes/ggb_view.inc.php';
 						
 						
 						<div style="grid-column-end: span 3;">
-							<textarea  name="game_description" placeholder="game_description" rows="4" cols="50">Write a description of the game... </textarea><br>
+							<?php 
+								//<textarea  name="game_description" placeholder="game_description" rows="4" cols="50">Write a description of the game... </textarea><br>
+								if(isset($_SESSION["input_data"]["game_description"])){
+									echo '
+											<textarea  name="game_description" placeholder="Game description" rows="4" cols="50">' . $_SESSION["input_data"]["game_description"] . '</textarea><br>';
+								} else {
+									echo '
+											<textarea  name="game_description" placeholder="Game description" rows="4" cols="50">Write a description of the game... </textarea><br>';
+								}
+							
+							?>
+							
 							<span style="font-size:16px;"> Tags: </span> 
 								<div id="tag_big_selector_div"></div>
-							<br><span> Score: <?php score_select(); ?> </span><button> Submit </button>
+							<br><span> Score: 
+							<?php 
+								if(isset($_SESSION["input_data"]["score"])){
+									score_select((int)$_SESSION["input_data"]["score"]); 
+								}else {
+									score_select(0);
+								}
+								
+							?> 
+							</span><button> Submit </button>
 							
 						</div>
 						<div class="box-input" style="width:300px;">
@@ -139,7 +161,21 @@ require_once 'includes/ggb_view.inc.php';
 		</div>
 		
 
-<?php create_datalist($pdo, ["designer_many", "developer_single", "company_single", "subgenre_many", "platform_many", "tag_many"]); ?>			
+<?php 
+	$session_variables = [];
+	//if(isset($_SESSION["input_data"]["designer_game"])){ 
+	array_push($session_variables, $_SESSION["input_data"]["designer_game"]);
+	array_push($session_variables, $_SESSION["input_data"]["developer_game"]);
+	array_push($session_variables, $_SESSION["input_data"]["company_game"]);
+	array_push($session_variables, $_SESSION["input_data"]["genre_game"]);
+	array_push($session_variables, $_SESSION["input_data"]["platform_game"]);
+	array_push($session_variables, $_SESSION["input_data"]["tags_game"]);
+	print_r($session_variables);
+	echo '<script>'; echo 'let session_vars ='; echo json_encode($session_variables); echo '</script>';
+	//}
+	create_datalist($pdo, ["designer_many", "developer_single", "company_single", "subgenre_many", "platform_many", "tag_many"]); 	
+	
+?>
 
 <?php	
 	$array = get_professions($pdo);

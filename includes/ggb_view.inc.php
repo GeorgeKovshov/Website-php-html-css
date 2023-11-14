@@ -58,13 +58,30 @@ function generation_select(int $selected){
 	
 }
 
-function score_select(){
+function score_select_old(){
 	
 	echo '<select name="score" id="score">';
 	$i=0;
 	while($i < 11) { 
 		echo '<option value=' . $i . '>' . $i++ . "</option>"; 
 		///$i++;
+	} 
+	echo '</select>';
+	
+	
+}
+
+function score_select(int $selected){
+	
+	echo '<select name="score" id="score">';
+	$i=0;
+	while($i < 11) { 
+		if($i != $selected) {
+			echo '<option value=' . $i . '>' . $i . "</option>"; 
+		} else {
+			echo '<option value=' . $i . ' selected="selected">' . $i . "</option>"; 
+		}
+		$i++;
 	} 
 	echo '</select>';
 	
@@ -587,15 +604,16 @@ function platform_inputs(object $pdo){
 				<span style="font-size:16px;"> Generation: </span>'; generation_select(-1); echo '<br>';
 	}
 	
+	// THIS IS THE FINAL ITERATION OF create_datalist 
 	echo '	
 				<span style="font-size:16px;"> Company:</span> <br>
-				<div id="company_big_selector_div"></div>
-				<span style="font-size:16px;"> Designer:</span> <br>
-				<div id="designer_big_selector_div"></div>
-				<span style="font-size:16px;"> Developer:</span> <br>
-				<div id="developer_big_selector_div"></div>';
+				<div id="company_big_selector_div"></div>';
+				
+	$session_variables = [];// this is for filling in value the user has inputted when the submit shows an error
+	array_push($session_variables, $_SESSION["input_data"]["company"]);
+	echo '<script>'; echo 'let session_vars ='; echo json_encode($session_variables); echo '</script>';
 	
-	create_datalist($pdo, ["designer_many", "company_single", "developer_single"]);
+	create_datalist($pdo, ["company_single"]);
 	
 	
 	/*
@@ -764,6 +782,38 @@ function tag_inputs(object $pdo){
 					<button> Submit </button>
 				</form>
 			</div>';
+	
+}
+
+function game_inputs(object $pdo){
+	/*
+	<input type="text" name="game_title" placeholder="Game title"> 
+	<input type="text" name="series_title" placeholder="Series"><br>
+	<span style="font-size:16px;"> Date of Release: </span> <br> <input type="date" name="released"> <br>*/
+	
+	if(isset($_SESSION["input_data"]["game_title"])){
+		echo '
+				<input type="text" name="game_title" value=' . $_SESSION["input_data"]["game_title"] .  '><br>';
+	} else {
+		echo '
+				<input type="text" name="game_title" placeholder="Game Title"><br>';
+	}
+				
+	if(isset($_SESSION["input_data"]["series_title"])){
+		echo '
+				<input type="text" name="series_title" value=' . $_SESSION["input_data"]["series_title"] .  '><br>';
+	} else {
+		echo '
+				<input type="text" name="series_title" placeholder="Series Title"><br>';
+	}
+	
+	if(isset($_SESSION["input_data"]["released_game"])){
+		echo '
+				<span style="font-size:16px;"> Date of Release: </span><br> <input type="date" name="released" value=' . $_SESSION["input_data"]["released_game"] . '><br>';
+	} else {
+		echo '
+				<span style="font-size:16px;"> Date of Release: </span><br> <input type="date" name="released"><br>';
+	}
 	
 }
 

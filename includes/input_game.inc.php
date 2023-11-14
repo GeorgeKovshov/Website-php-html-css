@@ -80,6 +80,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 			if(is_name_taken($pdo, $game_title, "game_title", "games" )){
 			$errors["game_name_taken"] = "This game was already added!";
 			}
+		
 			
 		
 		
@@ -104,8 +105,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 			foreach($tags as $t) { array_push($tags_new, get_id($pdo, $t, "tag_title", "tags", "tag_id"));}
 			if(is_zero_input($tags_new)){	$errors["empty_tags"] = "The tag doesn't exist! ";}
 			
-			
-		}
+		}	
+		
 		
 		require_once "config_session.inc.php";
 		
@@ -114,8 +115,22 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 		if($errors){
 			$_SESSION["errors_input"] = $errors;
 			//storing correct info to fill in when reset
-
 			
+			$inputData =[
+				"game_title" => $game_title,
+				"series_title" => $series_title,
+				"released_game" => $released, 
+				"game_description" => $game_description,
+				"developer_game" => $developer,
+				"company_game" => $publisher,
+				"genre_game" => $genre,
+				"designer_game" => $designer,
+				"platform_game" => $platform,
+				"tags_game" => $tags,
+				"score" => $score
+			];
+
+			$_SESSION["input_data"] = $inputData;
 			$pdo = null;
 			header("Location: ../game_input.php");
 			die();
@@ -195,7 +210,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 		if($errors){
 			$_SESSION["errors_input"] = $errors;
 			//storing correct info to fill in when reset
-
+			
+			
+			
 			
 			$pdo = null;
 			header("Location: ../game_input.php");
