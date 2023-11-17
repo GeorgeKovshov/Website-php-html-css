@@ -127,7 +127,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 				"designer_game" => $designer,
 				"platform_game" => $platform,
 				"tags_game" => $tags,
-				"score" => $score
+				"score" => $score,
+				"profession_game" => $profession
 			];
 
 			$_SESSION["input_data"] = $inputData;

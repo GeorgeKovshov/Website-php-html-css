@@ -200,7 +200,17 @@ require_once 'includes/ggb_view.inc.php';
 
 <?php	
 	$array = get_professions($pdo);
-	echo '<script>'; echo 'let professions ='; echo json_encode($array); echo '</script>';
+	echo '<script>';
+	echo 'let professions ='; echo json_encode($array); 
+	echo '</script>';
+	echo '<script>';
+	echo 'let set_professions =';
+	if(isset($_SESSION["input_data"]["profession_game"])){
+		echo json_encode($_SESSION["input_data"]["profession_game"]);
+	} else {
+		echo "''";
+	}
+	echo '</script>';
 ?>
 	
 <script src="includes/java_tie_profession_to_designers.inc.js"></script>
