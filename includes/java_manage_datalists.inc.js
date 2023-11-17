@@ -1,4 +1,3 @@
-console.log(session_vars);
 //let category = list_of_categories[2];
 // list_of_categories is a passed array to this file of which datalist selectors to add
 let amount_selectors = []; // array of how many selectors for each catagory there are
@@ -22,7 +21,7 @@ while (i < length){
 	if (list_of_categories[i].substr(list_of_categories[i].indexOf('_')+1, list_of_categories[i].length) == "single") {
 		amount_selectors.push(1);
 		let inputed_data = ""; //this is for filling values when the page is reloaded after mistake in input
-		if(session_vars != null){
+		if(typeof(session_vars) !== "undefined" && session_vars != null){
 			inputed_data = session_vars[i];
 		}
 		add_datalist(0, category, inputed_data);
@@ -59,7 +58,7 @@ while (i < length){
 	
 	let j = 1;
 	let session_vars_length = 0;
-	if(session_vars[i] != null){
+	if(typeof(session_vars) !== "undefined" && session_vars[i] != null){
 		session_vars_length = session_vars[i].length;
 	}
 	while( j <= amount_selectors[i]){// creating the appropriate amount of selectors for given category
@@ -92,6 +91,7 @@ function add_datalist(i, category, session_value){
 	
 	let input_field = document.createElement("input");
 	input_field.setAttribute("list", name + "_selector_datalist");
+	input_field.setAttribute("autocomplete","off");
 	input_field.name = name;
 	input_field.value = session_value;
 	input_field.id = name + "_selector_input";

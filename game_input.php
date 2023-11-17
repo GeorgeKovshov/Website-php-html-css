@@ -54,8 +54,8 @@ require_once 'includes/ggb_view.inc.php';
 			
 			
 				<div class="box-input">
-					<div class="form-input" >
-						<div> 
+					<div class="form-input">
+						<div style="grid-row: 1 /5"> 
 							<h3> Input a game</h3>
 							<!--
 							<input type="text" name="game_title" placeholder="Game title"> 
@@ -69,6 +69,29 @@ require_once 'includes/ggb_view.inc.php';
 							
 						</div>
 						
+						<div class="game_input_boxes">
+							<span style="font-size:16px;"> Genres: </span> 
+							<span style="font-size:16px; padding-left: 10px;"> Platforms: </span>
+							
+							<div id="subgenre_big_selector_div" style="padding-right: 10px;"></div>
+						
+							<div id="platform_big_selector_div"></div>
+							
+						</div>
+						<br>
+						
+					
+						<div class="game_input_boxes">
+	
+								<span style="font-size:16px;"> Designers: </span> 
+								<span style="font-size:16px; justify-self: start;">  Roles: </span>
+								<div id="designer_big_selector_div"></div>
+								<div id="profession_big_selector_div"></div>
+								
+							
+							
+						</div>
+						<!--
 						<div>
 							<br> 
 							<span style="font-size:16px;"> Genres: </span> 
@@ -90,7 +113,7 @@ require_once 'includes/ggb_view.inc.php';
 						
 						</div>
 						
-						
+						-->
 						
 						<div style="grid-column-end: span 3;">
 							<?php 
@@ -162,17 +185,15 @@ require_once 'includes/ggb_view.inc.php';
 		
 
 <?php 
-	$session_variables = [];
-	//if(isset($_SESSION["input_data"]["designer_game"])){ 
-	array_push($session_variables, $_SESSION["input_data"]["designer_game"]);
-	array_push($session_variables, $_SESSION["input_data"]["developer_game"]);
-	array_push($session_variables, $_SESSION["input_data"]["company_game"]);
-	array_push($session_variables, $_SESSION["input_data"]["genre_game"]);
-	array_push($session_variables, $_SESSION["input_data"]["platform_game"]);
-	array_push($session_variables, $_SESSION["input_data"]["tags_game"]);
-	print_r($session_variables);
+	$session_variables = [
+		$_SESSION["input_data"]["designer_game"],
+		$_SESSION["input_data"]["developer_game"],
+		$_SESSION["input_data"]["company_game"],
+		$_SESSION["input_data"]["genre_game"],
+		$_SESSION["input_data"]["platform_game"],
+		$_SESSION["input_data"]["tags_game"]
+	];
 	echo '<script>'; echo 'let session_vars ='; echo json_encode($session_variables); echo '</script>';
-	//}
 	create_datalist($pdo, ["designer_many", "developer_single", "company_single", "subgenre_many", "platform_many", "tag_many"]); 	
 	
 ?>
