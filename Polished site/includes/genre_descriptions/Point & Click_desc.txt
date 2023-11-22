@@ -1,0 +1,1 @@
+An adventure game, which you control with the mouse. The most predominant type of adventure games.

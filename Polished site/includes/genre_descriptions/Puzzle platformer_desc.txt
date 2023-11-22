@@ -1,0 +1,1 @@
+A platformer that shifts focus from pure action to a more cerebral challenge by making the required input more cryptic. The player has to consciously think through the gameplay mechanics and their synergy to find the needed solution, while, in a normal platformer, he could just intuit one on the fly. 

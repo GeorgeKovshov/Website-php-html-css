@@ -1,0 +1,1 @@
+The original form of adventure games: no graphics, just paragraphs of text describing the environments and situations with the text parser as the only means of interaction with the game.

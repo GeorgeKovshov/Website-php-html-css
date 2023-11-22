@@ -1,0 +1,1 @@
+In a 2D Platformer the player controls a character from a side-scrolling perspective, typically moving from left to right. The goal is to reach the end of a level without dying to obstacles, such as bottomless pits and enemies. Often involves a time limit, motivating the player to move fast and thus engage more with the action side of platforming.
