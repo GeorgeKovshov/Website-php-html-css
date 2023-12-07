@@ -185,7 +185,22 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 			if($errors){
 				$_SESSION["errors_input"] = $errors;
 				//storing correct info to fill in when reset
+				$inputData =[
+					"game_title" => $game_title,
+					"series_title" => $series_title,
+					"released_game" => $released, 
+					"game_description" => $game_description,
+					"developer_game" => $developer,
+					"company_game" => $publisher,
+					"genre_game" => $genre,
+					"designer_game" => $designer,
+					"platform_game" => $platform,
+					"tags_game" => $tags,
+					"score" => $score,
+					"profession_game" => $profession
+				];
 
+				$_SESSION["input_data"] = $inputData;
 				
 				$pdo = null;
 				header("Location: ../game_input.php");
@@ -211,7 +226,22 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 		if($errors){
 			$_SESSION["errors_input"] = $errors;
 			//storing correct info to fill in when reset
-			
+			$inputData =[
+					"game_title" => $game_title,
+					"series_title" => $series_title,
+					"released_game" => $released, 
+					"game_description" => $game_description,
+					"developer_game" => $developer,
+					"company_game" => $publisher,
+					"genre_game" => $genre,
+					"designer_game" => $designer,
+					"platform_game" => $platform,
+					"tags_game" => $tags,
+					"score" => $score,
+					"profession_game" => $profession
+				];
+
+				$_SESSION["input_data"] = $inputData;
 			
 			
 			
