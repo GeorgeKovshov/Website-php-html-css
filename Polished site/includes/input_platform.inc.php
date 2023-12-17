@@ -14,10 +14,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 		
 		// ERROR HANDLERS
 		$errors = [];
-		
+		$company_id = get_id($pdo, $company, "title", "publisher", "publisher_id");
+		if($company_id == NULL){
+			$errors["wrong company"] = "this is $company_id";
+		}
 		$arr = [$company, $platform_name, $released];
 		if(is_input_empty($arr)){
-			$errors["empty_input"] = "Fill in all the necessary data!";
+			$errors["empty_input"] = $company_id;#"Fill in all the necessary data!";
 		}
 		else {
 			if(is_name_taken($pdo, $platform_name, "platform_name", "platform" )){
@@ -51,7 +54,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 		if(empty($discontinued)){
 			$discontinued = "1";
 		}
-		input_platform($pdo, $platform_name, $company, $generation, $released, $discontinued);
+		input_platform($pdo, $platform_name, $company_id, $generation, $released, $discontinued);
 
 		
 		$pdo = null;
