@@ -15,7 +15,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 		// ERROR HANDLERS
 		$errors = [];
 		$company_id = get_id($pdo, $company, "title", "publisher", "publisher_id");
-		if($company_id == NULL){
+		if($company_id == 0){
 			$errors["wrong company"] = "this is $company_id";
 		}
 		$arr = [$company, $platform_name, $released];

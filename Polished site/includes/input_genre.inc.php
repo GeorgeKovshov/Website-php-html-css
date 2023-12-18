@@ -28,6 +28,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 			if(is_name_taken($pdo, $genre_name, "genre_name", "genre" )){
 			$errors["genre_name_taken"] = "This genre was already added!";
 			}
+			$subgenre_id = [];
+			foreach($subgenre as $s){
+				$tmp = get_id($pdo, $s, "genre_name", "genre", "genre_id");
+				if($tmp == 0){
+					$errors["wrong_genre"] = "parent genre is not in list: $s";
+					break;
+				}
+				array_push($subgenre_id, $tmp);
+			}
 			
 		}
 		
@@ -60,7 +69,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 		if(empty($subgenre)){
 			$subgenre = "1";
 		}
-		input_genre($pdo, $genre_name, $filename, $subgenre);
+		input_genre($pdo, $genre_name, $filename, $subgenre_id);
 
 		
 		$pdo = null;

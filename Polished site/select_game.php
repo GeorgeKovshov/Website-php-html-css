@@ -56,7 +56,12 @@ require_once 'includes/ggb_view.inc.php';
 					<p><?php echo "Developer: " . $result["developer"];?></p>
 					<p><?php echo "Publisher: " . $result["publisher"];?></p>
 					
-					<p> Tags: <?php print_tags($result["tags"]); ?> <p>
+					<p> Tags: 
+						<?php 
+							$tags_arr = array_reverse($result["tags"]);
+							print_tags($tags_arr); 
+						?> 
+					<p>
 					
 					
 					

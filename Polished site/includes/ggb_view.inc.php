@@ -187,6 +187,12 @@ function show_screenshots_description(string $game_desc, array $screenshots, str
 		echo $screenshots[1]["screenshot_path"]; 
 		echo'" alt="a really informative image"/><br>';
 	}
+	if(strlen($text) > 3000){
+		$start++;
+		echo '<img class="screenshots" src="includes/'; 
+		echo $screenshots[2]["screenshot_path"]; 
+		echo'" alt="a really informative image"/><br>';
+	}
 	echo '</div>';
 	
 	echo '<div>' . $text . '</div>';
