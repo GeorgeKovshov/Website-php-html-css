@@ -64,7 +64,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 		// ERROR HANDLERS
 		$errors = [];
 		
-		$filename ='game_descriptions/' . $game_title . '_desc.txt';
+		$filename ='game_descriptions/' . str_replace([':', '/', '*', '?', '"', '<', '>', '|'], '_', $game_title)  . '_desc.txt';
 		if(!file_put_contents($filename, $game_description)){
 			$errors["failed_description"] = "Failed to upload description!";
 		}
