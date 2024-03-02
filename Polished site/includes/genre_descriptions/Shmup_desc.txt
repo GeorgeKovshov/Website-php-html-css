@@ -1,0 +1,1 @@
+2D action game in which you control a space ship (typically) capable of free movement across the screen (although the screen itself moves in a sidescrolling fashion on its own). You have to shoot down enemies and avoid being hit by them. 

@@ -1,0 +1,1 @@
+A shmup, except instead of controlling a flying vehicle, you control a earthbound character whose only means of moving up is via jumping.
